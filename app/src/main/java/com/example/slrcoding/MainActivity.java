@@ -3,39 +3,55 @@ package com.example.slrcoding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.slrcoding.fragment.BoardFragment;
+import com.example.slrcoding.fragment.FeedFragment;
+import com.example.slrcoding.fragment.MainFragment;
+import com.example.slrcoding.fragment.MessageFragment;
+import com.example.slrcoding.fragment.MypageFragment;
+
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText("메인 화면");
                     setTitle("홈");
+                    fragmentTransaction.replace(R.id.main_content, new MainFragment());
+                    fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_feed:
-                    mTextMessage.setText("피드");
                     setTitle("피드");
+                    fragmentTransaction.replace(R.id.main_content, new FeedFragment());
+                    fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_comunity:
-                    mTextMessage.setText("게시판");
                     setTitle("게시판");
+                    fragmentTransaction.replace(R.id.main_content, new BoardFragment());
+                    fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_message:
-                    mTextMessage.setText("메시지 알림");
                     setTitle("메시지");
+                    fragmentTransaction.replace(R.id.main_content, new MessageFragment());
+                    fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_mypage:
-                    mTextMessage.setText("마이페이지");
                     setTitle("마이페이지");
+                    fragmentTransaction.replace(R.id.main_content, new MypageFragment());
+                    fragmentTransaction.commit();
                     return true;
             }
             return false;
@@ -46,9 +62,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setTitle("홈");
-        mTextMessage = (TextView) findViewById(R.id.message);
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.add(R.id.main_content, new MainFragment());
+        fragmentTransaction.commit();
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
