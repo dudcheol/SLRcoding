@@ -14,7 +14,8 @@ import com.example.slrcoding.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//자식 프래그먼트 부모 프래그먼트인 FeedFragment에서 넘어온 것이다.
+//이정찬
 public class Feed_Child_FragmentTwo extends Fragment {
 
     private RecyclerView mMainRecyclerView;
@@ -31,8 +32,8 @@ public class Feed_Child_FragmentTwo extends Fragment {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_feed__child__fragment_two, container, false);
         mMainRecyclerView = rootView.findViewById(R.id.main_recycler_view);
 
-        //ontainer.findViewById(R.id.main_write_button).setOnClickListener(this);
-
+        //container.findViewById(R.id.main_write_button).setOnClickListener(this);
+        //피드 글 적용시키기
         mBoardList = new ArrayList<>();
         mBoardList.add(new Board(null,"축구","축구 할사람 여러분",null,"android"));
         mBoardList.add(new Board(null,"축구","와~~토트넘 ",null,"server"));
