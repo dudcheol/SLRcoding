@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //자식 프래그먼트 부모 프래그먼트인 FeedFragment에서 넘어온 것이다.
-//이정찬
+//이정찬2014154031
 public class Feed_Child_FragmentTwo extends Fragment {
 
     private RecyclerView mMainRecyclerView;
