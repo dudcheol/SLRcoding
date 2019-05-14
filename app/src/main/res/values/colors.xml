@@ -3,4 +3,12 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="mainBg">#f2f2f2</color>
+    <color name="mainColor">#ffffff</color>
+    <color name="boldText">#33a217</color>
+    <color name="black">#000000</color>
+    <color name="hashTag">#e6b781</color>
+    <color name="timeFont">#6774e2</color>
+    <color name="busline">#eaeaea</color>
 </resources>
