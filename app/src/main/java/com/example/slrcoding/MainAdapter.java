@@ -1,8 +1,11 @@
 package com.example.slrcoding;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +14,13 @@ import android.widget.Toast;
 
 import java.util.List;
 
-//어댑터
+//피드 리사이클러 어댑터
 //이정찬
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder>{
 
     private List<Board> mBoardList;
-
+    public static final int REQUEST_CODE = 1000;
+    public static final String errorMessage ="Context should be an instanceof Activity.";
     public MainAdapter(List<Board> mBoardList) {
         this.mBoardList = mBoardList;
     }
@@ -31,8 +35,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, final int position) {
 
-
-
         final Board data = mBoardList.get(position);
 
         holder.mCategoryTextView.setText(data.getCategory());
@@ -44,7 +46,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             public void onClick(View v) {
                 Context context = v.getContext();
                 //여기서 각 피드들 클릭시 상세보기로 이동
-                Toast.makeText(context, position +""+data.getTitle(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, position +""+data.getTitle(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context,FeedDetailActivity.class);
+                if (context instanceof Activity) {
+                    intent.putExtra("title",data.getTitle());
+                    intent.putExtra("content",data.getContents());
+                    ((Activity) context).startActivityForResult(intent,REQUEST_CODE);
+                } else {
+                    Log.e("e",errorMessage);
+                }
+
             }
         });
     }

@@ -45,15 +45,15 @@ public class Feed_Child_FragmentOne extends Fragment {
         });
         //피드 글 적용시키기
         mBoardList = new ArrayList<>();
-        mBoardList.add(new Board(null,"시흥시모여라","반갑습니다 여러분",null,"android"));
-        mBoardList.add(new Board(null,"시흥시모여라","Hello",null,"server"));
-        mBoardList.add(new Board(null,"시흥시모여라","OK",null,"java"));
-        mBoardList.add(new Board(null,"시흥시모여라","안녕하세요",null,"php"));
-        mBoardList.add(new Board(null,"시흥시모여라","ㅋㅋㅋ",null,"python"));
-        mBoardList.add(new Board(null,"시흥시모여라","Hello",null,"server"));
-        mBoardList.add(new Board(null,"시흥시모여라","OK",null,"java"));
-        mBoardList.add(new Board(null,"시흥시모여라","안녕하세요",null,"php"));
-        mBoardList.add(new Board(null,"시흥시모여라","ㅋㅋㅋ",null,"python"));
+        mBoardList.add(new Board(null,"시흥시모여라","반갑습니다 여러분","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"시흥시모여라","Hello","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"시흥시모여라","OK","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"시흥시모여라","안녕하세요","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"시흥시모여라","ㅋㅋㅋ","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"시흥시모여라","Hello","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"시흥시모여라","OK","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"시흥시모여라","안녕하세요","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"시흥시모여라","ㅋㅋㅋ","와~~~~~~~~~~","익명"));
         mAdapter = new MainAdapter(mBoardList);
         mMainRecyclerView.setAdapter(mAdapter);
         return rootView;

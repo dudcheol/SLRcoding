@@ -44,15 +44,15 @@ public class Feed_Child_FragmentTwo extends Fragment {
         //container.findViewById(R.id.main_write_button).setOnClickListener(this);
         //피드 글 적용시키기
         mBoardList = new ArrayList<>();
-        mBoardList.add(new Board(null,"축구","축구 할사람 여러분",null,"android"));
-        mBoardList.add(new Board(null,"축구","와~~토트넘 ",null,"server"));
-        mBoardList.add(new Board(null,"축구","레알마드리드??",null,"java"));
-        mBoardList.add(new Board(null,"축구","히딩크 돌아와라",null,"php"));
-        mBoardList.add(new Board(null,"축구","박항서",null,"python"));
-        mBoardList.add(new Board(null,"축구","손흥민 잘한다..",null,"server"));
-        mBoardList.add(new Board(null,"축구","제 2의 박지성이냐",null,"java"));
-        mBoardList.add(new Board(null,"축구","축구는 뭐다?",null,"php"));
-        mBoardList.add(new Board(null,"축구","축구다!",null,"python"));
+        mBoardList.add(new Board(null,"축구","축구 할사람 여러분","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"축구","와~~토트넘 ","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"축구","레알마드리드??","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"축구","히딩크 돌아와라","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"축구","박항서","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"축구","손흥민 잘한다..","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"축구","제 2의 박지성이냐","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"축구","축구는 뭐다?","와~~~~~~~~~~","익명"));
+        mBoardList.add(new Board(null,"축구","축구다!","와~~~~~~~~~~","익명"));
         mAdapter = new MainAdapter(mBoardList);
         mMainRecyclerView.setAdapter(mAdapter);
         return rootView;
