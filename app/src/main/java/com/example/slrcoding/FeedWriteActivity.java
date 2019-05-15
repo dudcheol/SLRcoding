@@ -17,7 +17,7 @@ public class FeedWriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_write);
-        toolbar = (Toolbar)findViewById(R.id.toolbar2);
+       // toolbar = (Toolbar)findViewById(R.id.toolbar2);
         //setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

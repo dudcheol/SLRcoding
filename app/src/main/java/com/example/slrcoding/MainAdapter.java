@@ -51,6 +51,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                 if (context instanceof Activity) {
                     intent.putExtra("title",data.getTitle());
                     intent.putExtra("content",data.getContents());
+                    intent.putExtra("category",data.getCategory());
                     ((Activity) context).startActivityForResult(intent,REQUEST_CODE);
                 } else {
                     Log.e("e",errorMessage);
