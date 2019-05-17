@@ -12,6 +12,7 @@ import com.example.slrcoding.R;
 /**
  * A simple {@link Fragment} subclass.
  */
+//최민철
 public class MypageFragment extends Fragment {
 
 
