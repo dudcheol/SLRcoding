@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
+            // 프래그먼트!!
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     setTitle("홈");
