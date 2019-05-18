@@ -2,6 +2,7 @@ package com.example.slrcoding;
 
 public class FeedReplyVO {
     //댓글VO
+    //이정찬
     private String replyId; //댓글 아이디
     private String feedId; //피드 아이디(외래키)
     private String replyContent; //댓글 내용
