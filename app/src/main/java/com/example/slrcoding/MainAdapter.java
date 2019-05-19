@@ -40,6 +40,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.mCategoryTextView.setText(data.getCategory());
         holder.mTitleTextView.setText(data.getTitle());
         holder.mNameTextView.setText(data.getName());
+        holder.mDateTextView.setText(data.getDate());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +53,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                     intent.putExtra("title",data.getTitle());
                     intent.putExtra("content",data.getContents());
                     intent.putExtra("category",data.getCategory());
+                    intent.putExtra("date",data.getDate());
                     ((Activity) context).startActivityForResult(intent,REQUEST_CODE);
                 } else {
                     Log.e("e",errorMessage);
@@ -73,11 +75,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         private TextView mCategoryTextView;
         private TextView mTitleTextView;
         private TextView mNameTextView;
+        private TextView mDateTextView;
+
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
             mCategoryTextView = itemView.findViewById(R.id.category_name);
             mTitleTextView = itemView.findViewById(R.id.item_title_text);
             mNameTextView = itemView.findViewById(R.id.item_name_text);
+            mDateTextView = itemView.findViewById(R.id.feed_write_date);
             mView = itemView;
 
         }

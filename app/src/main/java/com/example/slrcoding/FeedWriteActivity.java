@@ -40,6 +40,9 @@ public class FeedWriteActivity extends AppCompatActivity {
                 return true;
             case R.id.feed_done:
                 Toast.makeText(getApplicationContext(), "등록 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                //여기서 파이어베이서 데이터에 저장 각 입력 정보들을 넣는다..
+                //대신 카테고리 별로 if문을 이용해서 따로 저장을 한다.??
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

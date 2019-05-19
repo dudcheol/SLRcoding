@@ -18,6 +18,8 @@ public class FeedDetailActivity extends AppCompatActivity {
     private TextView titleTextView;
     private TextView contentTextView;
     private TextView categoryTextView;
+    private TextView dateTextView;
+
     private RecyclerView mReplyRecyclerView;
     private List<FeedReplyVO> feedReplyVOList;
     private ReplyAdapter replyAdapter;
@@ -31,6 +33,7 @@ public class FeedDetailActivity extends AppCompatActivity {
         titleTextView = findViewById(R.id.detail_item_title_text);
         contentTextView = findViewById(R.id.feed_context);
         categoryTextView =findViewById(R.id.feed_detail_category);
+        dateTextView = findViewById(R.id.feed_date);
 
         //툴바에 적용
         //toolbar = (Toolbar)findViewById(R.id.toolbar3);
@@ -44,9 +47,12 @@ public class FeedDetailActivity extends AppCompatActivity {
         String title = intent.getStringExtra("title");
         String content = intent.getStringExtra("content");
         String category = intent.getStringExtra("category");
+        String date = intent.getStringExtra("date");
+
         titleTextView.setText(title);
         contentTextView.setText(content);
         categoryTextView.setText(category);
+        dateTextView.setText(date);
 
         //댓글 리사이클러 뷰
         mReplyRecyclerView = findViewById(R.id.feed_reply_recycler);
