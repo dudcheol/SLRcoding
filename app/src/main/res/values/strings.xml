@@ -3,7 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="login">Login</string>
+    <string name="signUp">SignUp</string>
     <string-array name="fragments">
+
 
         <item>시흥시모여라</item>
         <item>축구</item>
