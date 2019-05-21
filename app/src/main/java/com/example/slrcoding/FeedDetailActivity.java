@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     private TextView contentTextView;
     private TextView categoryTextView;
     private TextView dateTextView;
+    private ImageButton likelyButton;
 
     private RecyclerView mReplyRecyclerView;
     private List<FeedReplyVO> feedReplyVOList;
@@ -34,6 +37,7 @@ public class FeedDetailActivity extends AppCompatActivity {
         contentTextView = findViewById(R.id.feed_context);
         categoryTextView =findViewById(R.id.feed_detail_category);
         dateTextView = findViewById(R.id.feed_date);
+        likelyButton = findViewById(R.id.like_button2);
 
         //툴바에 적용
         //toolbar = (Toolbar)findViewById(R.id.toolbar3);
@@ -70,6 +74,17 @@ public class FeedDetailActivity extends AppCompatActivity {
         replyAdapter = new ReplyAdapter(feedReplyVOList);
         mReplyRecyclerView.setAdapter(replyAdapter);
         mReplyRecyclerView.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
+
+        //좋아요 버튼 클릭
+        setClickEvent();
+    }
+    private void setClickEvent(){
+        likelyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(FeedDetailActivity.this, "좋아요 버튼 클릭스...", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

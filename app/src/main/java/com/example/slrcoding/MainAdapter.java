@@ -9,8 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import java.util.List;
 
@@ -41,7 +45,21 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.mTitleTextView.setText(data.getTitle());
         holder.mNameTextView.setText(data.getName());
         holder.mDateTextView.setText(data.getDate());
+        //좋아요 버튼 클릭
+        holder.mlikeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                Context context = likeButton.getContext();
 
+                Toast.makeText(context, "좋아요 버튼 클릭!!"+position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+
+            }
+        });
+        //피드 클릭
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,13 +94,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         private TextView mTitleTextView;
         private TextView mNameTextView;
         private TextView mDateTextView;
-
+        private LikeButton mlikeButton;
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
             mCategoryTextView = itemView.findViewById(R.id.category_name);
             mTitleTextView = itemView.findViewById(R.id.item_title_text);
             mNameTextView = itemView.findViewById(R.id.item_name_text);
             mDateTextView = itemView.findViewById(R.id.feed_write_date);
+            mlikeButton = itemView.findViewById(R.id.heart_button);
+
             mView = itemView;
 
         }
