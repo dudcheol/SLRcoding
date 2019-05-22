@@ -1,5 +1,6 @@
 package com.example.slrcoding;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.like.LikeButton;
+import com.like.OnLikeListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +25,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     private TextView contentTextView;
     private TextView categoryTextView;
     private TextView dateTextView;
-    private ImageButton likelyButton;
+    private LikeButton likelyButton;
 
     private RecyclerView mReplyRecyclerView;
     private List<FeedReplyVO> feedReplyVOList;
@@ -79,10 +83,19 @@ public class FeedDetailActivity extends AppCompatActivity {
         setClickEvent();
     }
     private void setClickEvent(){
-        likelyButton.setOnClickListener(new View.OnClickListener() {
+        likelyButton.setOnLikeListener(new OnLikeListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(FeedDetailActivity.this, "좋아요 버튼 클릭스...", Toast.LENGTH_SHORT).show();
+            public void liked(LikeButton likeButton) {
+                Context context = likeButton.getContext();
+
+                Toast.makeText(context, "좋아요 버튼 클릭!!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                Context context = likeButton.getContext();
+
+                Toast.makeText(context, "좋아요 버튼 취소!!", Toast.LENGTH_SHORT).show();
             }
         });
     }

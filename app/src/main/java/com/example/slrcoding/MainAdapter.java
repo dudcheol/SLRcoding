@@ -56,7 +56,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
             @Override
             public void unLiked(LikeButton likeButton) {
-
+                Context context = likeButton.getContext();
+                Toast.makeText(context, "좋아요 버튼 취소!!"+position, Toast.LENGTH_SHORT).show();
             }
         });
         //피드 클릭
