@@ -20,7 +20,7 @@ import java.util.List;
 //이정찬2014154031
 public class Feed_Child_FragmentTwo extends Fragment {
 
-    private RecyclerView mMainRecyclerView;
+    public RecyclerView mMainRecyclerView;
     private MainAdapter mAdapter;
     private List<Board> mBoardList;
     public static final int REQUEST_CODE = 1000;
@@ -34,13 +34,13 @@ public class Feed_Child_FragmentTwo extends Fragment {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_feed__child__fragment_two, container, false);
         mMainRecyclerView = rootView.findViewById(R.id.main_recycler_view2);
 
-        rootView.findViewById(R.id.main_write_button2).setOnClickListener(new View.OnClickListener() {
+        /*rootView.findViewById(R.id.main_write_button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
                 startActivityForResult(intent,REQUEST_CODE);
             }
-        });
+        });*/
         //container.findViewById(R.id.main_write_button).setOnClickListener(this);
         //피드 글 적용시키기
         //이제 파이베 연동 시 writeActivity에서 클릭 시 여기로 이동하는데 파이어베이스로 겟을 통해 각 적용시켜준다.

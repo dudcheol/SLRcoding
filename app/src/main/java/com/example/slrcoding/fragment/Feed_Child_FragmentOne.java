@@ -19,7 +19,7 @@ import java.util.List;
 //이정찬
 public class Feed_Child_FragmentOne extends Fragment {
 
-    private RecyclerView mMainRecyclerView;
+    public RecyclerView mMainRecyclerView;
     private MainAdapter mAdapter;
     private List<Board> mBoardList;
     public static final int REQUEST_CODE = 1000;
@@ -52,7 +52,7 @@ public class Feed_Child_FragmentOne extends Fragment {
         mAdapter = new MainAdapter(mBoardList);
         mMainRecyclerView.setAdapter(mAdapter);
         //container.findViewById(R.id.main_write_button).setOnClickListener(this);
-        rootView.findViewById(R.id.main_write_button).setOnClickListener(new View.OnClickListener() {
+        /*rootView.findViewById(R.id.main_write_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
@@ -60,7 +60,7 @@ public class Feed_Child_FragmentOne extends Fragment {
 
                 startActivityForResult(intent,REQUEST_CODE);
             }
-        });
+        });*/
         return rootView;
     }
 
