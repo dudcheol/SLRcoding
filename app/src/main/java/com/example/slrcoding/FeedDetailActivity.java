@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -99,13 +101,23 @@ public class FeedDetailActivity extends AppCompatActivity {
             }
         });
     }
-
+    //추가된 소스, ToolBar에 menu.xml을 인플레이트함
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.feeddetailmenu, menu);
+        return true;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.menu_delete:
+                Toast.makeText(getApplicationContext(), "피드 삭제!!!", Toast.LENGTH_SHORT).show();
+
 
         }
         return super.onOptionsItemSelected(item);
