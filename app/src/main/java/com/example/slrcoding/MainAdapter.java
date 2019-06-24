@@ -33,7 +33,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     @Override
     public MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //item_main 레이아웃을 생성하여 리턴
-        return new MainViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main,parent,false));
+        return new MainViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.feed_item_test_design,parent,false));
     }
     //Board로 데이터 바인딩 시킴 이로인해 item_main에 내용이 뜨게 됨
     @Override
@@ -45,6 +45,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.mTitleTextView.setText(data.getTitle());
         holder.mNameTextView.setText(data.getName());
         holder.mDateTextView.setText(data.getDate());
+        holder.mContentTextView.setText(data.getContents());
         //좋아요 버튼 클릭
         holder.mlikeButton.setOnLikeListener(new OnLikeListener() {
             @Override
@@ -96,6 +97,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         private TextView mNameTextView;
         private TextView mDateTextView;
         private LikeButton mlikeButton;
+        private TextView mContentTextView;
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
             mCategoryTextView = itemView.findViewById(R.id.category_name);
@@ -103,7 +105,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             mNameTextView = itemView.findViewById(R.id.item_name_text);
             mDateTextView = itemView.findViewById(R.id.feed_write_date);
             mlikeButton = itemView.findViewById(R.id.heart_button);
-
+            mContentTextView =itemView.findViewById(R.id.item_content);
             mView = itemView;
 
         }
