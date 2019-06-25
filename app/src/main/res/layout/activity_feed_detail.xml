@@ -6,13 +6,13 @@
     android:background="#e4e4e4"
     android:orientation="vertical">
 
-    <!--<android.support.v7.widget.Toolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#009688">
+        android:background="@color/mainColor_mid">
 
-    </android.support.v7.widget.Toolbar>-->
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,14 +101,24 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="right|bottom">
 
-                    <ImageButton
+                    <!--<ImageButton
                         android:id="@+id/like_button2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="3dp"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/heart_4" />
-
+                        android:src="@drawable/heart_4" />-->
+                    <com.like.LikeButton
+                        android:id="@+id/like_button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        app:icon_size="10dp"
+                        app:anim_scale_factor="3"
+                        android:layout_marginRight="3dp"
+                        app:like_drawable="@drawable/heart_4_on"
+                        app:unlike_drawable="@drawable/heart_4"
+                        app:icon_type="heart" />
                     <TextView
                         android:id="@+id/like_cnt2"
                         android:layout_width="wrap_content"

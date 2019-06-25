@@ -9,13 +9,13 @@
 
 
 
-    <!--<android.support.v7.widget.Toolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#009688">
+        android:background="@color/mainColor_mid">
 
-    </android.support.v7.widget.Toolbar>-->
+    </android.support.v7.widget.Toolbar>
 
 
     <EditText
@@ -23,13 +23,15 @@
         android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:background="@android:drawable/edit_text"
+        android:layout_below="@+id/toolbar2"
         android:hint="제목을 입력하세요"/>
 
     <EditText
         android:id="@+id/feed_memo_edit"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

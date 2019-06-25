@@ -1,22 +1,25 @@
 package com.example.slrcoding;
 
+//피드 VO모델
+//이정찬
 public class Board {
     private String id;
     private String category;
     private String title;
     private String contents;
     private String name;
-
+    private String date;
     public Board(){
 
     }
 
-    public Board(String id, String category, String title, String contents, String name) {
+    public Board(String id, String category, String title, String contents, String name,String date) {
         this.id = id;
         this.category= category;
         this.title = title;
         this.contents = contents;
         this.name = name;
+        this.date = date;
     }
 
     public String getId() {
@@ -55,6 +58,14 @@ public class Board {
         this.name = name;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "Board{" +
@@ -63,6 +74,7 @@ public class Board {
                 ", title='" + title + '\'' +
                 ", contents='" + contents + '\'' +
                 ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
                 '}';
     }
 }
