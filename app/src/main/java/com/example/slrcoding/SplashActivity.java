@@ -6,6 +6,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -18,6 +19,8 @@ private final int SPLASH_DISPLAY_LENGTH = 3000;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         tv=(TextView)findViewById(R.id.sp_tv);
         iv=(ImageView)findViewById(R.id.sp_iv);

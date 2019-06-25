@@ -47,8 +47,8 @@ public class FeedDetailActivity extends AppCompatActivity {
         likelyButton = findViewById(R.id.like_button2);
 
         //툴바에 적용
-        //toolbar = (Toolbar)findViewById(R.id.toolbar3);
-        //setSupportActionBar(toolbar);
+        toolbar = (Toolbar)findViewById(R.id.toolbar3);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF9CCC65));
