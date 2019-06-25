@@ -10,7 +10,7 @@
         android:id="@+id/toolbar3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#009688">
+        android:background="#53F04D">
 
     </android.support.v7.widget.Toolbar>-->
 

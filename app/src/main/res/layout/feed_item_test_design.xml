@@ -40,7 +40,7 @@
                         android:layout_height="40dp"
                         android:id="@+id/imageView"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_person" />
+                        android:src="@drawable/user" />
 
                     <LinearLayout
                         android:orientation="vertical"

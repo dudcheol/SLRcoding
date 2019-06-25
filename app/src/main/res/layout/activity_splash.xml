@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/activity_splash"
-    android:background="#8CE029"
+    android:background="#9ccc65"
     >
     <LinearLayout
         android:gravity="center"

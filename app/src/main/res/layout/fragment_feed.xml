@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#009688">
+        android:background="#9ccc65">
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
-        android:backgroundTint="#009688"
+        android:backgroundTint="#9ccc65"
         android:src="@drawable/ic_add"
         app:borderWidth="0dp"
         app:fabSize="normal" />
