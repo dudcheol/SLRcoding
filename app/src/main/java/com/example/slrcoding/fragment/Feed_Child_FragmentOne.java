@@ -2,11 +2,14 @@ package com.example.slrcoding.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.slrcoding.Board;
 import com.example.slrcoding.FeedWriteActivity;
@@ -17,13 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 //자식 프래그먼트 부모 프래그먼트인 FeedFragment에서 넘어온 것이다.
 //이정찬
-public class Feed_Child_FragmentOne extends Fragment {
+public class Feed_Child_FragmentOne extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public RecyclerView mMainRecyclerView;
     private MainAdapter mAdapter;
     private List<Board> mBoardList;
     public static final int REQUEST_CODE = 1000;
-
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     public Feed_Child_FragmentOne() {
         // Required empty public constructor
     }
@@ -34,8 +37,8 @@ public class Feed_Child_FragmentOne extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_feed__child__fragment_one, container, false);
         mMainRecyclerView = rootView.findViewById(R.id.main_recycler_view);
-
-
+        mSwipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swref);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         //이제 파이베 연동 시 writeActivity에서 클릭 시 여기로 이동하는데 파이어베이스로 겟을 통해 각 적용시켜준다.
         //피드 글 적용시키기
 
@@ -65,6 +68,14 @@ public class Feed_Child_FragmentOne extends Fragment {
     }
 
 
-
-
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getActivity(), "로딩 완료", Toast.LENGTH_SHORT).show();
+            }
+        },3000);
+    }
 }

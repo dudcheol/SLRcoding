@@ -6,15 +6,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/main_recycler_view"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        android:background="#F0EBEB"
+        android:id="@+id/swref"
 
-        />
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/main_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            android:background="#F0EBEB"
+
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
     <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/main_write_button"
         android:layout_width="wrap_content"

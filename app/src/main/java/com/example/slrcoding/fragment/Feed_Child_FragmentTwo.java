@@ -2,11 +2,14 @@ package com.example.slrcoding.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.slrcoding.Board;
 import com.example.slrcoding.FeedWriteActivity;
@@ -18,12 +21,13 @@ import java.util.List;
 
 //자식 프래그먼트 부모 프래그먼트인 FeedFragment에서 넘어온 것이다.
 //이정찬2014154031
-public class Feed_Child_FragmentTwo extends Fragment {
+public class Feed_Child_FragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public RecyclerView mMainRecyclerView;
     private MainAdapter mAdapter;
     private List<Board> mBoardList;
     public static final int REQUEST_CODE = 1000;
+    private SwipeRefreshLayout mSwipeRefreshLayout2;
     public Feed_Child_FragmentTwo() {
         // Required empty public constructor
     }
@@ -33,7 +37,8 @@ public class Feed_Child_FragmentTwo extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_feed__child__fragment_two, container, false);
         mMainRecyclerView = rootView.findViewById(R.id.main_recycler_view2);
-
+        mSwipeRefreshLayout2 = (SwipeRefreshLayout)rootView.findViewById(R.id.swref2);
+        mSwipeRefreshLayout2.setOnRefreshListener(this);
         /*rootView.findViewById(R.id.main_write_button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,4 +65,14 @@ public class Feed_Child_FragmentTwo extends Fragment {
     }
 
 
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout2.setRefreshing(false);
+                Toast.makeText(getActivity(), "로딩 완료", Toast.LENGTH_SHORT).show();
+            }
+        },3000);
+    }
 }
