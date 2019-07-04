@@ -7,7 +7,7 @@ __박영철, 김연준, 이정찬, 최민철__
 ------------------------------
 1. 고민중
 
-<img src="/images/Zeroth.png" width="50%"><img src="/images/AppDesign.png" width="50%">
+<img src="/images/SLR.png" width="100%">
 
 
 ### 1. 제작 목적
