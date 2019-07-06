@@ -1,15 +1,13 @@
 package com.example.slrcoding.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.slrcoding.Board;
-import com.example.slrcoding.FeedWriteActivity;
 import com.example.slrcoding.MainAdapter;
 import com.example.slrcoding.R;
 
@@ -45,15 +43,15 @@ public class Feed_Child_FragmentTwo extends Fragment {
         //피드 글 적용시키기
         //이제 파이베 연동 시 writeActivity에서 클릭 시 여기로 이동하는데 파이어베이스로 겟을 통해 각 적용시켜준다.
         mBoardList = new ArrayList<>();
-        mBoardList.add(new Board(null,"축구","축구 할사람 여러분","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"축구","와~~토트넘 ","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"축구","레알마드리드??","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"축구","히딩크 돌아와라","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"축구","박항서","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"축구","손흥민 잘한다..","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"축구","제 2의 박지성이냐","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"축구","축구는 뭐다?","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"축구","축구다!","와~~~~~~~~~~","익명","10분전"));
+        mBoardList.add(new Board(null,"축구","축구 할사람 여러분","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"축구","와~~토트넘 ","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"축구","레알마드리드??","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"축구","히딩크 돌아와라","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"축구","박항서","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"축구","손흥민 잘한다..","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"축구","제 2의 박지성이냐","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"축구","축구는 뭐다?","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"축구","축구다!","와~~~~~~~~~~","익명","2019년 6월 25일"));
         mAdapter = new MainAdapter(mBoardList);
         mMainRecyclerView.setAdapter(mAdapter);
         return rootView;
