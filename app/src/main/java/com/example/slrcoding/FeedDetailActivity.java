@@ -2,14 +2,15 @@ package com.example.slrcoding;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.drawable.ColorDrawable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,11 +45,11 @@ public class FeedDetailActivity extends AppCompatActivity {
         likelyButton = findViewById(R.id.like_button2);
 
         //툴바에 적용
-        //toolbar = (Toolbar)findViewById(R.id.toolbar3);
-        //setSupportActionBar(toolbar);
+        toolbar = (Toolbar)findViewById(R.id.toolbar3);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF9CCC65));
         //넘어온 인텐트!!
         //피드에서 넘어온 데이터(카테고리 명,제목,내용,날짜,좋아요수,댓글수 등)
         Intent intent = getIntent();
@@ -99,13 +100,23 @@ public class FeedDetailActivity extends AppCompatActivity {
             }
         });
     }
-
+    //추가된 소스, ToolBar에 menu.xml을 인플레이트함
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.feeddetailmenu, menu);
+        return true;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.menu_delete:
+                Toast.makeText(getApplicationContext(), "피드 삭제!!!", Toast.LENGTH_SHORT).show();
+
 
         }
         return super.onOptionsItemSelected(item);

@@ -3,10 +3,11 @@ package com.example.slrcoding.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.GridLayoutManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.slrcoding.FeedWriteActivity;
 import com.example.slrcoding.R;
@@ -24,13 +24,16 @@ import com.example.slrcoding.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FeedFragment extends Fragment implements View.OnClickListener {
+public class FeedFragment extends Fragment  {
     //피드 프래그먼트 여기서 스피너에 아이템 클릭시 자식 프래그먼트로 넘어감.
     Spinner spinner;
     Feed_Child_FragmentOne fragmentOne;
     Feed_Child_FragmentTwo fragmentTwo;
 
     private GridLayoutManager mGridLayoutManager;
+    private LinearLayoutManager mLinearLayoutManager;
+    private boolean Grid_Linear=true;
+    private boolean Grid_Linear2=true;
     //에니메이션
     private Animation fab_open, fab_close;
     private boolean isFabOpen = false;
@@ -60,12 +63,14 @@ public class FeedFragment extends Fragment implements View.OnClickListener {
 
         fragmentOne = new Feed_Child_FragmentOne();
         fragmentTwo = new Feed_Child_FragmentTwo();
+
         //스피너 적용
         ArrayAdapter<String> ad = new ArrayAdapter<>(getActivity(),
                 R.layout.custom_spinner,
                 getResources().getStringArray(R.array.fragments));
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(ad);
+
         //스피너 이벤트 처리 클릭시 자식으로 이동
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -90,11 +95,58 @@ public class FeedFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        fab_main.setOnClickListener(this);
+        fab_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFab();
+            }
+        });
 
-        fab_sub1.setOnClickListener(this);
+        fab_sub1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFab();
+                Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
+                //각 카테고리명 넘겨주기
+                startActivityForResult(intent,REQUEST_CODE);
+            }
+        });
 
-        fab_sub2.setOnClickListener(this);
+        fab_sub2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFab();
+                //레이아웃 뷰 전환
+                int numberOfColumns = 2; // 한줄에 5개의 컬럼을 추가합니다.
+                mGridLayoutManager = new GridLayoutManager(getContext(), numberOfColumns);
+                mLinearLayoutManager = new LinearLayoutManager(getContext());
+                //각 카테고리를 눌렀을 경우 if문으로 구분하여 Grid와 Line 스위칭
+                if(switch_value==0){
+
+                    // true이면 Grid로
+                    if(Grid_Linear) {
+                        fragmentOne.mMainRecyclerView.setLayoutManager(mGridLayoutManager);
+                        Grid_Linear=false;
+
+                        //false 이면 Line으로
+                    }else if(!Grid_Linear){
+                        fragmentOne.mMainRecyclerView.setLayoutManager(mLinearLayoutManager);
+                        Grid_Linear=true;
+                    }
+                }else if(switch_value==1)
+                {
+
+                    if(Grid_Linear2) {
+                        fragmentTwo.mMainRecyclerView.setLayoutManager(mGridLayoutManager);
+                        Grid_Linear2 = false;
+                    }else if(!Grid_Linear2){
+                        fragmentTwo.mMainRecyclerView.setLayoutManager(mLinearLayoutManager);
+                        Grid_Linear2 = true;
+                    }
+
+                }
+            }
+        });
 
         //플로팅 버튼
         /*rootView.findViewById(R.id.main_write_button).setOnClickListener(new View.OnClickListener() {
@@ -138,7 +190,7 @@ public class FeedFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    @Override
+    /*@Override
     public void onClick(View v) {
         switch (v.getId()) {
 
@@ -153,18 +205,36 @@ public class FeedFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.fab_sub2:
                 toggleFab();
+                //레이아웃 뷰 전환
                 int numberOfColumns = 2; // 한줄에 5개의 컬럼을 추가합니다.
                 mGridLayoutManager = new GridLayoutManager(getContext(), numberOfColumns);
+                mLinearLayoutManager = new LinearLayoutManager(getContext());
+                //각 카테고리를 눌렀을 경우 if문으로 구분하여 Grid와 Line 스위칭
                 if(switch_value==0){
-                    fragmentOne.mMainRecyclerView.setLayoutManager(mGridLayoutManager);
+
+                    // true이면 Grid로
+                    if(Grid_Linear) {
+                        fragmentOne.mMainRecyclerView.setLayoutManager(mGridLayoutManager);
+                        Grid_Linear=false;
+                    //false 이면 Line으로
+                    }else if(!Grid_Linear){
+                        fragmentOne.mMainRecyclerView.setLayoutManager(mLinearLayoutManager);
+                        Grid_Linear=true;
+                    }
+
                 }else if(switch_value==1)
                 {
-                    fragmentTwo.mMainRecyclerView.setLayoutManager(mGridLayoutManager);
+
+                    if(Grid_Linear) {
+                        fragmentTwo.mMainRecyclerView.setLayoutManager(mGridLayoutManager);
+                        Grid_Linear = false;
+                    }else if(!Grid_Linear){
+                        fragmentTwo.mMainRecyclerView.setLayoutManager(mLinearLayoutManager);
+                        Grid_Linear = true;
+                    }
                 }
-
-
                 break;
 
         }
-    }
+    }*/
 }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "928724233183",
+    "firebase_url": "https://slrcoding.firebaseio.com",
+    "project_id": "slrcoding",
+    "storage_bucket": "slrcoding.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928724233183:android:485f3ab8d53f326f",
+        "android_client_info": {
+          "package_name": "com.example.slrcoding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928724233183-aukih9ksrb901armglk0vrltkq1758oo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcLVwL-mX9o6kLJSyY6n32rKo09CLkKvw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928724233183-aukih9ksrb901armglk0vrltkq1758oo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

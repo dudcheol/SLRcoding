@@ -1,15 +1,13 @@
 package com.example.slrcoding.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.slrcoding.Board;
-import com.example.slrcoding.FeedWriteActivity;
 import com.example.slrcoding.MainAdapter;
 import com.example.slrcoding.R;
 
@@ -40,15 +38,15 @@ public class Feed_Child_FragmentOne extends Fragment {
         //피드 글 적용시키기
 
         mBoardList = new ArrayList<>();
-        mBoardList.add(new Board(null,"시흥시모여라","반갑습니다 여러분","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"시흥시모여라","Hello","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"시흥시모여라","OK","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"시흥시모여라","안녕하세요","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"시흥시모여라","ㅋㅋㅋ","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"시흥시모여라","Hello","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"시흥시모여라","OK","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"시흥시모여라","안녕하세요","와~~~~~~~~~~","익명","10분전"));
-        mBoardList.add(new Board(null,"시흥시모여라","ㅋㅋㅋ","와~~~~~~~~~~","익명","10분전"));
+        mBoardList.add(new Board(null,"시흥시모여라","반갑습니다 여러분","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"시흥시모여라","Hello","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"시흥시모여라","OK","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"시흥시모여라","안녕하세요","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"시흥시모여라","ㅋㅋㅋ","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"시흥시모여라","Hello","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"시흥시모여라","OK","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"시흥시모여라","안녕하세요","와~~~~~~~~~~","익명","2019년 6월 25일"));
+        mBoardList.add(new Board(null,"시흥시모여라","ㅋㅋㅋ","와~~~~~~~~~~","익명","2019년 6월 25일"));
         mAdapter = new MainAdapter(mBoardList);
         mMainRecyclerView.setAdapter(mAdapter);
         //container.findViewById(R.id.main_write_button).setOnClickListener(this);
