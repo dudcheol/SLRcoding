@@ -80,7 +80,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="Small Text"
-                            android:id="@+id/feed_write_date"
+                            android:id="@+id/regDate"
                             android:textSize="9dp"
 
                             />

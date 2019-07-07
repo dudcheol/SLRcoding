@@ -40,7 +40,7 @@ public class FeedFragment extends Fragment {
 
     Feed_Child_FragmentOne fragmentOne;
     Feed_Child_FragmentTwo fragmentTwo;
-
+    private int f;
     private GridLayoutManager mGridLayoutManager;
     private LinearLayoutManager mLinearLayoutManager;
     private boolean Grid_Linear=true;
@@ -150,7 +150,14 @@ public class FeedFragment extends Fragment {
                 toggleFab();
                 Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
                 //각 카테고리명 넘겨주기
-                startActivityForResult(intent,REQUEST_CODE);
+                if(categoryName.equals("sigeung")){
+                    intent.putExtra("code",1);
+
+                }else if(categoryName.equals("soccer")){
+                    intent.putExtra("code",2);
+
+                }
+                startActivity(intent);
             }
         });
 

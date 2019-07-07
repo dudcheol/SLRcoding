@@ -52,7 +52,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
 
             mReplydate = itemView.findViewById(R.id.feed_reply_date);
             mReplycontent = itemView.findViewById(R.id.feed_reply_content);
-            mReplyname = itemView.findViewById(R.id.feed_reply_id);
+            mReplyname = itemView.findViewById(R.id.feed_reply_name);
             mView = itemView;
 
         }

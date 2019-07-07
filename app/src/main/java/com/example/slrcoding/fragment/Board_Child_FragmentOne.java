@@ -40,13 +40,13 @@ public class Board_Child_FragmentOne extends Fragment {
         //피드 글 적용시키기
 
         mBoardList = new ArrayList<>();
-        mBoardList.add(new Board(null,"책1","화학의 이해(생능출판사)","새삥임 안 사면 후회함","mox","2019년 7월 7일"));
-        mBoardList.add(new Board(null,"책2","물리의 이해(생능출판사)","새삥임 안 사면 후회함","fdas","2019년 7월 7일"));
-        mBoardList.add(new Board(null,"책3","수학의 이해(생능출판사)","새삥임 안 사면 후회함","dfx","2019년 7월 7일"));
-        mBoardList.add(new Board(null,"책4","사랑의 이해(생능출판사)","새삥임 안 사면 후회함","fdas","2019년 7월 7일"));
-        mBoardList.add(new Board(null,"책5","시선의 이해(생능출판사)","새삥임 안 사면 후회함","ew","2019년 7월 7일"));
-        mBoardList.add(new Board(null,"책6","연준의 이해(생능출판사)","새삥임 안 사면 후회함","xvc","2019년 7월 7일"));
-        mBoardList.add(new Board(null,"책7","정찬의 이해(생능출판사)","새삥임 안 사면 후회함","vcx","2019년 7월 7일"));
+        mBoardList.add(new Board(null,"책1","화학의 이해(생능출판사)","새삥임 안 사면 후회함","mox","2019년 7월 7일",0L));
+        mBoardList.add(new Board(null,"책2","물리의 이해(생능출판사)","새삥임 안 사면 후회함","fdas","2019년 7월 7일",0L));
+        mBoardList.add(new Board(null,"책3","수학의 이해(생능출판사)","새삥임 안 사면 후회함","dfx","2019년 7월 7일",0L));
+        mBoardList.add(new Board(null,"책4","사랑의 이해(생능출판사)","새삥임 안 사면 후회함","fdas","2019년 7월 7일",0L));
+        mBoardList.add(new Board(null,"책5","시선의 이해(생능출판사)","새삥임 안 사면 후회함","ew","2019년 7월 7일",0L));
+        mBoardList.add(new Board(null,"책6","연준의 이해(생능출판사)","새삥임 안 사면 후회함","xvc","2019년 7월 7일",0L));
+        mBoardList.add(new Board(null,"책7","정찬의 이해(생능출판사)","새삥임 안 사면 후회함","vcx","2019년 7월 7일",0L));
 
         mAdapter = new MainAdapter(mBoardList);
         mMainRecyclerView.setAdapter(mAdapter);

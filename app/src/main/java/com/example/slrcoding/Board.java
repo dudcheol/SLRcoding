@@ -8,18 +8,20 @@ public class Board {
     private String title;
     private String contents;
     private String name;
-    private String date;
+    private String regDate;
+    private Long replyCnt;
     public Board(){
 
     }
 
-    public Board(String id, String category, String title, String contents, String name,String date) {
+    public Board(String id, String category, String title, String contents, String name,String regDate,Long replyCnt) {
         this.id = id;
         this.category= category;
         this.title = title;
         this.contents = contents;
         this.name = name;
-        this.date = date;
+        this.regDate =regDate;
+        this.replyCnt = replyCnt;
     }
 
     public String getId() {
@@ -58,12 +60,20 @@ public class Board {
         this.name = name;
     }
 
-    public String getDate() {
-        return date;
+    public String getRegDate() {
+        return regDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
+    public Long getReplyCnt() {
+        return replyCnt;
+    }
+
+    public void setReplyCnt(Long replyCnt) {
+        this.replyCnt = replyCnt;
     }
 
     @Override
@@ -74,7 +84,8 @@ public class Board {
                 ", title='" + title + '\'' +
                 ", contents='" + contents + '\'' +
                 ", name='" + name + '\'' +
-                ", date='" + date + '\'' +
+                ", regDate='" + regDate + '\'' +
+                ", replyCnt=" + replyCnt +
                 '}';
     }
 }
