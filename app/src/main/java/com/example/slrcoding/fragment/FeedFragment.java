@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,20 +17,30 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.slrcoding.FeedWriteActivity;
 import com.example.slrcoding.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //부모 피드 프래그먼트
 //이정찬
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FeedFragment extends Fragment  {
+public class FeedFragment extends Fragment {
     //피드 프래그먼트 여기서 스피너에 아이템 클릭시 자식 프래그먼트로 넘어감.
     Spinner spinner;
+    private FragmentManager fragmentManager;
+
     Feed_Child_FragmentOne fragmentOne;
     Feed_Child_FragmentTwo fragmentTwo;
-
+    private int f;
     private GridLayoutManager mGridLayoutManager;
     private LinearLayoutManager mLinearLayoutManager;
     private boolean Grid_Linear=true;
@@ -38,6 +49,7 @@ public class FeedFragment extends Fragment  {
     private Animation fab_open, fab_close;
     private boolean isFabOpen = false;
     //플로팅버튼
+    String categoryName;
     private FloatingActionButton fab_main, fab_sub1, fab_sub2;
     public int switch_value;
     public static final int REQUEST_CODE = 1000;
@@ -61,14 +73,20 @@ public class FeedFragment extends Fragment  {
         fab_sub1 = (FloatingActionButton) rootView.findViewById(R.id.fab_sub1);
         fab_sub2 = (FloatingActionButton) rootView.findViewById(R.id.fab_sub2);
 
-        fragmentOne = new Feed_Child_FragmentOne();
-        fragmentTwo = new Feed_Child_FragmentTwo();
+        //fragmentOne = new Feed_Child_FragmentOne();
+        //fragmentTwo = new Feed_Child_FragmentTwo();
+
         //스피너 적용
         ArrayAdapter<String> ad = new ArrayAdapter<>(getActivity(),
                 R.layout.custom_spinner,
                 getResources().getStringArray(R.array.fragments));
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(ad);
+
+        fragmentManager = getChildFragmentManager();
+        fragmentOne = new Feed_Child_FragmentOne();
+        fragmentManager.beginTransaction().replace(R.id.main_frame,fragmentOne).commit();
+
         //스피너 이벤트 처리 클릭시 자식으로 이동
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -76,13 +94,39 @@ public class FeedFragment extends Fragment  {
                 switch (position)
                 {
                     case 0:
-                        switch_value=0;
-                        setFragment(fragmentOne);
+                        categoryName = "sigeung"; //카테고리 넘겨주기 위함.
+                        Toast.makeText(getContext(), "categoryName: "+categoryName, Toast.LENGTH_SHORT).show();
 
+                        switch_value=0;
+                        if(fragmentOne == null){
+                            fragmentOne = new Feed_Child_FragmentOne();
+                            fragmentManager.beginTransaction().add(R.id.main_frame,fragmentOne).commit();
+
+                        }
+                        if(fragmentOne!=null){
+                            fragmentManager.beginTransaction().show(fragmentOne).commit();
+
+                        }
+                        if(fragmentTwo!=null){
+                            fragmentManager.beginTransaction().hide(fragmentTwo).commit();
+                        }
                         break;
                     case 1:
+                        categoryName="soccer";
+                        Toast.makeText(getContext(), "categoryName: "+categoryName, Toast.LENGTH_SHORT).show();
                         switch_value=1;
-                        setFragment(fragmentTwo);
+                        if(fragmentTwo == null){
+                            fragmentTwo = new Feed_Child_FragmentTwo();
+                            fragmentManager.beginTransaction().add(R.id.main_frame,fragmentTwo).commit();
+                        }
+                        if(fragmentOne!=null){
+                            fragmentManager.beginTransaction().hide(fragmentOne).commit();
+
+                        }
+                        if(fragmentTwo!=null){
+                            fragmentManager.beginTransaction().show(fragmentTwo).commit();
+
+                        }
                         break;
                 }
             }
@@ -106,7 +150,14 @@ public class FeedFragment extends Fragment  {
                 toggleFab();
                 Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
                 //각 카테고리명 넘겨주기
-                startActivityForResult(intent,REQUEST_CODE);
+                if(categoryName.equals("sigeung")){
+                    intent.putExtra("code",1);
+
+                }else if(categoryName.equals("soccer")){
+                    intent.putExtra("code",2);
+
+                }
+                startActivity(intent);
             }
         });
 

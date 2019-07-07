@@ -23,16 +23,16 @@
                 android:layout_marginRight="10dp"/>
 
             <TextView
-                android:id="@+id/tv_text_id"
+                android:id="@+id/feed_reply_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="회원들 ID"
+                android:text="정찬"
                 android:textColor="@color/black"
                 android:textSize="13dp"
                 android:textStyle="bold" />
             <TextView
-                android:id="@+id/tv_text_date"
+                android:id="@+id/feed_reply_date"
                 android:gravity="right"
                 android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
@@ -50,12 +50,12 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp">
             <TextView
-                android:id="@+id/tv_text_content"
+                android:id="@+id/feed_reply_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12dp"
                 android:textColor="@color/black"
-                android:text="이것은 댓글이다!!!!"/>
+                android:text="사고싶어요!! 쪽지주세요!"/>
         </LinearLayout>
 
         <LinearLayout

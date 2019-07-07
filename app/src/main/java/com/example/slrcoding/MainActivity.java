@@ -1,11 +1,14 @@
 package com.example.slrcoding;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.slrcoding.fragment.BoardFragment;
@@ -15,6 +18,7 @@ import com.example.slrcoding.fragment.MessageFragment;
 import com.example.slrcoding.fragment.MypageFragment;
 
 public class MainActivity extends AppCompatActivity {
+    int flag=0;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -63,14 +67,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("홈");
+        Intent intent = getIntent();
+
+        if(intent.getExtras()!=null){
+            flag =intent.getExtras().getInt("flag");
+        }
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.add(R.id.main_content, new MainFragment());
-        fragmentTransaction.commit();
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        if(flag==1){
+            Log.i("first","first");
+            fragmentTransaction.add(R.id.main_content, new FeedFragment());
+            fragmentTransaction.commit();
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+            navigation.getMenu().getItem(1).setChecked(true);
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        }else {
+            Log.i("first","two");
+            fragmentTransaction.add(R.id.main_content, new MainFragment());
+            fragmentTransaction.commit();
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        }
     }
 
 }

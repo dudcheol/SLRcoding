@@ -2,13 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#e4e4e4"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/board_title"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor_mid">
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,18 +23,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_weight="8"
             android:background="@color/mainBg"
             android:orientation="vertical"
             android:weightSum="10">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_weight="3">
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="2">
 
                 <ImageView
+                    android:id="@+id/feed_detail_anonyimage"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -42,21 +46,24 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:orientation="vertical">
-
                     <TextView
-                        android:id="@+id/txt_id"
+                        android:id="@+id/feed_detail_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="산기대 김연준"
+                        android:text="카테고리"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="익명"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txt_date"
+                        android:id="@+id/feed_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="40분전"
+                        android:text="2019/05/13"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="10dp" />
                 </LinearLayout>
@@ -65,24 +72,31 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="60dp"
                 android:layout_marginHorizontal="10dp"
-                android:layout_weight="7"
+                android:layout_weight="8"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txt_title"
+                    android:id="@+id/bard_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:text="ANDERSSON BELL (앤더슨벨)_ 유니섹스 유스 집 스웻셔츠 atb062"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_content"
+                <ImageView
+                    android:id="@+id/board_image"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="250dp"
+                    android:src="@drawable/board_example" />
+
+                <TextView
+                    android:id="@+id/board_context"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="ANDERSSON BELL (앤더슨벨)_ 유니섹스 유스 집 스웻셔츠 atb062(Blue)(맨투맨)_M사이즈\n실착 5회\n상태: 상\n쪽지나 댓글 남겨주세요"
                     android:textColor="@color/black"
                     android:textSize="10dp" />
@@ -93,16 +107,26 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="right|bottom">
 
-                    <ImageButton
-                        android:id="@+id/btn_like"
+                    <!--<ImageButton
+                        android:id="@+id/like_button2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="3dp"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/heart_4" />
-
+                        android:src="@drawable/heart_4" />-->
+                    <com.like.LikeButton
+                        android:id="@+id/like_button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        app:icon_size="10dp"
+                        app:anim_scale_factor="3"
+                        android:layout_marginRight="3dp"
+                        app:like_drawable="@drawable/heart_4_on"
+                        app:unlike_drawable="@drawable/heart_4"
+                        app:icon_type="heart" />
                     <TextView
-                        android:id="@+id/txt_like"
+                        android:id="@+id/like_cnt2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
@@ -111,6 +135,7 @@
                         android:textSize="8sp" />
 
                     <ImageButton
+                        android:id="@+id/reply_button2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="3dp"
@@ -118,7 +143,7 @@
                         android:src="@drawable/chat" />
 
                     <TextView
-                        android:id="@+id/txt_view"
+                        android:id="@+id/reply_cnt2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
@@ -139,7 +164,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
+            android:layout_weight="2"
             android:background="#e4e4e4"
             android:gravity="bottom"
             android:orientation="vertical"
@@ -148,13 +173,15 @@
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="8.95"
+                android:layout_weight="7"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler"
+                    android:id="@+id/feed_reply_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+
+                    />
             </LinearLayout>
 
             <View
@@ -166,7 +193,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2.95"
                 android:background="@color/mainBg"
                 android:orientation="horizontal"
                 android:weightSum="10">
@@ -178,13 +205,12 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/input_r_id"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:gravity="center_horizontal"
-                        android:text="자신의 ID"
+                        android:text="익명"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="15dp" />
 
@@ -200,7 +226,7 @@
                     android:layout_weight="7">
 
                     <EditText
-                        android:id="@+id/input_r_content"
+                        android:id="@+id/feed_reply_edit"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_gravity="center_vertical"
@@ -218,7 +244,7 @@
                     android:gravity="center">
 
                     <ImageButton
-                        android:id="@+id/btn_r_write"
+                        android:id="@+id/feed_reply_submit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"

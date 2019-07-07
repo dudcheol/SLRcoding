@@ -4,7 +4,6 @@ public class FeedReplyVO {
     //댓글VO
     //이정찬
     private String replyId; //댓글 아이디
-    private String feedId; //피드 아이디(외래키)
     private String replyContent; //댓글 내용
     private String replyName;// 댓글 작성자 어차피 익명!!
     private String replyDate;//날짜
@@ -12,9 +11,8 @@ public class FeedReplyVO {
 
     }
 
-    public FeedReplyVO(String replyId,String feedId, String replyContent, String replyName, String replyDate) {
+    public FeedReplyVO(String replyId,  String replyContent, String replyName, String replyDate) {
         this.replyId = replyId;
-        this.feedId = feedId;
         this.replyContent = replyContent;
         this.replyName = replyName;
         this.replyDate = replyDate;
@@ -28,13 +26,7 @@ public class FeedReplyVO {
         this.replyId = replyId;
     }
 
-    public String getFeedId() {
-        return feedId;
-    }
 
-    public void setFeedId(String feedId) {
-        this.feedId = feedId;
-    }
 
     public String getReplyContent() {
         return replyContent;
@@ -64,7 +56,6 @@ public class FeedReplyVO {
     public String toString() {
         return "FeedReplyVO{" +
                 "replyId='" + replyId + '\'' +
-                ", feedId='" + feedId + '\'' +
                 ", replyContent='" + replyContent + '\'' +
                 ", replyName='" + replyName + '\'' +
                 ", replyDate='" + replyDate + '\'' +
