@@ -63,12 +63,14 @@ public class FeedFragment extends Fragment  {
 
         fragmentOne = new Feed_Child_FragmentOne();
         fragmentTwo = new Feed_Child_FragmentTwo();
+
         //스피너 적용
         ArrayAdapter<String> ad = new ArrayAdapter<>(getActivity(),
                 R.layout.custom_spinner,
                 getResources().getStringArray(R.array.fragments));
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(ad);
+
         //스피너 이벤트 처리 클릭시 자식으로 이동
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
