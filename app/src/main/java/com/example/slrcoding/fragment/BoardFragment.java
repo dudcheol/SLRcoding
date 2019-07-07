@@ -3,13 +3,9 @@ package com.example.slrcoding.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-=======
-import androidx.fragment.app.Fragment;
->>>>>>> master
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

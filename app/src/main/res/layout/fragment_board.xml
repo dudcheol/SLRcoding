@@ -23,7 +23,6 @@
     <FrameLayout
         android:id="@+id/bod_main_frame"
         android:layout_width="match_parent"
-<<<<<<< HEAD
         android:layout_height="match_parent"
         android:layout_below="@id/bod_toolbar">
     </FrameLayout>
@@ -59,17 +58,3 @@
         app:borderWidth="0dp"
         app:fabSize="normal" />
 </RelativeLayout>
-=======
-        android:layout_height="match_parent">
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/swipe_refresh">
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/recycler"/>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </LinearLayout>
-</LinearLayout>
->>>>>>> master
