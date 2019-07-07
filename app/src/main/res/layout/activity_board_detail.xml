@@ -177,7 +177,11 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
+<<<<<<< HEAD:app/src/main/res/layout/activity_board_detail.xml
                     android:id="@+id/feed_reply_recycler"
+=======
+                    android:id="@+id/recycler"
+>>>>>>> master:app/src/main/res/layout/board_detail.xml
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
 

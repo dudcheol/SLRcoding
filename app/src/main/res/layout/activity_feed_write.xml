@@ -25,7 +25,11 @@
         android:layout_height="wrap_content"
         android:background="@android:drawable/edit_text"
         android:layout_below="@+id/toolbar2"
+<<<<<<< HEAD
         android:hint="제목을 입력하세요"/>z
+=======
+        android:hint="제목을 입력하세요"/>
+>>>>>>> master
 
     <EditText
         android:id="@+id/feed_memo_edit"
