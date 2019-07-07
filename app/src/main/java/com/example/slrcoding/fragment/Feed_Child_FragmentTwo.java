@@ -10,7 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.slrcoding.Board;
+import com.example.slrcoding.FeedWriteActivity;
 import com.example.slrcoding.MainAdapter;
 import com.example.slrcoding.R;
 

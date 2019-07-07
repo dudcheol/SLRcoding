@@ -19,14 +19,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.slrcoding.FeedWriteActivity;
 import com.example.slrcoding.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //부모 피드 프래그먼트
 //이정찬
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FeedFragment extends Fragment  {
+public class FeedFragment extends Fragment {
     //피드 프래그먼트 여기서 스피너에 아이템 클릭시 자식 프래그먼트로 넘어감.
     Spinner spinner;
     private FragmentManager fragmentManager;
