@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#a8b545</color>
+    <color name="colorPrimaryDark">#a8b545</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="Black">#000000</color>
+
+    <color name="mainBg">#f2f2f2</color>
+    <color name="mainColor">#ffffff</color>
+    <color name="boldText">#33a217</color>
+    <color name="black">#000000</color>
+    <color name="hashTag">#e6b781</color>
+    <color name="timeFont">#6774e2</color>
+    <color name="busline">#eaeaea</color>
+
+
+    <!-- 메인 컬러 -->
+    <color name="mainColor_mid">#a8b545</color>
+    <color name="mainColor_dark">#a8b545</color>
+    <color name="mainColor_bright">#ffffa6</color>
+</resources>
