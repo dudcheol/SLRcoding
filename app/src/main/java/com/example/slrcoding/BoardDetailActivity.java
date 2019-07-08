@@ -59,8 +59,8 @@ public class BoardDetailActivity extends AppCompatActivity {
     private LikeButton likelyButton;
 
     private RecyclerView mReplyRecyclerView;
-    private List<FeedReplyVO> feedReplyVOList;
-    private ReplyAdapter replyAdapter;
+    private List<BoardReplyVO> boardReplyVOList;
+    private BoardReplyAdapter replyAdapter;
     private ImageButton replyButton;
 
     private String category;
@@ -165,7 +165,7 @@ public class BoardDetailActivity extends AppCompatActivity {
 
         //댓글 등록시 실시간 불러오기로 받아올 곳
         mReplyRecyclerView = findViewById(R.id.feed_reply_recycler);
-        feedReplyVOList = new ArrayList<>();
+        boardReplyVOList = new ArrayList<>();
         Query query = db.collection(category).document(idfrom).collection("reply");
         ListenerRegistration registration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -193,17 +193,17 @@ public class BoardDetailActivity extends AppCompatActivity {
                     Log.i("Reply:","replyContent: "+replyContent);
                     Log.i("Reply:","replyName: "+replyName);
                     Log.i("Reply:","replyDate: "+replyDate);
-                    FeedReplyVO replyVO = new FeedReplyVO(replyId,replyContent,replyName,replyDateModify);
+                    BoardReplyVO replyVO = new BoardReplyVO(replyId,replyContent,replyName,replyDateModify);
                     //datacopy = data;
 
-                    feedReplyVOList.add(replyVO);
+                    boardReplyVOList.add(replyVO);
 
 
                 }
 
                 // Log.i("for","통과2");
-                Collections.sort(feedReplyVOList,new CompareRegDateDesc());
-                replyAdapter = new ReplyAdapter(feedReplyVOList);
+                Collections.sort(boardReplyVOList,new CompareRegDateDesc());
+                replyAdapter = new BoardReplyAdapter(boardReplyVOList);
                 replyAdapter.notifyDataSetChanged();
                 mReplyRecyclerView.setAdapter(replyAdapter);
                 mReplyRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
