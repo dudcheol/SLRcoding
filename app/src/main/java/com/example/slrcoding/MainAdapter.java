@@ -45,7 +45,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.mCategoryTextView.setText(data.getCategory());
         holder.mTitleTextView.setText(data.getTitle());
         holder.mNameTextView.setText(data.getName());
-        holder.mRegDateView.setText(data.getRegDate());
+        holder.mRegDateView.setText(data.getRegModifyDate());
         holder.mReplyCntVIew.setText(String.valueOf(data.getReplyCnt()));
         holder.mContentTextView.setText(data.getContents());
         //피드 클릭
