@@ -98,7 +98,7 @@ public class Feed_Child_FragmentTwo extends Fragment implements SwipeRefreshLayo
                                 regDateModify = regDate.substring(0,17);
                             }
                             Long replyCnt = (Long)dc.getDocument().getData().get("replyCnt");
-                            data2 = new Board(id,category,title,contents,name,regDateModify,replyCnt);
+                            data2 = new Board(id,category,title,contents,name,regDate,replyCnt,regDateModify);
                             mBoardList2.add(data2);
                             Log.i("dd","ADDED");
 
@@ -124,7 +124,7 @@ public class Feed_Child_FragmentTwo extends Fragment implements SwipeRefreshLayo
                                 regDateModify1 = regDate1.substring(0,17);
                             }
                             //수정 된 게시글에 대한 정보를 담은 Board를 백업하여 이를 가지고 리스트에 set으로 수정함
-                            Board datacopy = new Board(id1,category1,title1,contents1,name1,regDateModify1,replyCnt1);
+                            Board datacopy = new Board(id1,category1,title1,contents1,name1,regDate1,replyCnt1,regDateModify1);
 
                             //리스트에서 해당 수정된 객체를 찾아서 그 리스트에서 수정
                             Board temp = new Board();

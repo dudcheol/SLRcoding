@@ -223,7 +223,9 @@ public class FeedDetailActivity extends AppCompatActivity {
 
                 if (snapshot != null && snapshot.exists()) {
                     //Log.d(TAG, "Current data: " + snapshot.getData());
-                    Long replyCnt = (Long)snapshot.getData().get("replyCnt");
+                    Log.i("idfrom","idfrom : "+idfrom);
+                    //이부분 지역변수로 해놔서 안됐었음
+                    replyCnt = (Long)snapshot.getData().get("replyCnt");
                     replyCntView.setText(String.valueOf(replyCnt));
 
                 } else {
