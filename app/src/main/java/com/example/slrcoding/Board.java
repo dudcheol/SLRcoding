@@ -15,6 +15,7 @@ public class Board {
 
     }
 
+
     public Board(String id, String category, String title, String contents, String name,String regDate,Long replyCnt,String regModifyDate) {
         this.id = id;
         this.category= category;
@@ -76,6 +77,7 @@ public class Board {
 
     public void setReplyCnt(Long replyCnt) {
         this.replyCnt = replyCnt;
+
     }
 
     public String getRegModifyDate() {
@@ -84,6 +86,7 @@ public class Board {
 
     public void setRegModifyDate(String regModifyDate) {
         this.regModifyDate = regModifyDate;
+
     }
 
     @Override
