@@ -350,10 +350,10 @@ public class BoardDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    static class CompareRegDateDesc implements Comparator<FeedReplyVO> {
+    static class CompareRegDateDesc implements Comparator<BoardReplyVO> {
 
         @Override
-        public int compare(FeedReplyVO o1, FeedReplyVO o2) {
+        public int compare(BoardReplyVO o1, BoardReplyVO o2) {
             // TODO Auto-generated method stub
             return o2.getReplyDate().compareTo(o1.getReplyDate());
         }
