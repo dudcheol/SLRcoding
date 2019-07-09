@@ -19,7 +19,6 @@ public class BoardWriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_write);
         toolbar = (Toolbar)findViewById(R.id.bod_toolbar);
-        // ActionBar에 뒤로가기 버튼
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

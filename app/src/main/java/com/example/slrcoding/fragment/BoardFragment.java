@@ -55,12 +55,14 @@ public class BoardFragment extends Fragment {
 
         bod_main = (FloatingActionButton) rootView.findViewById(R.id.bod_main);
         bod_sub1 = (FloatingActionButton) rootView.findViewById(R.id.bod_sub1);
+
         board_FragmentOne = new Board_Child_FragmentOne();
         //
         //스피너 적용
         ArrayAdapter<String> bod_spinner = new ArrayAdapter<>(getActivity(),
                 R.layout.custom_board_spinner,
                 getResources().getStringArray(R.array.bod_fragments));
+
         // android.R.layout~ 기본제공
         bod_spinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(bod_spinner);
