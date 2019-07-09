@@ -7,15 +7,17 @@ public class FeedReplyVO {
     private String replyContent; //댓글 내용
     private String replyName;// 댓글 작성자 어차피 익명!!
     private String replyDate;//날짜
+    private String replyModifyDate; //날짜 변형
     public FeedReplyVO(){
 
     }
 
-    public FeedReplyVO(String replyId,  String replyContent, String replyName, String replyDate) {
+    public FeedReplyVO(String replyId,  String replyContent, String replyName, String replyDate,String replyModifyDate) {
         this.replyId = replyId;
         this.replyContent = replyContent;
         this.replyName = replyName;
         this.replyDate = replyDate;
+        this.replyModifyDate = replyModifyDate;
     }
 
     public String getReplyId() {
@@ -25,7 +27,6 @@ public class FeedReplyVO {
     public void setReplyId(String replyId) {
         this.replyId = replyId;
     }
-
 
 
     public String getReplyContent() {
@@ -52,6 +53,14 @@ public class FeedReplyVO {
         this.replyDate = replyDate;
     }
 
+    public String getReplyModifyDate() {
+        return replyModifyDate;
+    }
+
+    public void setReplyModifyDate(String replyModifyDate) {
+        this.replyModifyDate = replyModifyDate;
+    }
+
     @Override
     public String toString() {
         return "FeedReplyVO{" +
@@ -59,6 +68,7 @@ public class FeedReplyVO {
                 ", replyContent='" + replyContent + '\'' +
                 ", replyName='" + replyName + '\'' +
                 ", replyDate='" + replyDate + '\'' +
+                ", replyModifyDate='" + replyModifyDate + '\'' +
                 '}';
     }
 }

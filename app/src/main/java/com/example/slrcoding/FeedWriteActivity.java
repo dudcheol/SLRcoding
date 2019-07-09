@@ -35,7 +35,7 @@ public class FeedWriteActivity extends AppCompatActivity {
     private String id;
     private  String time1;
     private Long replyCnt;
-
+    private Long likeCnt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +79,7 @@ public class FeedWriteActivity extends AppCompatActivity {
                 Date time = new Date();
                 time1 = format1.format(time);
                 replyCnt=0L;
+                likeCnt=0L;
 
                 id = db.collection(category).document().getId();
                 Map<String,Object> post = new HashMap<>();
@@ -89,6 +90,7 @@ public class FeedWriteActivity extends AppCompatActivity {
                 post.put("category",category);
                 post.put("regDate",time1);
                 post.put("replyCnt",replyCnt);
+                post.put("likeCnt",likeCnt);
 
                 db.collection(category)
                         .document(id).set(post)

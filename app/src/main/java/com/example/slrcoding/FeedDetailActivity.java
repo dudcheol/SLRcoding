@@ -75,11 +75,13 @@ public class FeedDetailActivity extends AppCompatActivity {
     private String regDate;
     String regDateModify = null; //수정된 날짜
     private Long replyCnt;
+    private Long likeCnt;
 
     private TextView replyName;//닉네임
     private TextView replyContent;//댓글 내용
     private TextView replyRegDate; //댓글 작성 일자
-
+    private TextView likeCntView;
+    private int likeflag; //댓글 스위치 플래그 나중에 파베에
     private TextView replyCntView; //댓글 수
     private EditText replyEditTextView;
     private String replyId;
@@ -100,6 +102,8 @@ public class FeedDetailActivity extends AppCompatActivity {
         likelyButton = findViewById(R.id.like_button2);
         replyButton = findViewById(R.id.feed_reply_submit);
         replyCntView = findViewById(R.id.reply_cnt2); //게시글 댓글 수
+        likeCntView = findViewById(R.id.like_cnt2);
+
 
         replyName = findViewById(R.id.feed_reply_name);
         replyContent=findViewById(R.id.feed_reply_content);
@@ -144,6 +148,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                                 regDateModify = regDate.substring(0,17);
                             }
                             replyCnt =(Long)documentSnapshot.getData().get("replyCnt");
+                            likeCnt = (Long)documentSnapshot.getData().get("likeCnt");
                             Log.i("title","title: "+title);
                             Log.i("title","contents: "+contents);
                             Log.i("title","category2: "+category2);
@@ -155,9 +160,10 @@ public class FeedDetailActivity extends AppCompatActivity {
                         titleTextView.setText(title);
                         contentTextView.setText(contents);
                         categoryTextView.setText(category2);
-                        nameTextView.setText(name+"1");
+                        nameTextView.setText(name);
                         dateTextView.setText(regDateModify);
                         replyCntView.setText(String.valueOf(replyCnt));
+                        likeCntView.setText(String.valueOf(likeCnt));
                     }
 
                 });
@@ -193,7 +199,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                     Log.i("Reply:","replyContent: "+replyContent);
                     Log.i("Reply:","replyName: "+replyName);
                     Log.i("Reply:","replyDate: "+replyDate);
-                    FeedReplyVO replyVO = new FeedReplyVO(replyId,replyContent,replyName,replyDateModify);
+                    FeedReplyVO replyVO = new FeedReplyVO(replyId,replyContent,replyName,replyDate,replyDateModify);
                     //datacopy = data;
 
                     feedReplyVOList.add(replyVO);
@@ -234,7 +240,39 @@ public class FeedDetailActivity extends AppCompatActivity {
             }
 
         });
+
+        //좋아요 버튼 클릭 시 좋아요 수 실시간으로 보여주기
+        final DocumentReference docRef2 = db.collection(category).document(idfrom);
+        docRef2.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    //Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    //Log.d(TAG, "Current data: " + snapshot.getData());
+                    Log.i("idfrom","idfrom : "+idfrom);
+                    //이부분 지역변수로 해놔서 안됐었음
+                    likeCnt = (Long)snapshot.getData().get("likeCnt");
+                    likeCntView.setText(String.valueOf(likeCnt));
+
+                } else {
+                    //Log.d(TAG, "Current data: null");
+                }
+            }
+
+        });
         //mReplyRecyclerView.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
+
+
+        if(likeflag ==1){
+            likelyButton.setPressed(true);
+        }else if (likeflag == 0){
+            likelyButton.setPressed(false);
+        }
         setClickEvent();
         setReplySubmit();
     }
@@ -300,6 +338,22 @@ public class FeedDetailActivity extends AppCompatActivity {
                 Context context = likeButton.getContext();
 
                 Toast.makeText(context, "좋아요 버튼 클릭!!", Toast.LENGTH_SHORT).show();
+                //Firebase에 좋아요 수 1증가 update 실행
+                db.collection(category).document(idfrom)
+                        .update("likeCnt",likeCnt+1L).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(FeedDetailActivity.this, "좋아요 수 증가!!", Toast.LENGTH_SHORT).show();
+                        likeflag =1;
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(FeedDetailActivity.this, "좋아요 수 증가 실패!!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
             }
 
             @Override
@@ -307,8 +361,23 @@ public class FeedDetailActivity extends AppCompatActivity {
                 Context context = likeButton.getContext();
 
                 Toast.makeText(context, "좋아요 버튼 취소!!", Toast.LENGTH_SHORT).show();
+                //Firebase에 좋아요 수 1감소 update 실행
+                db.collection(category).document(idfrom)
+                        .update("likeCnt",likeCnt-1L).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        likeflag=0;
+                        Toast.makeText(FeedDetailActivity.this, "좋아요 수 감소!!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(FeedDetailActivity.this, "좋아요 수 감소 실패!!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
-        });
+       });
     }
     //추가된 소스, ToolBar에 menu.xml을 인플레이트함
     @Override
