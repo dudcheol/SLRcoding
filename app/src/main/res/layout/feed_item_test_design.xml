@@ -160,8 +160,18 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="3dp"/>
+                    <ImageView
+                        android:id="@+id/heart_button"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_toRightOf="@id/reply_cnt"
+                        android:background="@android:color/transparent"
+                        android:layout_alignBottom="@id/reply_button"
+                        android:src="@drawable/heart_4"
 
-                    <com.like.LikeButton
+                        />
+                    <!--<com.like.LikeButton
                         android:id="@+id/heart_button"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
@@ -173,7 +183,7 @@
                         app:like_drawable="@drawable/heart_4_on"
                         app:unlike_drawable="@drawable/heart_4"
                         android:layout_marginRight="3dp"
-                        app:icon_type="heart" />
+                        app:icon_type="heart" />-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

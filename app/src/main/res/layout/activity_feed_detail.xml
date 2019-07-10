@@ -115,8 +115,8 @@
                         app:icon_size="10dp"
                         app:anim_scale_factor="3"
                         android:layout_marginRight="3dp"
-                        app:like_drawable="@drawable/heart_4_on"
-                        app:unlike_drawable="@drawable/heart_4"
+                        app:like_drawable="@drawable/heart_on"
+                        app:unlike_drawable="@drawable/heart_off"
                         app:icon_type="heart" />
                     <TextView
                         android:id="@+id/like_cnt2"
