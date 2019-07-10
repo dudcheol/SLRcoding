@@ -42,13 +42,8 @@ public class MainFragment extends Fragment {
 
         View v = (View)inflater.inflate(R.layout.fragment_main, container, false);
 
-
-
-
-
-
-        //서버가 없으므로 임시로 추가한 데이터
-        /*mBoardList = new ArrayList<>();
+        //테스트데이터
+        mBoardList = new ArrayList<>();
 
         mBoardList.add(new Board(null,"축구","축구 할사람 여러분","내용입니다","android","10분전",0L,"10분전"));
         mBoardList.add(new Board(null,"축구","와~~토트넘 ", "내용입니다","server","10분전",0L,"10분전"));
@@ -59,6 +54,13 @@ public class MainFragment extends Fragment {
         mBoardList.add(new Board(null,"축구","제 2의 박지성이냐","내용입니다","java","10분전",0L,"10분전"));
         mBoardList.add(new Board(null,"축구","축구는 뭐다?","내용입니다","php","10분전",0L,"10분전"));
         mBoardList.add(new Board(null,"축구","축구다!","내용입니다","python","10분전",0L,"10분전"));
+
+
+
+
+
+        //서버가 없으므로 임시로 추가한 데이터
+        /*
 
 
         // 리사이클러뷰 생성
