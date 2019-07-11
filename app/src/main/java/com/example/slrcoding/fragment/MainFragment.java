@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.slrcoding.Adapter.mainListAdapter;
 import com.example.slrcoding.Board;
 import com.example.slrcoding.famousAdapter;
 import com.example.slrcoding.latestAdapter;
 import com.example.slrcoding.R;
+import com.example.slrcoding.util.MainListViewType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +25,21 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
     private static List<Board> mBoardList;
-    private RecyclerView mRecyclerView_latest;
+
+    private RecyclerView mRecyclerView;
+
+    //리스트뷰 아이템별 뷰타입을 정해주는 리스트
+    private List<MainListViewType> mainListViewTypeList;
+
+    private List<Board> board_A;
+
+    /*private RecyclerView mRecyclerView_latest;
     private RecyclerView mRecyclerView_famous;
     private RecyclerView.Adapter mAdapter_latest;
     private RecyclerView.Adapter mAdapter_famous;
 
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.LayoutManager mLayoutManager2;
+    private RecyclerView.LayoutManager mLayoutManager2;*/
 
     public MainFragment() {
         // Required empty public constructor
@@ -55,8 +65,32 @@ public class MainFragment extends Fragment {
         mBoardList.add(new Board(null,"축구","축구는 뭐다?","내용입니다","php","10분전",0L,"10분전"));
         mBoardList.add(new Board(null,"축구","축구다!","내용입니다","python","10분전",0L,"10분전"));
 
+        mRecyclerView = (RecyclerView)v.findViewById(R.id.main_recyclerView_for_mainFrag);
+        mRecyclerView.setHasFixedSize(true);
 
+        // mainListViewTypeList를 먼저 만들어준다
+        // 뷰 타입 별로 다른 뷰 제공
+        // type : flag : subject
+        // A : 0 : 인기글
+        // B : 1 : test로 그냥 아무거나 넣어봄
+        mainListViewTypeList = new ArrayList<>();
+        mainListViewTypeList.add(new MainListViewType(0));
+        mainListViewTypeList.add(new MainListViewType(1));
+        mainListViewTypeList.add(new MainListViewType(0));
+        mainListViewTypeList.add(new MainListViewType(1));
+        mainListViewTypeList.add(new MainListViewType(0));
+        mainListViewTypeList.add(new MainListViewType(0));
+        mainListViewTypeList.add(new MainListViewType(1));
+        mainListViewTypeList.add(new MainListViewType(0));
+        mainListViewTypeList.add(new MainListViewType(1));
+        mainListViewTypeList.add(new MainListViewType(0));
 
+        RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,board_A,null);
+        mainListAdapter.notifyDataSetChanged();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(mainListAdapter);
 
 
         //서버가 없으므로 임시로 추가한 데이터
