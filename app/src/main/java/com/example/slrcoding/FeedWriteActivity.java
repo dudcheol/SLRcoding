@@ -49,9 +49,9 @@ public class FeedWriteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         code = intent.getExtras().getInt("code");
         if(code == 1){
-            category = "sigeung";
+            category = "기숙사와 밥";
         }else if(code == 2){
-            category = "soccer";
+            category = "스포츠와 게임";
         }
 
     }

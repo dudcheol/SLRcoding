@@ -40,7 +40,7 @@ import javax.annotation.Nullable;
 //이정찬2014154031
 public class Feed_Child_FragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String cate="soccer";
+    private String cate="스포츠와 게임";
     public RecyclerView mMainRecyclerView;
     private MainAdapter mAdapter;
     private List<Board> mBoardList2 = null;
@@ -187,6 +187,7 @@ public class Feed_Child_FragmentTwo extends Fragment implements SwipeRefreshLayo
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                mAdapter.notifyDataSetChanged();
                 mSwipeRefreshLayout2.setRefreshing(false);
                 Toast.makeText(getActivity(), "로딩 완료", Toast.LENGTH_SHORT).show();
             }

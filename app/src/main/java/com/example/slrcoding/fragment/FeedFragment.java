@@ -94,7 +94,7 @@ public class FeedFragment extends Fragment {
                 switch (position)
                 {
                     case 0:
-                        categoryName = "sigeung"; //카테고리 넘겨주기 위함.
+                        categoryName = "기숙사와 밥"; //카테고리 넘겨주기 위함.
                         Toast.makeText(getContext(), "categoryName: "+categoryName, Toast.LENGTH_SHORT).show();
 
                         switch_value=0;
@@ -112,7 +112,7 @@ public class FeedFragment extends Fragment {
                         }
                         break;
                     case 1:
-                        categoryName="soccer";
+                        categoryName="스포츠와 게임";
                         Toast.makeText(getContext(), "categoryName: "+categoryName, Toast.LENGTH_SHORT).show();
                         switch_value=1;
                         if(fragmentTwo == null){
@@ -150,10 +150,10 @@ public class FeedFragment extends Fragment {
                 toggleFab();
                 Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
                 //각 카테고리명 넘겨주기
-                if(categoryName.equals("sigeung")){
+                if(categoryName.equals("기숙사와 밥")){
                     intent.putExtra("code",1);
 
-                }else if(categoryName.equals("soccer")){
+                }else if(categoryName.equals("스포츠와 게임")){
                     intent.putExtra("code",2);
 
                 }

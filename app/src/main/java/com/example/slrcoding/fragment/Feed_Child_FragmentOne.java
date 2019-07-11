@@ -42,7 +42,7 @@ import javax.annotation.Nullable;
 //이정찬
 public class Feed_Child_FragmentOne extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private FirebaseFirestore db =FirebaseFirestore.getInstance();
-    private String cate="sigeung"; // 인텐
+    private String cate="기숙사와 밥"; // 인텐
     public RecyclerView mMainRecyclerView;
     private MainAdapter mAdapter;
     private List<Board> mBoardList1 =null;
@@ -183,9 +183,11 @@ public class Feed_Child_FragmentOne extends Fragment implements SwipeRefreshLayo
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                mAdapter.notifyDataSetChanged();
                 mSwipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(getActivity(), "로딩 완료", Toast.LENGTH_SHORT).show();
             }
-        },3000);
+        },1500);
     }
 }

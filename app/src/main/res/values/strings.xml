@@ -7,9 +7,9 @@
     <string name="signUp">SignUp</string>
 
     <string-array name="fragments">
-        <item>시흥시모여라</item>
-        <item>축구</item>
-        <item>야구</item>
+        <item>기숙사와 밥</item>
+        <item>스포츠와 게임</item>
+
     </string-array>
 
     <string-array name="bod_fragments">
