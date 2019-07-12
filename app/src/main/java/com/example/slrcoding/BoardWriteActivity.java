@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class BoardWriteActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
