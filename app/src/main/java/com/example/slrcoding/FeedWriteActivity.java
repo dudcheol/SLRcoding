@@ -71,10 +71,21 @@ public class FeedWriteActivity extends AppCompatActivity {
                 return true;
             case R.id.feed_done:
                 Toast.makeText(getApplicationContext(), "등록 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                //예외처리
+                if(mWriteTitleText.getText().toString().equals("")){
+                    Toast.makeText(this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if(mWriteContentsText.getText().toString().equals("")){
+                    Toast.makeText(this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+
                 //여기서 파이어베이서 데이터에 저장 각 입력 정보들을 넣는다..
                 //대신 카테고리 별로 if문을 이용해서 따로 저장을 한다.??
                 //현재 년도를 비교하고 올해이면 MM/dd HH:mm 까지
                 //년도를 비교해서
+
                 SimpleDateFormat format1 = new SimpleDateFormat("yyyy년 MM/dd HH:mm:ss");
                 Date time = new Date();
                 time1 = format1.format(time);

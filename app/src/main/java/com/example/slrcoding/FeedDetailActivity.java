@@ -286,7 +286,11 @@ public class FeedDetailActivity extends AppCompatActivity {
                 SimpleDateFormat format1 = new SimpleDateFormat("yyyy년 MM/dd HH:mm:ss");
                 Date time = new Date();
                 time1 = format1.format(time);
-
+                //예외처리
+                if(replyEditTextView.getText().toString().equals("")){
+                    Toast.makeText(FeedDetailActivity.this, "댓글 내용은 필수!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 replyId = db.collection(category).document(idfrom).collection("reply").document().getId();
                 Map<String,Object> post = new HashMap<>();
@@ -327,6 +331,7 @@ public class FeedDetailActivity extends AppCompatActivity {
 
                     }
                 });
+                replyEditTextView.setText(""); //댓글 쓰면 내용 비어줘기
             }
 
         });
