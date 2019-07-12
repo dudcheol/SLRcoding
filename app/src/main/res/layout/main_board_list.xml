@@ -4,17 +4,19 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/subject"
-        android:text="제목 "
+        android:text="카테고리 "
         android:textStyle="bold"/>
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/title"
+        android:layout_toRightOf="@+id/category"
         android:layout_below="@+id/subject"
-        android:text="내용" />
+        android:text="제목"
+        android:singleLine="true"
+        android:ellipsize="end"/>
 </RelativeLayout>

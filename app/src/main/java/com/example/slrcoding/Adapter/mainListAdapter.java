@@ -79,13 +79,15 @@ public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         // Todo -- 영철 : 이제 여기에서 어떻게 지지고 볶을지 고민해볼것
-        MainListViewType list = mainListViewTypeList.get(position);
 
         if(holder instanceof AHolder){
             // 받아온 객체를  가져와서 여기서 보여준다
             // position 써서
             // AHolder에서 보여줄 것 구현
             ((AHolder)holder).subject.setText("인기글");
+
+            BoardListAdapter boardListAdapter = new BoardListAdapter(board_A);
+            ((AHolder)holder).listView.setAdapter(boardListAdapter);
 
         }else if(holder instanceof  BHolder){
             // BHolder에서 보여줄 것 구현
@@ -99,11 +101,13 @@ public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class AHolder extends RecyclerView.ViewHolder{
         TextView subject,title,content;
+        ListView listView;
 
         public AHolder(@NonNull View itemView) {
             super(itemView);
             // 여기서 A홀더에 있는 것들 findviewid 해준다.
             subject = (TextView)itemView.findViewById(R.id.subject);
+            listView = (ListView)itemView.findViewById(R.id.list);
         }
     }
 

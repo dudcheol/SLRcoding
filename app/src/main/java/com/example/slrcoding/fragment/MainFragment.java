@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +17,15 @@ import com.example.slrcoding.famousAdapter;
 import com.example.slrcoding.latestAdapter;
 import com.example.slrcoding.R;
 import com.example.slrcoding.util.MainListViewType;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +33,7 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
     private static List<Board> mBoardList;
+    FirebaseFirestore firestore;
 
     private RecyclerView mRecyclerView;
 
@@ -49,6 +58,9 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = (View)inflater.inflate(R.layout.fragment_main, container, false);
+
+        // 파이어베이스 설정작업
+        firestore = FirebaseFirestore.getInstance();
 
         //테스트데이터
         mBoardList = new ArrayList<>();
@@ -82,6 +94,23 @@ public class MainFragment extends Fragment {
         mainListViewTypeList.add(new MainListViewType(0));
         mainListViewTypeList.add(new MainListViewType(1));
         mainListViewTypeList.add(new MainListViewType(0));
+
+        //Todo -- 파이어베이스에서 피드 정보 받아오기
+        firestore
+                .collection("기숙사와 밥")
+                .document()
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        DocumentSnapshot  documentSnapshot = task.getResult();
+                        if(documentSnapshot.exists()){
+                            Log.d("document suc","doc data: "+documentSnapshot.getData());
+                        }else{
+                            Log.d("document","NO DATA");
+                        }
+                    }
+                });
+
 
 
         //Todo -- mainListAdapter를 생성할때 생성자로 리사이클러뷰에 담고싶은 정보들을 한꺼번에 보내는 식으로 해야하나..??
