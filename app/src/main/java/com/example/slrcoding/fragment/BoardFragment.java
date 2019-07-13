@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.slrcoding.BoardWriteActivity;
 import com.example.slrcoding.R;
@@ -26,8 +28,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class BoardFragment extends Fragment {
     // spinner
     Spinner spinner;
-    Board_Child_FragmentOne board_FragmentOne;
+    private FragmentManager fragmentManager;
 
+    Board_Child_FragmentOne board_FragmentOne;
+    Board_Child_FragmentTwo board_FragmentTwo;
 
     //에니메이션
     private Animation bod_open, bod_close;
@@ -37,6 +41,7 @@ public class BoardFragment extends Fragment {
     private FloatingActionButton bod_main, bod_sub1;
     public int board_switch_value;
     public static final int REQUEST_CODE = 1000;
+    String board_categoryName;
 
     public BoardFragment() {
         // Required empty public constructor
@@ -90,6 +95,55 @@ public class BoardFragment extends Fragment {
             }
         });
         //
+        //스피너 이벤트 처리 클릭시 자식으로 이동
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position)
+                {
+                    case 0:
+                        board_categoryName = "books"; //카테고리 넘겨주기 위함.
+                        Toast.makeText(getContext(), "categoryName: "+board_categoryName, Toast.LENGTH_SHORT).show();
+
+                        board_switch_value=0;
+                        if(board_FragmentOne == null){
+                            board_FragmentOne = new Board_Child_FragmentOne();
+                            fragmentManager.beginTransaction().add(R.id.main_frame,board_FragmentOne).commit();
+
+                        }
+                        if(board_FragmentOne!=null){
+                            fragmentManager.beginTransaction().show(board_FragmentOne).commit();
+
+                        }
+                        if(board_FragmentTwo!=null){
+                            fragmentManager.beginTransaction().hide(board_FragmentTwo).commit();
+                        }
+                        break;
+                    case 1:
+                        board_categoryName="cloths";
+                        Toast.makeText(getContext(), "categoryName: "+board_categoryName, Toast.LENGTH_SHORT).show();
+                        board_switch_value=1;
+                        if(board_FragmentTwo == null){
+                            board_FragmentTwo = new Board_Child_FragmentTwo();
+                            fragmentManager.beginTransaction().add(R.id.main_frame,board_FragmentTwo).commit();
+                        }
+                        if(board_FragmentOne!=null){
+                            fragmentManager.beginTransaction().hide(board_FragmentOne).commit();
+
+                        }
+                        if(board_FragmentTwo!=null){
+                            fragmentManager.beginTransaction().show(board_FragmentTwo).commit();
+
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         bod_main.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,11 +1,11 @@
 package com.example.slrcoding;
 
 public class BoardReplyVO {
-    //댓글VO
-    //이정찬
+    // 댓글VO
+    // 김연준
     private String replyId; //댓글 아이디
     private String replyContent; //댓글 내용
-    private String replyName;// 댓글 작성자 어차피 익명!!
+    private String replyName;// 댓글 작성자(노 익명)
     private String replyDate;//날짜
     public BoardReplyVO(){
 
@@ -54,7 +54,7 @@ public class BoardReplyVO {
 
     @Override
     public String toString() {
-        return "FeedReplyVO{" +
+        return "BoardReplyVO{" +
                 "replyId='" + replyId + '\'' +
                 ", replyContent='" + replyContent + '\'' +
                 ", replyName='" + replyName + '\'' +

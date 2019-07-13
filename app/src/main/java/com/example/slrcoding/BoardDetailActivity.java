@@ -88,7 +88,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feed_detail);
+        setContentView(R.layout.activity_board_detail);
 
         titleTextView = findViewById(R.id.bard_title);
         contentTextView = findViewById(R.id.board_context);
@@ -99,7 +99,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         replyButton = findViewById(R.id.board_reply_submit);
         replyCntView = findViewById(R.id.board_reply_cnt); // 게시판 게시글 댓글 수
 
-        replyName = findViewById(R.id.board_reply_id);
+        replyName = findViewById(R.id.board_reply_name);
         replyContent=findViewById(R.id.board_reply_content);
         replyRegDate = findViewById(R.id.board_reply_date);
 
@@ -164,7 +164,7 @@ public class BoardDetailActivity extends AppCompatActivity {
 
 
         //댓글 등록시 실시간 불러오기로 받아올 곳
-        mReplyRecyclerView = findViewById(R.id.feed_reply_recycler);
+        mReplyRecyclerView = findViewById(R.id.board_reply_recycler);
         boardReplyVOList = new ArrayList<>();
         Query query = db.collection(category).document(idfrom).collection("reply");
         ListenerRegistration registration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -252,7 +252,7 @@ public class BoardDetailActivity extends AppCompatActivity {
                 post.put("id",replyId);
                 post.put("replyDate",time1);
                 post.put("replyContent",replyEditTextView.getText().toString());
-                post.put("replyName","익명");
+                post.put("replyName","노익명");
 
 
                 db.collection(category)
@@ -313,7 +313,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.feeddetailmenu, menu);
+        menuInflater.inflate(R.menu.boarddetailmenu, menu);
         return true;
     }
 

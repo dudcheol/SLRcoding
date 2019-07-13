@@ -104,6 +104,7 @@ public class FeedDetailActivity extends AppCompatActivity {
         replyName = findViewById(R.id.feed_reply_name);
         replyContent=findViewById(R.id.feed_reply_content);
         replyRegDate = findViewById(R.id.feed_reply_date);
+
         replyEditTextView = findViewById(R.id.feed_reply_edit);
         toolbar = (Toolbar)findViewById(R.id.toolbar3);
         setSupportActionBar(toolbar);
