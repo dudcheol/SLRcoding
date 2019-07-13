@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.slrcoding.Board2;
+import com.example.slrcoding.BoardAdapter;
 import com.example.slrcoding.MainAdapter;
 import com.example.slrcoding.R;
 import com.google.firebase.firestore.DocumentChange;
@@ -39,14 +40,14 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String cate = "book"; // 인텐
-    public RecyclerView mMainRecyclerView;
-    private MainAdapter mAdapter;
+    public RecyclerView board_mMainRecyclerView;
+    private BoardAdapter board_mAdapter;
     private List<Board2> board_mBoardList1 = null;
     private Board2 data1;
     private int i = 0;
 
     public static final int REQUEST_CODE = 1000;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private SwipeRefreshLayout board_mSwipeRefreshLayout;
 
     public Board_Child_FragmentOne() {
         // Required empty public constructor
@@ -57,9 +58,9 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_board__child__fragment_one, container, false);
-        mMainRecyclerView = rootView.findViewById(R.id.main_recycler_view);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swref);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        board_mMainRecyclerView = rootView.findViewById(R.id.board_recycler_view);
+        board_mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.board_swref);
+        board_mSwipeRefreshLayout.setOnRefreshListener(this);
         //이제 파이베 연동 시 writeActivity에서 클릭 시 여기로 이동하는데 파이어베이스로 겟을 통해 각 적용시켜준다.
         //피드 글 적용시키기
 
@@ -144,9 +145,9 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
 
                 // Log.i("for","통과2");
                 Collections.sort(board_mBoardList1, new Board_Child_FragmentOne.CompareRegDateDesc());
-                mAdapter = new MainAdapter(board_mBoardList1);
+                board_mAdapter = new BoardAdapter(board_mBoardList1);
                 //mAdapter.notifyDataSetChanged();
-                mMainRecyclerView.setAdapter(mAdapter);
+                board_mMainRecyclerView.setAdapter(board_mAdapter);
 
             }
         });
@@ -176,7 +177,7 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
+                board_mSwipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(getActivity(), "로딩 완료", Toast.LENGTH_SHORT).show();
             }
         }, 3000);

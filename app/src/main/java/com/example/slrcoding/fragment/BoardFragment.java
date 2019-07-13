@@ -28,7 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class BoardFragment extends Fragment {
     // spinner
     Spinner spinner;
-    private FragmentManager fragmentManager;
+    private FragmentManager board_FragmentManager;
 
     Board_Child_FragmentOne board_FragmentOne;
     Board_Child_FragmentTwo board_FragmentTwo;
@@ -38,7 +38,7 @@ public class BoardFragment extends Fragment {
     private boolean isBodOpen = false;
 
     //플로팅버튼
-    private FloatingActionButton bod_main, bod_sub1;
+    private FloatingActionButton bod_main, bod_sub1, bod_sub2;
     public int board_switch_value;
     public static final int REQUEST_CODE = 1000;
     String board_categoryName;
@@ -60,41 +60,21 @@ public class BoardFragment extends Fragment {
 
         bod_main = (FloatingActionButton) rootView.findViewById(R.id.bod_main);
         bod_sub1 = (FloatingActionButton) rootView.findViewById(R.id.bod_sub1);
+        bod_sub2 = (FloatingActionButton) rootView.findViewById(R.id.bod_sub2);
 
         board_FragmentOne = new Board_Child_FragmentOne();
-        //
+
         //스피너 적용
-        ArrayAdapter<String> bod_spinner = new ArrayAdapter<>(getActivity(),
+        ArrayAdapter<String> ad = new ArrayAdapter<>(getActivity(),
                 R.layout.custom_board_spinner,
                 getResources().getStringArray(R.array.bod_fragments));
+        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(ad);
 
-        // android.R.layout~ 기본제공
-        bod_spinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(bod_spinner);
+        board_FragmentManager = getChildFragmentManager();
+        board_FragmentOne = new Board_Child_FragmentOne();
+        board_FragmentManager.beginTransaction().replace(R.id.main_frame,board_FragmentOne).commit();
 
-        //스피너 이벤트 처리 클릭시 자식으로 이동
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position)
-                {
-                    case 0:
-                        board_switch_value=0;
-                        setFragment(board_FragmentOne);
-
-                        break;
-                    case 1:
-                        board_switch_value=1;
-                        setFragment(board_FragmentOne);
-                        break;
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        //
         //스피너 이벤트 처리 클릭시 자식으로 이동
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -108,15 +88,15 @@ public class BoardFragment extends Fragment {
                         board_switch_value=0;
                         if(board_FragmentOne == null){
                             board_FragmentOne = new Board_Child_FragmentOne();
-                            fragmentManager.beginTransaction().add(R.id.main_frame,board_FragmentOne).commit();
+                            board_FragmentManager.beginTransaction().add(R.id.main_frame,board_FragmentOne).commit();
 
                         }
                         if(board_FragmentOne!=null){
-                            fragmentManager.beginTransaction().show(board_FragmentOne).commit();
+                            board_FragmentManager.beginTransaction().show(board_FragmentOne).commit();
 
                         }
                         if(board_FragmentTwo!=null){
-                            fragmentManager.beginTransaction().hide(board_FragmentTwo).commit();
+                            board_FragmentManager.beginTransaction().hide(board_FragmentTwo).commit();
                         }
                         break;
                     case 1:
@@ -125,14 +105,14 @@ public class BoardFragment extends Fragment {
                         board_switch_value=1;
                         if(board_FragmentTwo == null){
                             board_FragmentTwo = new Board_Child_FragmentTwo();
-                            fragmentManager.beginTransaction().add(R.id.main_frame,board_FragmentTwo).commit();
+                            board_FragmentManager.beginTransaction().add(R.id.main_frame,board_FragmentTwo).commit();
                         }
                         if(board_FragmentOne!=null){
-                            fragmentManager.beginTransaction().hide(board_FragmentOne).commit();
+                            board_FragmentManager.beginTransaction().hide(board_FragmentOne).commit();
 
                         }
                         if(board_FragmentTwo!=null){
-                            fragmentManager.beginTransaction().show(board_FragmentTwo).commit();
+                            board_FragmentManager.beginTransaction().show(board_FragmentTwo).commit();
 
                         }
                         break;

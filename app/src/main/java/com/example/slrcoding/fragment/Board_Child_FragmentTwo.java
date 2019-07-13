@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.slrcoding.Board2;
-import com.example.slrcoding.MainAdapter;
+import com.example.slrcoding.BoardAdapter;
 import com.example.slrcoding.R;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -38,7 +38,7 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String cate="cloths";
     public RecyclerView mMainRecyclerView;
-    private MainAdapter mAdapter;
+    private BoardAdapter board_mAdapter;
     private List<Board2> board_mBoardList2 = null;
     private Board2 data2;
     public static final int REQUEST_CODE = 1000;
@@ -52,7 +52,7 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_feed__child__fragment_two, container, false);
-        mMainRecyclerView = rootView.findViewById(R.id.main_recycler_view2);
+        mMainRecyclerView = rootView.findViewById(R.id.board_recycler_view);
         mSwipeRefreshLayout2 = (SwipeRefreshLayout)rootView.findViewById(R.id.swref2);
         mSwipeRefreshLayout2.setOnRefreshListener(this);
         /*rootView.findViewById(R.id.main_write_button2).setOnClickListener(new View.OnClickListener() {
@@ -143,10 +143,10 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                 }
                 Log.i("boardList: ","boardList2: "+board_mBoardList2);
                 Collections.sort(board_mBoardList2,new Board_Child_FragmentTwo.CompareRegDateDesc());
-                mAdapter = new MainAdapter(board_mBoardList2);
+                board_mAdapter = new BoardAdapter(board_mBoardList2);
 
-                //  mAdapter.notifyDataSetChanged();
-                mMainRecyclerView.setAdapter(mAdapter);
+                //  board_mAdapter.notifyDataSetChanged();
+                mMainRecyclerView.setAdapter(board_mAdapter);
 
 
             }
