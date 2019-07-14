@@ -9,12 +9,16 @@ public class Board {
     private String contents;
     private String name;
     private String regDate;
+    private String regModifyDate;
     private Long replyCnt;
+    private Long likeCnt;
     public Board(){
 
     }
 
-    public Board(String id, String category, String title, String contents, String name,String regDate,Long replyCnt) {
+
+    public Board(String id, String category, String title, String contents, String name,String regDate,Long replyCnt,String regModifyDate,Long likeCnt) {
+
         this.id = id;
         this.category= category;
         this.title = title;
@@ -22,6 +26,8 @@ public class Board {
         this.name = name;
         this.regDate =regDate;
         this.replyCnt = replyCnt;
+        this.regModifyDate = regModifyDate;
+        this.likeCnt = likeCnt;
     }
 
     public String getId() {
@@ -74,6 +80,24 @@ public class Board {
 
     public void setReplyCnt(Long replyCnt) {
         this.replyCnt = replyCnt;
+
+    }
+
+    public String getRegModifyDate() {
+        return regModifyDate;
+    }
+
+    public void setRegModifyDate(String regModifyDate) {
+        this.regModifyDate = regModifyDate;
+
+    }
+
+    public Long getLikeCnt() {
+        return likeCnt;
+    }
+
+    public void setLikeCnt(Long likeCnt) {
+        this.likeCnt = likeCnt;
     }
 
     @Override
@@ -85,7 +109,9 @@ public class Board {
                 ", contents='" + contents + '\'' +
                 ", name='" + name + '\'' +
                 ", regDate='" + regDate + '\'' +
+                ", regModifyDate='" + regModifyDate + '\'' +
                 ", replyCnt=" + replyCnt +
+                ", likeCnt=" + likeCnt +
                 '}';
     }
 }

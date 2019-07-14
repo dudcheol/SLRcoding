@@ -51,12 +51,12 @@
                         android:id="@+id/feed_detail_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="카테고리"/>
+                        />
                     <TextView
                         android:id="@+id/fname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="익명"
+
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -65,7 +65,7 @@
                         android:id="@+id/feed_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2019/05/13"
+
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="10dp" />
                 </LinearLayout>
@@ -83,7 +83,6 @@
                     android:id="@+id/detail_item_title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ANDERSSON BELL (앤더슨벨)_ 유니섹스 유스 집 스웻셔츠 atb062"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -92,7 +91,6 @@
                     android:id="@+id/feed_context"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ANDERSSON BELL (앤더슨벨)_ 유니섹스 유스 집 스웻셔츠 atb062(Blue)(맨투맨)_M사이즈\n실착 5회\n상태: 상\n쪽지나 댓글 남겨주세요"
                     android:textColor="@color/black"
                     android:textSize="10dp" />
 
@@ -117,15 +115,15 @@
                         app:icon_size="10dp"
                         app:anim_scale_factor="3"
                         android:layout_marginRight="3dp"
-                        app:like_drawable="@drawable/heart_4_on"
-                        app:unlike_drawable="@drawable/heart_4"
+                        app:like_drawable="@drawable/heart_on"
+                        app:unlike_drawable="@drawable/heart_off"
                         app:icon_type="heart" />
                     <TextView
                         android:id="@+id/like_cnt2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        android:text="10"
+                        android:text="0"
                         android:textColor="#FF2C0E"
                         android:textSize="8sp" />
 
@@ -142,7 +140,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
-                        android:text="8"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="8sp" />
                 </LinearLayout>
@@ -228,7 +225,7 @@
                         android:layout_marginLeft="5dp"
                         android:background="@null"
                         android:hint="댓글을 입력해 주세요."
-                        android:textColor="#bababa"
+                        android:textColor="#2C2828"
                         android:textSize="10dp" />
                 </LinearLayout>
 

@@ -44,9 +44,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.mCategoryTextView.setText(data.getCategory());
         holder.mTitleTextView.setText(data.getTitle());
         holder.mNameTextView.setText(data.getName());
-        holder.mRegDateView.setText(data.getRegDate());
+        holder.mRegDateView.setText(data.getRegModifyDate());
         holder.mReplyCntVIew.setText(String.valueOf(data.getReplyCnt()));
         holder.mContentTextView.setText(data.getContents());
+        holder.mLikeCntView.setText(String.valueOf(data.getLikeCnt()));
         //피드 클릭
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +81,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         private TextView mContentTextView;
         private TextView mRegDateView;
         private TextView mReplyCntVIew;
+        private TextView mLikeCntView;
         private LikeButton likeButton;
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +91,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             mRegDateView = itemView.findViewById(R.id.regDate);
             mReplyCntVIew = itemView.findViewById(R.id.reply_cnt);
             mContentTextView = itemView.findViewById(R.id.item_content);
+            mLikeCntView = itemView.findViewById(R.id.like_cnt);
             mView = itemView;
 
 
