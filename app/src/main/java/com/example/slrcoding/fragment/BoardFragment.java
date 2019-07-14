@@ -137,7 +137,7 @@ public class BoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 toggleFab();
-                Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
+                Intent intent = new Intent(getActivity(), BoardWriteActivity.class);
                 //각 카테고리명 넘겨주기
                 if(board_categoryName.equals("책")){
                     intent.putExtra("code",1);

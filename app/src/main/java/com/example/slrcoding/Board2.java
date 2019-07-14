@@ -10,6 +10,9 @@ public class Board2 {
     private String name;
     private String regDate;
     private Long replyCnt;
+    private String regModifyDate;
+    private Long likeCnt;
+
     public Board2(){
 
     }
@@ -22,6 +25,8 @@ public class Board2 {
         this.name = name;
         this.regDate =regDate;
         this.replyCnt = replyCnt;
+        this.regModifyDate = regModifyDate;
+        this.likeCnt = likeCnt;
     }
 
     public String getId() {
@@ -74,6 +79,24 @@ public class Board2 {
 
     public void setReplyCnt(Long replyCnt) {
         this.replyCnt = replyCnt;
+
+    }
+
+    public String getRegModifyDate() {
+        return regModifyDate;
+    }
+
+    public void setRegModifyDate(String regModifyDate) {
+        this.regModifyDate = regModifyDate;
+
+    }
+
+    public Long getLikeCnt() {
+        return likeCnt;
+    }
+
+    public void setLikeCnt(Long likeCnt) {
+        this.likeCnt = likeCnt;
     }
 
     @Override
@@ -85,7 +108,9 @@ public class Board2 {
                 ", contents='" + contents + '\'' +
                 ", name='" + name + '\'' +
                 ", regDate='" + regDate + '\'' +
+                ", regModifyDate='" + regModifyDate + '\'' +
                 ", replyCnt=" + replyCnt +
+                ", likeCnt=" + likeCnt +
                 '}';
     }
 }
