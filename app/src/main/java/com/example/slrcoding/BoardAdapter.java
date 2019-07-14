@@ -82,6 +82,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MainViewHold
         private TextView board_mRegDateView;
         private TextView board_mReplyCntVIew;
         private LikeButton board_mLikeCntView;
+        private LikeButton likeButton;
+
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
             board_mCategoryTextView = itemView.findViewById(R.id.board_category_name);
