@@ -12,7 +12,7 @@
         android:title="피드" />
 
     <item
-        android:id="@+id/navigation_comunity"
+        android:id="@+id/navigation_board"
         android:icon="@drawable/ic_library_books_black_24dp"
         android:title="게시판" />
 

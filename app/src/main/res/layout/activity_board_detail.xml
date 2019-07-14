@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
+        android:id="@+id/board_toolbar3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/mainColor_mid">
@@ -47,11 +47,12 @@
                     android:layout_gravity="center_vertical"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/feed_detail_category"
+                        android:id="@+id/board_detail_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="카테고리"/>
                     <TextView
+                        android:id="@+id/board_fname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="익명"
@@ -60,7 +61,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/feed_date"
+                        android:id="@+id/board_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2019/05/13"
@@ -107,15 +108,8 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="right|bottom">
 
-                    <!--<ImageButton
-                        android:id="@+id/like_button2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="3dp"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/heart_4" />-->
                     <com.like.LikeButton
-                        android:id="@+id/like_button2"
+                        android:id="@+id/board_like_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
@@ -143,7 +137,7 @@
                         android:src="@drawable/chat" />
 
                     <TextView
-                        android:id="@+id/reply_cnt2"
+                        android:id="@+id/board_reply_cnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
@@ -177,7 +171,7 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/feed_reply_recycler"
+                    android:id="@+id/board_reply_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
 
@@ -226,7 +220,7 @@
                     android:layout_weight="7">
 
                     <EditText
-                        android:id="@+id/feed_reply_edit"
+                        android:id="@+id/board_reply_edit"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_gravity="center_vertical"
@@ -244,7 +238,7 @@
                     android:gravity="center">
 
                     <ImageButton
-                        android:id="@+id/feed_reply_submit"
+                        android:id="@+id/board_reply_submit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"

@@ -23,7 +23,7 @@
                 android:layout_marginRight="10dp"/>
 
             <TextView
-                android:id="@+id/feed_reply_id"
+                android:id="@+id/board_reply_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -32,7 +32,7 @@
                 android:textSize="13dp"
                 android:textStyle="bold" />
             <TextView
-                android:id="@+id/feed_reply_date"
+                android:id="@+id/board_reply_date"
                 android:gravity="right"
                 android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp">
             <TextView
-                android:id="@+id/feed_reply_content"
+                android:id="@+id/board_reply_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12dp"

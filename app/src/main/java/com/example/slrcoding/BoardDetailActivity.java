@@ -2,15 +2,7 @@ package com.example.slrcoding;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +12,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,7 +49,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-public class FeedDetailActivity extends AppCompatActivity {
+public class BoardDetailActivity extends AppCompatActivity {
     //좋아요 댓글 수 데이터 교환 가능해야함
     private TextView titleTextView;
     private TextView contentTextView;
@@ -61,8 +59,8 @@ public class FeedDetailActivity extends AppCompatActivity {
     private LikeButton likelyButton;
 
     private RecyclerView mReplyRecyclerView;
-    private List<FeedReplyVO> feedReplyVOList;
-    private ReplyAdapter replyAdapter;
+    private List<BoardReplyVO> boardReplyVOList;
+    private BoardReplyAdapter replyAdapter;
     private ImageButton replyButton;
 
     private String category;
@@ -90,23 +88,24 @@ public class FeedDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feed_detail);
+        setContentView(R.layout.activity_board_detail);
 
-        titleTextView = findViewById(R.id.detail_item_title_text);
-        contentTextView = findViewById(R.id.feed_context);
-        categoryTextView =findViewById(R.id.feed_detail_category);
-        nameTextView = findViewById(R.id.fname);
-        dateTextView = findViewById(R.id.feed_date);
-        likelyButton = findViewById(R.id.like_button2);
-        replyButton = findViewById(R.id.feed_reply_submit);
-        replyCntView = findViewById(R.id.reply_cnt2); //게시글 댓글 수
+        titleTextView = findViewById(R.id.bard_title);
+        contentTextView = findViewById(R.id.board_context);
+        categoryTextView =findViewById(R.id.board_detail_category);
+        nameTextView = findViewById(R.id.board_fname);
+        dateTextView = findViewById(R.id.board_date);
+        likelyButton = findViewById(R.id.board_like_button);
+        replyButton = findViewById(R.id.board_reply_submit);
+        replyCntView = findViewById(R.id.board_reply_cnt); // 게시판 게시글 댓글 수
 
-        replyName = findViewById(R.id.feed_reply_name);
-        replyContent=findViewById(R.id.feed_reply_content);
-        replyRegDate = findViewById(R.id.feed_reply_date);
+        replyName = findViewById(R.id.board_reply_name);
+        replyContent=findViewById(R.id.board_reply_content);
+        replyRegDate = findViewById(R.id.board_reply_date);
 
-        replyEditTextView = findViewById(R.id.feed_reply_edit);
-        toolbar = (Toolbar)findViewById(R.id.toolbar3);
+        replyEditTextView = findViewById(R.id.board_reply_edit);
+        toolbar = (Toolbar)findViewById(R.id.board_toolbar3);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -165,8 +164,8 @@ public class FeedDetailActivity extends AppCompatActivity {
 
 
         //댓글 등록시 실시간 불러오기로 받아올 곳
-        mReplyRecyclerView = findViewById(R.id.feed_reply_recycler);
-        feedReplyVOList = new ArrayList<>();
+        mReplyRecyclerView = findViewById(R.id.board_reply_recycler);
+        boardReplyVOList = new ArrayList<>();
         Query query = db.collection(category).document(idfrom).collection("reply");
         ListenerRegistration registration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -194,17 +193,17 @@ public class FeedDetailActivity extends AppCompatActivity {
                     Log.i("Reply:","replyContent: "+replyContent);
                     Log.i("Reply:","replyName: "+replyName);
                     Log.i("Reply:","replyDate: "+replyDate);
-                    FeedReplyVO replyVO = new FeedReplyVO(replyId,replyContent,replyName,replyDateModify);
+                    BoardReplyVO replyVO = new BoardReplyVO(replyId,replyContent,replyName,replyDateModify);
                     //datacopy = data;
 
-                    feedReplyVOList.add(replyVO);
+                    boardReplyVOList.add(replyVO);
 
 
                 }
 
                 // Log.i("for","통과2");
-                Collections.sort(feedReplyVOList,new CompareRegDateDesc());
-                replyAdapter = new ReplyAdapter(feedReplyVOList);
+                Collections.sort(boardReplyVOList,new CompareRegDateDesc());
+                replyAdapter = new BoardReplyAdapter(boardReplyVOList);
                 replyAdapter.notifyDataSetChanged();
                 mReplyRecyclerView.setAdapter(replyAdapter);
                 mReplyRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -253,7 +252,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                 post.put("id",replyId);
                 post.put("replyDate",time1);
                 post.put("replyContent",replyEditTextView.getText().toString());
-                post.put("replyName","익명");
+                post.put("replyName","노익명");
 
 
                 db.collection(category)
@@ -261,7 +260,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(FeedDetailActivity.this, "업로드 성공!!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BoardDetailActivity.this, "업로드 성공!!", Toast.LENGTH_SHORT).show();
                                 // finish();
                             }
 
@@ -270,7 +269,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // Log.w(TAG, "Error adding document", e);
-                                Toast.makeText(FeedDetailActivity.this, "업로드 실패!!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BoardDetailActivity.this, "업로드 실패!!", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -278,12 +277,12 @@ public class FeedDetailActivity extends AppCompatActivity {
                         .update("replyCnt",replyCnt+1L).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(FeedDetailActivity.this, "댓글 수 증가!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BoardDetailActivity.this, "댓글 수 증가!!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(FeedDetailActivity.this, "댓글 수 증가 실패!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BoardDetailActivity.this, "댓글 수 증가 실패!!", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -314,7 +313,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.feeddetailmenu, menu);
+        menuInflater.inflate(R.menu.boarddetailmenu, menu);
         return true;
     }
 
@@ -351,12 +350,11 @@ public class FeedDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    static class CompareRegDateDesc implements Comparator<FeedReplyVO> {
-
+    static class CompareRegDateDesc implements Comparator<BoardReplyVO> {
         @Override
-        public int compare(FeedReplyVO o1, FeedReplyVO o2) {
+        public int compare(BoardReplyVO b1, BoardReplyVO b2) {
             // TODO Auto-generated method stub
-            return o2.getReplyDate().compareTo(o1.getReplyDate());
+            return b1.getReplyDate().compareTo(b2.getReplyDate());
         }
     }
 }
