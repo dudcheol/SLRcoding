@@ -73,7 +73,7 @@ public class BoardFragment extends Fragment {
 
         board_FragmentManager = getChildFragmentManager();
         board_FragmentOne = new Board_Child_FragmentOne();
-        board_FragmentManager.beginTransaction().replace(R.id.main_frame,board_FragmentOne).commit();
+        board_FragmentManager.beginTransaction().replace(R.id.bod_main_frame,board_FragmentOne).commit();
 
         //스피너 이벤트 처리 클릭시 자식으로 이동
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
