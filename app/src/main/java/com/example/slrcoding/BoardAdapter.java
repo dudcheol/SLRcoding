@@ -46,6 +46,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MainViewHold
         holder.board_mRegDateView.setText(data.getRegDate());
         holder.board_mReplyCntVIew.setText(String.valueOf(data.getReplyCnt()));
         holder.board_mContentTextView.setText(data.getContents());
+        holder.board_mLikeCntView.setText(String.valueOf(data.getLikeCnt()));
+
         //피드 클릭
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +81,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MainViewHold
         private TextView board_mContentTextView;
         private TextView board_mRegDateView;
         private TextView board_mReplyCntVIew;
-        private LikeButton board_likeButton;
+        private LikeButton board_mLikeCntView;
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
             board_mCategoryTextView = itemView.findViewById(R.id.board_category_name);
@@ -88,6 +90,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MainViewHold
             board_mRegDateView = itemView.findViewById(R.id.board_regDate);
             board_mReplyCntVIew = itemView.findViewById(R.id.board_reply_cnt);
             board_mContentTextView = itemView.findViewById(R.id.board_item_content);
+            board_mLikeCntView = itemView.findViewById(R.id.board_like_cnt);
             mView = itemView;
 
 
