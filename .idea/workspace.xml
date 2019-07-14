@@ -6,7 +6,10 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7300ea7-fed3-4d14-b303-6032b4f9b10f" name="Default Changelist" comment="" />
+    <list default="true" id="a7300ea7-fed3-4d14-b303-6032b4f9b10f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/BoardFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/BoardFragment.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,77 +27,79 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/MypageFragment.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/FeedWriteActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="817">
-              <caret line="43" column="46" selection-start-line="43" selection-start-column="46" selection-end-line="43" selection-end-column="46" />
+            <state relative-caret-position="-163">
+              <caret line="49" selection-start-line="49" selection-end-line="49" />
+              <folding>
+                <element signature="e#3984#4327#0" expanded="true" />
+                <element signature="e#4326#4327#0" expanded="true" />
+                <element signature="e#4375#4754#0" expanded="true" />
+                <element signature="e#4753#4754#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/BoardDetailActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/BoardFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="209" selection-start-line="209" selection-end-line="209" />
+            <state relative-caret-position="388">
+              <caret line="103" column="46" selection-start-line="103" selection-start-column="46" selection-end-line="103" selection-end-column="46" />
               <folding>
-                <element signature="e#4606#7002#0" expanded="true" />
-                <element signature="e#7001#7002#0" expanded="true" />
-                <element signature="e#7310#9530#0" expanded="true" />
-                <element signature="e#9529#9530#0" expanded="true" />
-                <element signature="e#9685#10429#0" expanded="true" />
-                <element signature="e#10428#10429#0" expanded="true" />
-                <element signature="e#10707#13031#0" expanded="true" />
-                <element signature="e#11532#11880#0" expanded="true" />
-                <element signature="e#11879#11880#0" expanded="true" />
-                <element signature="e#11928#12309#0" expanded="true" />
-                <element signature="e#12308#12309#0" expanded="true" />
-                <element signature="e#12447#12710#0" expanded="true" />
-                <element signature="e#12709#12710#0" expanded="true" />
-                <element signature="e#12733#13004#0" expanded="true" />
-                <element signature="e#13003#13004#0" expanded="true" />
-                <element signature="e#13030#13031#0" expanded="true" />
-                <element signature="e#14295#15064#0" expanded="true" />
-                <element signature="e#15063#15064#0" expanded="true" />
-                <element signature="e#15112#15381#0" expanded="true" />
-                <element signature="e#15380#15381#0" expanded="true" />
+                <element signature="e#5114#5259#0" expanded="true" />
+                <element signature="e#5258#5259#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/BoardReplyVO.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/FeedFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-114">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            <state relative-caret-position="290">
+              <caret line="115" column="82" selection-start-line="115" selection-start-column="70" selection-end-line="115" selection-end-column="82" />
               <folding>
-                <element signature="e#630#631#0" expanded="true" />
-                <element signature="e#666#667#0" expanded="true" />
-                <element signature="e#712#713#0" expanded="true" />
-                <element signature="e#756#757#0" expanded="true" />
-                <element signature="e#797#798#0" expanded="true" />
-                <element signature="e#838#839#0" expanded="true" />
-                <element signature="e#894#895#0" expanded="true" />
-                <element signature="e#948#949#0" expanded="true" />
-                <element signature="e#984#985#0" expanded="true" />
-                <element signature="e#1022#1023#0" expanded="true" />
-                <element signature="e#1072#1073#0" expanded="true" />
-                <element signature="e#1120#1121#0" expanded="true" />
-                <element signature="e#1156#1157#0" expanded="true" />
-                <element signature="e#1194#1195#0" expanded="true" />
-                <element signature="e#1244#1245#0" expanded="true" />
-                <element signature="e#1292#1293#0" expanded="true" />
+                <element signature="e#5582#5727#0" expanded="true" />
+                <element signature="e#5726#5727#0" expanded="true" />
+                <element signature="e#6329#7748#0" expanded="true" />
+                <element signature="e#7747#7748#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/MainActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/BoardWriteActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="44" column="43" selection-start-line="44" selection-start-column="43" selection-end-line="44" selection-end-column="43" />
+            <state relative-caret-position="179">
+              <caret line="53" column="45" selection-start-line="53" selection-start-column="45" selection-end-line="53" selection-end-column="45" />
+              <folding>
+                <element signature="e#3058#3402#0" expanded="true" />
+                <element signature="e#3401#3402#0" expanded="true" />
+                <element signature="e#3450#3830#0" expanded="true" />
+                <element signature="e#3829#3830#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_feed_write.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="181">
+              <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_board_write.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="437">
+              <caret line="38" column="40" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -103,9 +108,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>setFragment</find>
-      <find>bod_switch_value</find>
-      <find>switch_value</find>
       <find>Grid_Linear</find>
       <find>isFabOpen</find>
       <find>mLinearLayoutManager</find>
@@ -133,6 +135,9 @@
       <find>frame</find>
       <find>mWriteContentsText</find>
       <find>likeCnt</find>
+      <find>categoryName</find>
+      <find>code</find>
+      <find>mWriteTitleText</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -170,15 +175,15 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/feed_item_test_design.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_feed_detail.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/FeedFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/Feed_Child_FragmentOne.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/Feed_Child_FragmentTwo.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/FeedWriteActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/FeedDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/BoardAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/BoardFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/BoardWriteActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/FeedFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/BoardFragment.java" />
       </list>
     </option>
   </component>
@@ -377,6 +382,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.13486141" />
@@ -387,12 +393,12 @@
       <window_info id="Designer" order="6" />
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
-      <window_info anchor="bottom" id="Run" order="0" visible="true" weight="0.3264642" />
+      <window_info anchor="bottom" id="Run" order="0" weight="0.3264642" />
       <window_info anchor="bottom" id="Logcat" order="1" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50067115" side_tool="true" visible="true" weight="0.32765958" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50067115" side_tool="true" weight="0.32765958" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49932885" weight="0.32765958" />
       <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49798658" weight="0.31325302" />
       <window_info anchor="bottom" id="Android Profiler" order="8" />
@@ -691,24 +697,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/FeedWriteActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1007">
-          <caret line="73" column="22" selection-start-line="73" selection-start-column="22" selection-end-line="73" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/SignUpActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="988">
           <caret line="67" column="40" selection-start-line="67" selection-start-column="40" selection-end-line="67" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/FeedFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2413">
-          <caret line="155" column="51" selection-start-line="155" selection-start-column="51" selection-end-line="155" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -829,6 +821,72 @@
             <element signature="e#15063#15064#0" expanded="true" />
             <element signature="e#15112#15381#0" expanded="true" />
             <element signature="e#15380#15381#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_feed_write.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_board_write.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="38" column="40" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/BoardWriteActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="53" column="45" selection-start-line="53" selection-start-column="45" selection-end-line="53" selection-end-column="45" />
+          <folding>
+            <element signature="e#3058#3402#0" expanded="true" />
+            <element signature="e#3401#3402#0" expanded="true" />
+            <element signature="e#3450#3830#0" expanded="true" />
+            <element signature="e#3829#3830#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/FeedFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="115" column="82" selection-start-line="115" selection-start-column="70" selection-end-line="115" selection-end-column="82" />
+          <folding>
+            <element signature="e#5582#5727#0" expanded="true" />
+            <element signature="e#5726#5727#0" expanded="true" />
+            <element signature="e#6329#7748#0" expanded="true" />
+            <element signature="e#7747#7748#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/FeedWriteActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-163">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
+          <folding>
+            <element signature="e#3984#4327#0" expanded="true" />
+            <element signature="e#4326#4327#0" expanded="true" />
+            <element signature="e#4375#4754#0" expanded="true" />
+            <element signature="e#4753#4754#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/BoardFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="103" column="46" selection-start-line="103" selection-start-column="46" selection-end-line="103" selection-end-column="46" />
+          <folding>
+            <element signature="e#5114#5259#0" expanded="true" />
+            <element signature="e#5258#5259#0" expanded="true" />
           </folding>
         </state>
       </provider>

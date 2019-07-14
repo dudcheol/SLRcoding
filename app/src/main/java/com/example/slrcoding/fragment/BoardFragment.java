@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.slrcoding.BoardWriteActivity;
+import com.example.slrcoding.FeedWriteActivity;
 import com.example.slrcoding.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -82,7 +83,7 @@ public class BoardFragment extends Fragment {
                 switch (position)
                 {
                     case 0:
-                        board_categoryName = "books"; //카테고리 넘겨주기 위함.
+                        board_categoryName = "책"; //카테고리 넘겨주기 위함.
                         Toast.makeText(getContext(), "categoryName: "+board_categoryName, Toast.LENGTH_SHORT).show();
 
                         board_switch_value=0;
@@ -100,7 +101,7 @@ public class BoardFragment extends Fragment {
                         }
                         break;
                     case 1:
-                        board_categoryName="cloths";
+                        board_categoryName="의류";
                         Toast.makeText(getContext(), "categoryName: "+board_categoryName, Toast.LENGTH_SHORT).show();
                         board_switch_value=1;
                         if(board_FragmentTwo == null){
@@ -136,9 +137,16 @@ public class BoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 toggleFab();
-                Intent intent = new Intent(getActivity(), BoardWriteActivity.class);
+                Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
                 //각 카테고리명 넘겨주기
-                startActivityForResult(intent,REQUEST_CODE);
+                if(board_categoryName.equals("책")){
+                    intent.putExtra("code",1);
+
+                }else if(board_categoryName.equals("의류")){
+                    intent.putExtra("code",2);
+
+                }
+                startActivity(intent);
             }
         });
 
