@@ -39,7 +39,7 @@ import javax.annotation.Nullable;
 public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String cate = "book"; // 인텐
+    private String cate = "책"; // 인텐
     public RecyclerView board_mMainRecyclerView;
     private BoardAdapter board_mAdapter;
     private List<Board2> board_mBoardList1 = null;
@@ -100,6 +100,7 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                             break;
                         case MODIFIED:
                             Long replyCnt1 = (Long) dc.getDocument().getData().get("replyCnt");
+                            Long likeCnt1 = (Long)dc.getDocument().getData().get("likeCnt");
                             String id1 = (String) dc.getDocument().getData().get("id");
                             String title1 = (String) dc.getDocument().getData().get("title");
                             String contents1 = (String) dc.getDocument().getData().get("contents");
@@ -120,6 +121,8 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                             }
                             //수정 된 게시글에 대한 정보를 담은 Board를 백업하여 이를 가지고 리스트에 set으로 수정함
                             Board2 data2 = new Board2(id1, category1, title1, contents1, name1, regDateModify1, replyCnt1);
+
+
                             Log.i("dd", "data1: " + data1);
                             Log.i("dd", "Modify");
                             //리스트에서 해당 수정된 객체를 찾아서 그 리스트에서 수정

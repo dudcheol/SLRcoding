@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
 public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String cate="cloths";
+    private String cate="의류";
     public RecyclerView mMainRecyclerView;
     private BoardAdapter board_mAdapter;
     private List<Board2> board_mBoardList2 = null;
