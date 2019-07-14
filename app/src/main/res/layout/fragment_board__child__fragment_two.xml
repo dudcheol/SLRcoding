@@ -6,20 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/board_swref"
-        >
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/board_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:background="#F0EBEB"
+        android:id="@+id/board_swref2"
 
-        />
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/board_recycler_view2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:background="#F0EBEB"
+
+            />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/main_write_button"

@@ -5,21 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.like.LikeButton;
-import com.like.OnLikeListener;
 
 import java.util.List;
 
 //피드 리사이클러 어댑터
 //이정찬
 //어댑터
+
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder>{
 
     private static final int RESULT_OK = 3000;

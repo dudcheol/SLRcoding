@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -15,8 +16,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.slrcoding.BoardWriteActivity;
+import com.example.slrcoding.FeedWriteActivity;
 import com.example.slrcoding.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,17 +29,20 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class BoardFragment extends Fragment {
     // spinner
     Spinner spinner;
-    Board_Child_FragmentOne board_FragmentOne;
+    private FragmentManager board_FragmentManager;
 
+    Board_Child_FragmentOne board_FragmentOne;
+    Board_Child_FragmentTwo board_FragmentTwo;
 
     //에니메이션
     private Animation bod_open, bod_close;
     private boolean isBodOpen = false;
 
     //플로팅버튼
-    private FloatingActionButton bod_main, bod_sub1;
+    private FloatingActionButton bod_main, bod_sub1, bod_sub2;
     public int board_switch_value;
     public static final int REQUEST_CODE = 1000;
+    String board_categoryName;
 
     public BoardFragment() {
         // Required empty public constructor
@@ -55,17 +61,20 @@ public class BoardFragment extends Fragment {
 
         bod_main = (FloatingActionButton) rootView.findViewById(R.id.bod_main);
         bod_sub1 = (FloatingActionButton) rootView.findViewById(R.id.bod_sub1);
+        bod_sub2 = (FloatingActionButton) rootView.findViewById(R.id.bod_sub2);
 
         board_FragmentOne = new Board_Child_FragmentOne();
-        //
+
         //스피너 적용
-        ArrayAdapter<String> bod_spinner = new ArrayAdapter<>(getActivity(),
+        ArrayAdapter<String> ad = new ArrayAdapter<>(getActivity(),
                 R.layout.custom_board_spinner,
                 getResources().getStringArray(R.array.bod_fragments));
+        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(ad);
 
-        // android.R.layout~ 기본제공
-        bod_spinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(bod_spinner);
+        board_FragmentManager = getChildFragmentManager();
+        board_FragmentOne = new Board_Child_FragmentOne();
+        board_FragmentManager.beginTransaction().replace(R.id.bod_main_frame,board_FragmentOne).commit();
 
         //스피너 이벤트 처리 클릭시 자식으로 이동
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -74,22 +83,48 @@ public class BoardFragment extends Fragment {
                 switch (position)
                 {
                     case 0:
-                        board_switch_value=0;
-                        setFragment(board_FragmentOne);
+                        board_categoryName = "책"; //카테고리 넘겨주기 위함.
+                        Toast.makeText(getContext(), "categoryName: "+board_categoryName, Toast.LENGTH_SHORT).show();
 
+                        board_switch_value=0;
+                        if(board_FragmentOne == null){
+                            board_FragmentOne = new Board_Child_FragmentOne();
+                            board_FragmentManager.beginTransaction().add(R.id.main_frame,board_FragmentOne).commit();
+
+                        }
+                        if(board_FragmentOne!=null){
+                            board_FragmentManager.beginTransaction().show(board_FragmentOne).commit();
+
+                        }
+                        if(board_FragmentTwo!=null){
+                            board_FragmentManager.beginTransaction().hide(board_FragmentTwo).commit();
+                        }
                         break;
                     case 1:
+                        board_categoryName="의류";
+                        Toast.makeText(getContext(), "categoryName: "+board_categoryName, Toast.LENGTH_SHORT).show();
                         board_switch_value=1;
-                        setFragment(board_FragmentOne);
+                        if(board_FragmentTwo == null){
+                            board_FragmentTwo = new Board_Child_FragmentTwo();
+                            board_FragmentManager.beginTransaction().add(R.id.main_frame,board_FragmentTwo).commit();
+                        }
+                        if(board_FragmentOne!=null){
+                            board_FragmentManager.beginTransaction().hide(board_FragmentOne).commit();
+
+                        }
+                        if(board_FragmentTwo!=null){
+                            board_FragmentManager.beginTransaction().show(board_FragmentTwo).commit();
+
+                        }
                         break;
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-        //
 
         bod_main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,9 +137,16 @@ public class BoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 toggleFab();
-                Intent intent = new Intent(getActivity(), BoardWriteActivity.class);
+                Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
                 //각 카테고리명 넘겨주기
-                startActivityForResult(intent,REQUEST_CODE);
+                if(board_categoryName.equals("책")){
+                    intent.putExtra("code",1);
+
+                }else if(board_categoryName.equals("의류")){
+                    intent.putExtra("code",2);
+
+                }
+                startActivity(intent);
             }
         });
 
