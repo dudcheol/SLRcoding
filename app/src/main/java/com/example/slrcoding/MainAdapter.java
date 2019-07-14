@@ -5,21 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.like.LikeButton;
-import com.like.OnLikeListener;
 
 import java.util.List;
 
 //피드 리사이클러 어댑터
 //이정찬
 //어댑터
+
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder>{
 
     private static final int RESULT_OK = 3000;
@@ -48,6 +47,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.mRegDateView.setText(data.getRegModifyDate());
         holder.mReplyCntVIew.setText(String.valueOf(data.getReplyCnt()));
         holder.mContentTextView.setText(data.getContents());
+        holder.mLikeCntView.setText(String.valueOf(data.getLikeCnt()));
         //피드 클릭
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +81,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         private TextView mContentTextView;
         private TextView mRegDateView;
         private TextView mReplyCntVIew;
+        private TextView mLikeCntView;
         private LikeButton likeButton;
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +91,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             mRegDateView = itemView.findViewById(R.id.regDate);
             mReplyCntVIew = itemView.findViewById(R.id.reply_cnt);
             mContentTextView = itemView.findViewById(R.id.item_content);
+            mLikeCntView = itemView.findViewById(R.id.like_cnt);
             mView = itemView;
 
 

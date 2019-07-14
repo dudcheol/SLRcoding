@@ -28,7 +28,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
     public void onBindViewHolder(@NonNull ReplyAdapter.ReplyViewHolder replyViewHolder,final int i) {
         final FeedReplyVO reply = feedReplyVOList.get(i);
         replyViewHolder.mReplyname.setText(reply.getReplyName());
-        replyViewHolder.mReplydate.setText(reply.getReplyDate());
+        replyViewHolder.mReplydate.setText(reply.getReplyModifyDate());
         replyViewHolder.mReplycontent.setText(reply.getReplyContent());
 
     }
