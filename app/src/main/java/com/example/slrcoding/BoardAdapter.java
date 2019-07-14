@@ -15,9 +15,9 @@ import com.like.LikeButton;
 
 import java.util.List;
 
-//피드 리사이클러 어댑터
-//이정찬
-//어댑터
+// 피드 리사이클러 어댑터
+// 김연준
+// 어댑터
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MainViewHolder>{
 
@@ -81,7 +81,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MainViewHold
         private TextView board_mContentTextView;
         private TextView board_mRegDateView;
         private TextView board_mReplyCntVIew;
-        private LikeButton board_mLikeCntView;
+        private TextView board_mLikeCntView;
         private LikeButton likeButton;
 
         public MainViewHolder(@NonNull View itemView) {
