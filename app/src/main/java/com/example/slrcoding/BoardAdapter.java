@@ -36,7 +36,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MainViewHold
 
         return new MainViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.board_item_test_design,parent,false));
     }
-       
+
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
         final Board2 data = board_mBoardList.get(position);
