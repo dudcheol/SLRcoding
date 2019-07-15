@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.main_content, new FeedFragment());
                     fragmentTransaction.commit();
                     return true;
-                case R.id.navigation_comunity:
+                case R.id.navigation_board:
                     setTitle("게시판");
                     fragmentTransaction.replace(R.id.main_content, new BoardFragment());
                     fragmentTransaction.commit();
