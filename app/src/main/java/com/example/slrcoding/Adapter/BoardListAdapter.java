@@ -1,5 +1,6 @@
 package com.example.slrcoding.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import java.util.List;
 public class BoardListAdapter extends BaseAdapter {
     List<Board> boardList;
     LayoutInflater mLayoutInflater;
+    Activity activity;
 
-    public BoardListAdapter(List<Board> data){
-        boardList = data;
+    public BoardListAdapter(Activity activity, List<Board> data){
+        this.boardList = data;
+        this.activity = activity;
     }
 
     @Override
@@ -37,13 +40,18 @@ public class BoardListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = mLayoutInflater.inflate(R.layout.main_board_list,null);
-        TextView category = (TextView)v.findViewById(R.id.category);
-        TextView title = (TextView)v.findViewById(R.id.title);
+        if (mLayoutInflater == null)
+            mLayoutInflater = (LayoutInflater) activity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (view == null)
+            view = mLayoutInflater.inflate(R.layout.main_board_list, null);
+        //View v = mLayoutInflater.inflate(R.layout.main_board_list,viewGroup);
+        TextView category = (TextView)view.findViewById(R.id.category);
+        TextView title = (TextView)view.findViewById(R.id.title);
 
         category.setText(boardList.get(i).getCategory());
         title.setText(boardList.get(i).getTitle());
 
-        return v;
+        return view;
     }
 }

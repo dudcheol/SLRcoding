@@ -21,6 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ import javax.annotation.Nullable;
  */
 public class MainFragment extends Fragment {
 
+    private String TAG = "MainFragment_TEST";
     private static List<Board> mBoardList;
     FirebaseFirestore firestore;
 
@@ -95,21 +97,23 @@ public class MainFragment extends Fragment {
         mainListViewTypeList.add(new MainListViewType(1));
         mainListViewTypeList.add(new MainListViewType(0));
 
-        //Todo -- 파이어베이스에서 피드 정보 받아오기
+        //완료 -- 파이어베이스에서 피드 정보 받아오기
         firestore
                 .collection("기숙사와 밥")
-                .document()
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        DocumentSnapshot  documentSnapshot = task.getResult();
-                        if(documentSnapshot.exists()){
-                            Log.d("document suc","doc data: "+documentSnapshot.getData());
-                        }else{
-                            Log.d("document","NO DATA");
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.v(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.v(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
+        //Todo -- 파이어베이스에서 가져온 정보 VO에 저장시킨다음에 어댑터에 넣어줘서 메인으로 만들기
 
 
 
@@ -118,7 +122,7 @@ public class MainFragment extends Fragment {
         // 여기 들어가면 리사이클러뷰 아이템의 특정 Position 위치만 바뀌었을 경우 거기만  동작?하게 할 수 있는듯
         // mainListAdapter의 생성자 안에 들어가는 모든 데이터들을 담고있는 객체 하나 만들어서 처음띄울땐 전부 다 받아오고
         // 실시간 데이터만 getter setter 이용해서 그것만 어댑터에 전달해서 바꾸는식으로 해야하나...?? 고민해봐야할듯..
-        RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,null,null);
+        RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,mBoardList,null);
         mainListAdapter.notifyDataSetChanged();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
 

@@ -1,5 +1,6 @@
 package com.example.slrcoding.Adapter;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.slrcoding.Board;
 import com.example.slrcoding.R;
+import com.example.slrcoding.fragment.MainFragment;
 import com.example.slrcoding.util.MainListViewType;
 
 import java.util.ArrayList;
@@ -48,9 +50,9 @@ public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // 지금은 테스트를 위해 main_board만 사용했지만
         // 나중에 데이터가 쌓이면 다른 형태의 뷰타입을 사용할 수 있음
         if(viewType == VIEW_TYPE_A){
-            View v = LayoutInflater.from(parent.getContext())
+            v_A = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.main_board,parent,false);
-            return new AHolder(v);
+            return new AHolder(v_A);
         }
         else{
             View v = LayoutInflater.from(parent.getContext())
@@ -86,7 +88,7 @@ public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // AHolder에서 보여줄 것 구현
             ((AHolder)holder).subject.setText("인기글");
 
-            BoardListAdapter boardListAdapter = new BoardListAdapter(board_A);
+            BoardListAdapter boardListAdapter = new BoardListAdapter((Activity) v_A.getContext(),board_A);
             ((AHolder)holder).listView.setAdapter(boardListAdapter);
 
         }else if(holder instanceof  BHolder){
