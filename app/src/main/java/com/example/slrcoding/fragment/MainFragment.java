@@ -5,31 +5,50 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.slrcoding.Adapter.mainListAdapter;
 import com.example.slrcoding.Board;
 import com.example.slrcoding.famousAdapter;
 import com.example.slrcoding.latestAdapter;
 import com.example.slrcoding.R;
+import com.example.slrcoding.util.MainListViewType;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment {
 
+    private String TAG = "MainFragment_TEST";
     private static List<Board> mBoardList;
-    private RecyclerView mRecyclerView_latest;
+    FirebaseFirestore firestore;
+
+    private RecyclerView mRecyclerView;
+
+    //리스트뷰 아이템별 뷰타입을 정해주는 리스트
+    private List<MainListViewType> mainListViewTypeList;
+
+    /*private RecyclerView mRecyclerView_latest;
     private RecyclerView mRecyclerView_famous;
     private RecyclerView.Adapter mAdapter_latest;
     private RecyclerView.Adapter mAdapter_famous;
 
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.LayoutManager mLayoutManager2;
+    private RecyclerView.LayoutManager mLayoutManager2;*/
 
     public MainFragment() {
         // Required empty public constructor
@@ -42,7 +61,10 @@ public class MainFragment extends Fragment {
 
         View v = (View)inflater.inflate(R.layout.fragment_main, container, false);
 
-        //서버가 없으므로 임시로 추가한 데이터
+        // 파이어베이스 설정작업
+        firestore = FirebaseFirestore.getInstance();
+
+        //테스트데이터
         mBoardList = new ArrayList<>();
 
         mBoardList.add(new Board(null,"축구","축구 할사람 여러분","내용입니다","android","10분전",0L,"10분전",0L));
@@ -55,6 +77,62 @@ public class MainFragment extends Fragment {
         mBoardList.add(new Board(null,"축구","축구는 뭐다?","내용입니다","php","10분전",0L,"10분전",0L));
         mBoardList.add(new Board(null,"축구","축구다!","내용입니다","python","10분전",0L,"10분전",0L));
 
+
+        mRecyclerView = (RecyclerView)v.findViewById(R.id.main_recyclerView_for_mainFrag);
+        mRecyclerView.setHasFixedSize(true);
+
+        // mainListViewTypeList를 먼저 만들어준다
+        // 뷰 타입 별로 다른 뷰 제공
+        // type : flag : subject
+        // A : 0 : 인기글
+        // B : 1 : test로 그냥 아무거나 넣어봄
+        mainListViewTypeList = new ArrayList<>();
+        mainListViewTypeList.add(new MainListViewType(0));
+        mainListViewTypeList.add(new MainListViewType(1));
+        mainListViewTypeList.add(new MainListViewType(0));
+        mainListViewTypeList.add(new MainListViewType(1));
+        mainListViewTypeList.add(new MainListViewType(0));
+        mainListViewTypeList.add(new MainListViewType(0));
+        mainListViewTypeList.add(new MainListViewType(1));
+        mainListViewTypeList.add(new MainListViewType(0));
+        mainListViewTypeList.add(new MainListViewType(1));
+        mainListViewTypeList.add(new MainListViewType(0));
+
+        //완료 -- 파이어베이스에서 피드 정보 받아오기
+        firestore
+                .collection("기숙사와 밥")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.v(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.v(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+        //Todo -- 파이어베이스에서 가져온 정보 VO에 저장시킨다음에 어댑터에 넣어줘서 메인으로 만들기
+
+
+
+        //Todo -- mainListAdapter를 생성할때 생성자로 리사이클러뷰에 담고싶은 정보들을 한꺼번에 보내는 식으로 해야하나..??
+        // 내 생각엔 notifyDataSetChanged를 좀 알아봐서 쓰면 될거같다.. 참고:https://alpoxdev.github.io/2018/07/31/Android/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C2/
+        // 여기 들어가면 리사이클러뷰 아이템의 특정 Position 위치만 바뀌었을 경우 거기만  동작?하게 할 수 있는듯
+        // mainListAdapter의 생성자 안에 들어가는 모든 데이터들을 담고있는 객체 하나 만들어서 처음띄울땐 전부 다 받아오고
+        // 실시간 데이터만 getter setter 이용해서 그것만 어댑터에 전달해서 바꾸는식으로 해야하나...?? 고민해봐야할듯..
+        RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,mBoardList,null);
+        mainListAdapter.notifyDataSetChanged();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(mainListAdapter);
+
+
+        //서버가 없으므로 임시로 추가한 데이터
+        /*
 
 
         // 리사이클러뷰 생성
@@ -78,7 +156,7 @@ public class MainFragment extends Fragment {
         // 최신글
         mLayoutManager=new LinearLayoutManager(v.getContext());
         mRecyclerView_latest.setLayoutManager(mLayoutManager);
-        mRecyclerView_latest.setAdapter(mAdapter_latest);
+        mRecyclerView_latest.setAdapter(mAdapter_latest);*/
 
 
         // Inflate the layout for this fragment
