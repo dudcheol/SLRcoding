@@ -12,7 +12,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a7300ea7-fed3-4d14-b303-6032b4f9b10f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/FeedDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/FeedDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/login.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,15 +31,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/MypageFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1596">
-              <caret line="119" selection-start-line="119" selection-end-line="119" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="551">
@@ -51,7 +42,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/BoardFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
+            <state relative-caret-position="2508">
               <caret line="154" column="30" selection-start-line="154" selection-start-column="30" selection-end-line="154" selection-end-column="30" />
             </state>
           </provider>
@@ -60,36 +51,42 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/Board_Child_FragmentOne.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2090">
+            <state relative-caret-position="2698">
               <caret line="174" column="9" selection-start-line="174" selection-start-column="9" selection-end-line="174" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/FeedDetailActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2957">
+            <state relative-caret-position="19">
               <caret line="96" column="10" selection-start-line="96" selection-start-column="10" selection-end-line="96" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7636#9856#0" expanded="true" />
-                <element signature="e#9855#9856#0" expanded="true" />
-                <element signature="e#13350#13697#0" expanded="true" />
-                <element signature="e#13696#13697#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/login.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/board_item_test_design.xml">
-          <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="3306">
               <caret line="174" column="36" selection-start-line="174" selection-start-column="36" selection-end-line="174" selection-end-column="36" />
             </state>
           </provider>
+          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -202,13 +199,14 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/Board_Child_FragmentOne.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/FeedDetailActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/login.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="951" />
+    <option name="x" value="950" />
     <option name="width" value="975" />
-    <option name="height" value="1049" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -216,6 +214,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -247,15 +246,19 @@
             <path>
               <item name="SLRcoding2" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="slrcoding" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
             </path>
             <path>
               <item name="SLRcoding2" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="slrcoding" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="fragment" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="SLRcoding2" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
               <item name="SLRcoding2" type="1abcf292:AndroidViewProjectNode" />
@@ -265,7 +268,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -406,12 +408,18 @@
       <option name="project" value="LOCAL" />
       <updated>1563121961322</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="좋아요 버튼에 대한 Idea 도출중">
+      <created>1563288549046</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1563288549046</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.152349" />
@@ -423,13 +431,13 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.3264642" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="1" sideWeight="0.49932885" visible="true" weight="0.32907802" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49932885" weight="0.3286119" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50067115" side_tool="true" weight="0.32907802" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49444443" weight="0.32673267" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49731544" weight="0.3148936" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49731544" visible="true" weight="0.3134752" />
       <window_info anchor="bottom" id="Android Profiler" order="8" />
       <window_info active="true" anchor="bottom" id="Find" order="9" visible="true" weight="0.2483731" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
@@ -438,7 +446,7 @@
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info anchor="right" id="Assistant" order="5" weight="0.33507463" />
-      <window_info anchor="right" id="Preview" order="6" weight="0.3" />
+      <window_info active="true" anchor="right" id="Preview" order="6" visible="true" weight="0.3" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -487,49 +495,41 @@
     <MESSAGE value="피드 스피너 수정" />
     <MESSAGE value="피드 예외처리" />
     <MESSAGE value="메니페스트파일 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="메니페스트파일 수정" />
+    <MESSAGE value="좋아요 버튼에 대한 Idea 도출중" />
+    <option name="LAST_COMMIT_MESSAGE" value="좋아요 버튼에 대한 Idea 도출중" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/board_item_talk_list.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="16" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/board_talk_list.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_board__child__fragment_one.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="16" column="10" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="16" selection-end-column="10" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/feed_reply_item.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
           <caret line="34" column="37" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/board_reply_item.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="25" column="49" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="49" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_board_detail.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/famousAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -662,12 +662,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_feed_detail.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2242">
           <caret line="118" column="65" selection-start-line="118" selection-start-column="65" selection-end-line="118" selection-end-column="65" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
@@ -698,36 +698,36 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_feed__child__fragment_one.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_feed__child__fragment_two.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/mypage_sub0_comment.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_feed_write.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
           <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_board_write.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
           <caret line="38" column="40" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="40" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/BoardWriteActivity.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -757,12 +757,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/feed_item_test_design.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
           <caret line="191" column="36" selection-start-line="191" selection-start-column="36" selection-end-line="191" selection-end-column="36" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/Feed_Child_FragmentOne.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -817,6 +817,20 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://D:/Androidsdk/Sdk/sources/android-28/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2660">
+          <caret line="1171" column="22" selection-start-line="1171" selection-start-column="22" selection-end-line="1171" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.jd-alexander/LikeButton/0.2.3/49f207bda426d37df5486e94fa0fda88544fd838/LikeButton-0.2.3-sources.jar!/com/like/LikeButton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="509" column="16" selection-start-line="509" selection-start-column="16" selection-end-line="509" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/MypageFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1596">
@@ -831,13 +845,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/BoardFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2508">
+          <caret line="154" column="30" selection-start-line="154" selection-start-column="30" selection-end-line="154" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/Board_Child_FragmentOne.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2698">
+          <caret line="174" column="9" selection-start-line="174" selection-start-column="9" selection-end-line="174" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/board_item_test_design.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3306">
           <caret line="174" column="36" selection-start-line="174" selection-start-column="36" selection-end-line="174" selection-end-column="36" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/MainAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -860,47 +888,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/BoardFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="154" column="30" selection-start-line="154" selection-start-column="30" selection-end-line="154" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Androidsdk/Sdk/sources/android-28/java/lang/String.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2660">
-          <caret line="1171" column="22" selection-start-line="1171" selection-start-column="22" selection-end-line="1171" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/fragment/Board_Child_FragmentOne.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2090">
-          <caret line="174" column="9" selection-start-line="174" selection-start-column="9" selection-end-line="174" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.jd-alexander/LikeButton/0.2.3/49f207bda426d37df5486e94fa0fda88544fd838/LikeButton-0.2.3-sources.jar!/com/like/LikeButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="509" column="16" selection-start-line="509" selection-start-column="16" selection-end-line="509" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/slrcoding/FeedDetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2957">
+        <state relative-caret-position="19">
           <caret line="96" column="10" selection-start-line="96" selection-start-column="10" selection-end-line="96" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7636#9856#0" expanded="true" />
-            <element signature="e#9855#9856#0" expanded="true" />
-            <element signature="e#13350#13697#0" expanded="true" />
-            <element signature="e#13696#13697#0" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/app_icon.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/login.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
   </component>
 </project>
