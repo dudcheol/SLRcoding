@@ -5,7 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".fragment.MainFragment">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   <androidx.recyclerview.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/main_recyclerView_for_mainFrag">
+
+   </androidx.recyclerview.widget.RecyclerView>
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/container"
@@ -64,6 +70,6 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
 </FrameLayout>
