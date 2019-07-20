@@ -72,10 +72,10 @@ public class MainFragment extends Fragment {
         mBoardList.add(new Board(null,"축구","레알마드리드??","내용입니다","java","10분전",0L,"10분전",0L));
         mBoardList.add(new Board(null,"축구","히딩크 돌아와라","내용입니다","php","10분전",0L,"10분전",0L));
         mBoardList.add(new Board(null,"축구","박항서","내용입니다","python","10분전",0L,"10분전",0L));
-        mBoardList.add(new Board(null,"축구","손흥민 잘한다..","내용입니다","server","10분전",0L,"10분전",0L));
+        /*mBoardList.add(new Board(null,"축구","손흥민 잘한다..","내용입니다","server","10분전",0L,"10분전",0L));
         mBoardList.add(new Board(null,"축구","제 2의 박지성이냐","내용입니다","java","10분전",0L,"10분전",0L));
         mBoardList.add(new Board(null,"축구","축구는 뭐다?","내용입니다","php","10분전",0L,"10분전",0L));
-        mBoardList.add(new Board(null,"축구","축구다!","내용입니다","python","10분전",0L,"10분전",0L));
+        mBoardList.add(new Board(null,"축구","축구다!","내용입니다","python","10분전",0L,"10분전",0L));*/
 
 
         mRecyclerView = (RecyclerView)v.findViewById(R.id.main_recyclerView_for_mainFrag);
@@ -114,7 +114,12 @@ public class MainFragment extends Fragment {
                     }
                 });
 
-        //Todo -- 파이어베이스에서 가져온 정보 VO에 저장시킨다음에 어댑터에 넣어줘서 메인으로 만들기
+        //Todo 1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
+        //Todo 2-- 파이어베이스에서 인기글 받아오는 것 구현 (일단 그냥 좋아요 가장 많은 것부터 가져온다)
+
+        //Todo 3-- 파이어베이스에서 가져온 정보 VO에 저장시킨다음에 어댑터에 넣어줘서 메인으로 만들기
+
+        //Todo 4-- 타이틀봐 활용해서 꾸며보기
 
 
 

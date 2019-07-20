@@ -353,7 +353,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     static class CompareRegDateDesc implements Comparator<BoardReplyVO> {
         @Override
         public int compare(BoardReplyVO b1, BoardReplyVO b2) {
-            // TODO Auto-generated method stub
+
             return b1.getReplyDate().compareTo(b2.getReplyDate());
         }
     }

@@ -174,7 +174,6 @@ public class Feed_Child_FragmentOne extends Fragment implements SwipeRefreshLayo
 
         @Override
         public int compare(Board o1, Board o2) {
-            // TODO Auto-generated method stub
             return o2.getRegDate().compareTo(o1.getRegDate());
         }
     }
