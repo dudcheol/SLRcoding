@@ -432,7 +432,7 @@ public class FeedDetailActivity extends AppCompatActivity {
 
         @Override
         public int compare(FeedReplyVO o1, FeedReplyVO o2) {
-            // TODO Auto-generated method stub
+
             return o2.getReplyDate().compareTo(o1.getReplyDate());
         }
     }
