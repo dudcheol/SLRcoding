@@ -21,7 +21,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,9 @@ public class MainFragment extends Fragment {
 
     //리스트뷰 아이템별 뷰타입을 정해주는 리스트
     private List<MainListViewType> mainListViewTypeList;
+
+    Board boardDTO;
+    List<Board> boards;
 
     /*private RecyclerView mRecyclerView_latest;
     private RecyclerView mRecyclerView_famous;
@@ -101,39 +106,45 @@ public class MainFragment extends Fragment {
         //완료 -- 파이어베이스에서 피드 정보 받아오기
         firestore
                 .collection("기숙사와 밥")
+                .orderBy("regDate",Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
+                        boards = new ArrayList<>();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.v(TAG, document.getId() + " => " + document.getData());
+                                boardDTO = document.toObject(Board.class);
+                                boards.add(boardDTO);
                             }
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
                         }
+
+                        //Todo -- mainListAdapter를 생성할때 생성자로 리사이클러뷰에 담고싶은 정보들을 한꺼번에 보내는 식으로 해야하나..??
+                        // 내 생각엔 notifyDataSetChanged를 좀 알아봐서 쓰면 될거같다.. 참고:https://alpoxdev.github.io/2018/07/31/Android/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C2/
+                        // 여기 들어가면 리사이클러뷰 아이템의 특정 Position 위치만 바뀌었을 경우 거기만  동작?하게 할 수 있는듯
+                        // mainListAdapter의 생성자 안에 들어가는 모든 데이터들을 담고있는 객체 하나 만들어서 처음띄울땐 전부 다 받아오고
+                        // 실시간 데이터만 getter setter 이용해서 그것만 어댑터에 전달해서 바꾸는식으로 해야하나...?? 고민해봐야할듯..
+                        RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,boards,null);
+                        mainListAdapter.notifyDataSetChanged();
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setAdapter(mainListAdapter);
+
                     }
                 });
 
         //Todo 1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
+
         //Todo 2-- 파이어베이스에서 인기글 받아오는 것 구현 (일단 그냥 좋아요 가장 많은 것부터 가져온다)
 
-        //Todo 3-- 파이어베이스에서 가져온 정보 VO에 저장시킨다음에 어댑터에 넣어줘서 메인으로 만들기
+        //Todo 3-- 파이어베이스에서 가져온 정보 VO에 저장시킨다음에 어댑터에 넣어줘서 메인으로 만들기 << 일단하긴했음
+        // DTO만 잘 정의해주면 여러번 써먹을 수 있음
 
-        //Todo 4-- 타이틀봐 활용해서 꾸며보기
+        //Todo 4-- 타이틀바 활용해서 꾸며보기
 
-
-
-        //Todo -- mainListAdapter를 생성할때 생성자로 리사이클러뷰에 담고싶은 정보들을 한꺼번에 보내는 식으로 해야하나..??
-        // 내 생각엔 notifyDataSetChanged를 좀 알아봐서 쓰면 될거같다.. 참고:https://alpoxdev.github.io/2018/07/31/Android/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C2/
-        // 여기 들어가면 리사이클러뷰 아이템의 특정 Position 위치만 바뀌었을 경우 거기만  동작?하게 할 수 있는듯
-        // mainListAdapter의 생성자 안에 들어가는 모든 데이터들을 담고있는 객체 하나 만들어서 처음띄울땐 전부 다 받아오고
-        // 실시간 데이터만 getter setter 이용해서 그것만 어댑터에 전달해서 바꾸는식으로 해야하나...?? 고민해봐야할듯..
-        RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,mBoardList,null);
-        mainListAdapter.notifyDataSetChanged();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
-
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(mainListAdapter);
 
 
         //서버가 없으므로 임시로 추가한 데이터
