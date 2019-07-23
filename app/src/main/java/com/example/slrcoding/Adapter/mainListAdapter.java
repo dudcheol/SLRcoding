@@ -86,7 +86,7 @@ public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 받아온 객체를  가져와서 여기서 보여준다
             // position 써서
             // AHolder에서 보여줄 것 구현
-            ((AHolder)holder).subject.setText("인기글");
+            ((AHolder)holder).subject.setText("최신글");
 
             BoardListAdapter boardListAdapter = new BoardListAdapter((Activity) v_A.getContext(),board_A);
             ((AHolder)holder).listView.setAdapter(boardListAdapter);
