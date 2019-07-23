@@ -93,24 +93,15 @@ public class MainFragment extends Fragment {
         // B : 1 : test로 그냥 아무거나 넣어봄
         mainListViewTypeList = new ArrayList<>();
         mainListViewTypeList.add(new MainListViewType(0));
-        mainListViewTypeList.add(new MainListViewType(1));
-        mainListViewTypeList.add(new MainListViewType(0));
-        mainListViewTypeList.add(new MainListViewType(1));
-        mainListViewTypeList.add(new MainListViewType(0));
-        mainListViewTypeList.add(new MainListViewType(0));
-        mainListViewTypeList.add(new MainListViewType(1));
-        mainListViewTypeList.add(new MainListViewType(0));
-        mainListViewTypeList.add(new MainListViewType(1));
-        mainListViewTypeList.add(new MainListViewType(0));
 
         //완료 -- 파이어베이스에서 피드 정보 받아오기
+        boards = new ArrayList<>();
         firestore
                 .collection("기숙사와 밥")
                 .orderBy("regDate",Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        boards = new ArrayList<>();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.v(TAG, document.getId() + " => " + document.getData());
@@ -135,6 +126,38 @@ public class MainFragment extends Fragment {
 
                     }
                 });
+
+        firestore
+                .collection("스포츠와 게임")
+                .orderBy("regDate",Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.v(TAG, document.getId() + " => " + document.getData());
+                                boardDTO = document.toObject(Board.class);
+                                boards.add(boardDTO);
+                            }
+                        } else {
+                            Log.v(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+
+                });
+
+
+        // Todo 0724 : ASYNCtask 로 받아오는거 해봐야할듯 // or 리스너 달아놓는 방법 생각해야할 듯 => 내채팅방에기록해둠
+        //  그리고 어댑터 구조를 손으로 그려가면서 본 다음 수정해야함
+        //  이 방법 알아본다음 메인에 기숙사와밥,스포츠와 게임 두개 최신글 리스트에 넣어본다
+        RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,boards,null);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(mainListAdapter);
+        mainListAdapter.notifyDataSetChanged();
+
+
 
         //Todo 1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
 
