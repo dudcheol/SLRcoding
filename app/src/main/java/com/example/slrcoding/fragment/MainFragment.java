@@ -44,8 +44,13 @@ public class MainFragment extends Fragment {
     //리스트뷰 아이템별 뷰타입을 정해주는 리스트
     private List<MainListViewType> mainListViewTypeList;
 
+    // 데이터 받은 거 확인하는 리스너
+    private ReceiveDataListener mReceiveDataListener;
+
+    RecyclerView.Adapter mainListAdapter;
+
     Board boardDTO;
-    List<Board> boards;
+    List<Board> boards1, boards2;
 
     /*private RecyclerView mRecyclerView_latest;
     private RecyclerView mRecyclerView_famous;
@@ -95,7 +100,7 @@ public class MainFragment extends Fragment {
         mainListViewTypeList.add(new MainListViewType(0));
 
         //완료 -- 파이어베이스에서 피드 정보 받아오기
-        boards = new ArrayList<>();
+        boards1 = new ArrayList<>();
         firestore
                 .collection("기숙사와 밥")
                 .orderBy("regDate",Query.Direction.DESCENDING)
@@ -106,7 +111,7 @@ public class MainFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.v(TAG, document.getId() + " => " + document.getData());
                                 boardDTO = document.toObject(Board.class);
-                                boards.add(boardDTO);
+                                boards1.add(boardDTO);
                             }
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
@@ -117,16 +122,17 @@ public class MainFragment extends Fragment {
                         // 여기 들어가면 리사이클러뷰 아이템의 특정 Position 위치만 바뀌었을 경우 거기만  동작?하게 할 수 있는듯
                         // mainListAdapter의 생성자 안에 들어가는 모든 데이터들을 담고있는 객체 하나 만들어서 처음띄울땐 전부 다 받아오고
                         // 실시간 데이터만 getter setter 이용해서 그것만 어댑터에 전달해서 바꾸는식으로 해야하나...?? 고민해봐야할듯..
-                        RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,boards,null);
-                        mainListAdapter.notifyDataSetChanged();
+                        //mainListAdapter = new mainListAdapter(mainListViewTypeList,boards,null);
+                        /*mainListAdapter.notifyDataSetChanged();
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
 
                         mRecyclerView.setLayoutManager(layoutManager);
-                        mRecyclerView.setAdapter(mainListAdapter);
-
+                        mRecyclerView.setAdapter(mainListAdapter);*/
+                        mReceiveDataListener.onReceivedEvent();
                     }
                 });
 
+        boards2 = new ArrayList<>();
         firestore
                 .collection("스포츠와 게임")
                 .orderBy("regDate",Query.Direction.DESCENDING)
@@ -137,25 +143,34 @@ public class MainFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.v(TAG, document.getId() + " => " + document.getData());
                                 boardDTO = document.toObject(Board.class);
-                                boards.add(boardDTO);
+                                boards2.add(boardDTO);
                             }
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
                         }
-                    }
 
+                        mReceiveDataListener.onReceivedEvent();
+                    }
                 });
 
 
-        // Todo 0724 : ASYNCtask 로 받아오는거 해봐야할듯 // or 리스너 달아놓는 방법 생각해야할 듯 => 내채팅방에기록해둠
-        //  그리고 어댑터 구조를 손으로 그려가면서 본 다음 수정해야함
-        //  이 방법 알아본다음 메인에 기숙사와밥,스포츠와 게임 두개 최신글 리스트에 넣어본다
-        RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,boards,null);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+        setOnSampleReceivedEvent(new ReceiveDataListener() {
+            @Override
+            public void onReceivedEvent() {
+                // Todo 0724 : ASYNCtask 로 받아오는거 해봐야할듯 // or 리스너 달아놓는 방법 생각해야할 듯 => 내채팅방에기록해둠
+                //  그리고 어댑터 구조를 손으로 그려가면서 본 다음 수정해야함
+                //  이 방법 알아본다음 메인에 기숙사와밥,스포츠와 게임 두개 최신글 리스트에 넣어본다
 
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(mainListAdapter);
-        mainListAdapter.notifyDataSetChanged();
+                RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,boards1,boards2);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+
+                mRecyclerView.setLayoutManager(layoutManager);
+                mRecyclerView.setAdapter(mainListAdapter);
+                mainListAdapter.notifyDataSetChanged();
+            }
+        });
+
+
 
 
 
@@ -202,4 +217,14 @@ public class MainFragment extends Fragment {
         return v;
     }
 
+    public interface ReceiveDataListener{
+
+        void onReceivedEvent();
+
+    }
+
+    public void setOnSampleReceivedEvent(ReceiveDataListener listener){
+        mReceiveDataListener = listener;
+
+    }
 }
