@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="8dp"
+    card_view:cardCornerRadius="10dp"
+    android:layout_margin="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/subject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="게시글"
+                android:textSize="20dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="더보기>"
+                android:layout_alignParentRight="true"/>
+
+            <ListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/subject"
+                android:layout_height="105dp"
+                android:listSelector="@android:color/transparent"
+                android:dividerHeight="2dp"
+                android:divider="#ffffff"
+                android:scrollbars="none"></ListView>
+
+        </RelativeLayout>
+
+    <!--<TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subject"
+        android:text="제목 "
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/title"
+        android:layout_below="@+id/subject"
+        android:text="내용" />
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:text="제목 "
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/content2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/title"
+        android:layout_below="@+id/content"
+        android:text="내용" />
+    <TextView
+        android:id="@+id/title3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title2"
+        android:text="제목 "
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/content3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/title"
+        android:layout_below="@+id/content2"
+        android:text="내용" />
+    <TextView
+        android:id="@+id/title4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title3"
+        android:text="제목 "
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/content4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/title"
+        android:layout_below="@+id/content3"
+        android:text="내용" />
+    <TextView
+        android:id="@+id/title5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title4"
+        android:text="제목 "
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/content5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/title"
+        android:layout_below="@+id/content4"
+        android:text="내용" />-->
+</androidx.cardview.widget.CardView>
