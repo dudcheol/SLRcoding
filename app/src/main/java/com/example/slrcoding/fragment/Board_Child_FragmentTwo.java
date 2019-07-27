@@ -166,7 +166,6 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
 
         @Override
         public int compare(Board2 b1, Board2 b2) {
-            // TODO Auto-generated method stub
             return b2.getRegDate().compareTo(b1.getRegDate());
         }
     }
