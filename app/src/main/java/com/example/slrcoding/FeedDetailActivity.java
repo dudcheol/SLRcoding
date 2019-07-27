@@ -274,6 +274,7 @@ public class FeedDetailActivity extends AppCompatActivity {
 
         setClickEvent();
         setReplySubmit();
+        //좋아요 누른 사용자 (LikeUsers 컬렉션의 문서(usreID)를 모두 가져와서 if문으로 비교후 좋아요를 누른 사용자라면 하트 켜고 좋아요 누른 적이 없다며 하트 끄기
         Log.i("flag","likeflag: "+likeflag);
         if(likeflag ==1){
             likelyButton.setLiked(true);
@@ -363,6 +364,8 @@ public class FeedDetailActivity extends AppCompatActivity {
 
                     }
                 });
+                //로그인 한 유저 정보를 가져와서 댓글을 좋아요 누르면 LikeUsers라는 컬렉션을 내부에서 생성해서
+                //UserId를 문서로 넣는다. (좋아요 누른 사용자들을 넣어줌 )
 
             }
 
@@ -386,6 +389,7 @@ public class FeedDetailActivity extends AppCompatActivity {
 
                     }
                 });
+                //LikeUsers 컬렉션 문서도 삭제한다.(해당 로그인 사용자 ID)
             }
        });
     }
