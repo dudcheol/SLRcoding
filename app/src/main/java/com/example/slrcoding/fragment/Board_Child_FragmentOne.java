@@ -44,7 +44,6 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
     private BoardAdapter board_mAdapter;
     private List<Board2> board_mBoardList1 = null;
     private Board2 data1;
-    private int i = 0;
 
     public static final int REQUEST_CODE = 1000;
     private SwipeRefreshLayout board_mSwipeRefreshLayout;
@@ -137,8 +136,8 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                                 }
                             }
                             Log.i("dd", "modify: " + board_mBoardList1);
-
                             break;
+
                         case REMOVED:
                             break;
 

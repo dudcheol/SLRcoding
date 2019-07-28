@@ -19,6 +19,8 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String cate="의류";
-    public RecyclerView mMainRecyclerView;
+    public RecyclerView board_mMainRecyclerView;
     private BoardAdapter board_mAdapter;
     private List<Board2> board_mBoardList2 = null;
     private Board2 data2;
@@ -52,21 +54,13 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_feed__child__fragment_two, container, false);
-        mMainRecyclerView = rootView.findViewById(R.id.board_recycler_view);
+        board_mMainRecyclerView = rootView.findViewById(R.id.board_recycler_view2);
         mSwipeRefreshLayout2 = (SwipeRefreshLayout)rootView.findViewById(R.id.swref2);
         mSwipeRefreshLayout2.setOnRefreshListener(this);
-        /*rootView.findViewById(R.id.main_write_button2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
-                startActivityForResult(intent,REQUEST_CODE);
-            }
-        });*/
-        //container.findViewById(R.id.main_write_button).setOnClickListener(this);
-        //피드 글 적용시키기
-        //이제 파이베 연동 시 writeActivity에서 클릭 시 여기로 이동하는데 파이어베이스로 겟을 통해 각 적용시켜준다.
+
         board_mBoardList2=new ArrayList<>();
-        db.collection(cate).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        Query query = db.collection(cate);
+        ListenerRegistration registration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
@@ -134,8 +128,8 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                                     board_mBoardList2.set(index,datacopy);
                                 }
                             }
-
                             break;
+
                         case REMOVED:
                             break;
                     }
@@ -146,7 +140,7 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                 board_mAdapter = new BoardAdapter(board_mBoardList2);
 
                 //  board_mAdapter.notifyDataSetChanged();
-                mMainRecyclerView.setAdapter(board_mAdapter);
+                board_mMainRecyclerView.setAdapter(board_mAdapter);
 
 
             }
