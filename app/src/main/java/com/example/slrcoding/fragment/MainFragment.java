@@ -78,54 +78,6 @@ public class MainFragment extends Fragment {
         mainListViewTypeList.add(new MainListViewType(0,"스포츠와 게임"));
 
         // 기숙사와 밥 데이터 로드
-        roadData_1(new Data_Access_Callback() {
-            @Override
-            public void onCallback(List<Board> value) {
-                Log.v("TEST",value.toString());
-                // 메인리스트뷰타입리스트의 0번째 요소는 '기숙사와 밥'이므로
-                // 기숙사와 밥에 관련된 정보를 전달함
-                mainListViewTypeList.get(0).setBoards(value);
-                mainListAdapter.notifyDataSetChanged();
-            }
-        });
-
-        // 스포츠와 게임 데이터 로드
-        roadData_2(new Data_Access_Callback() {
-            @Override
-            public void onCallback(List<Board> value) {
-                Log.v("TEST",value.toString());
-                mainListViewTypeList.get(1).setBoards(value);
-                mainListAdapter.notifyDataSetChanged();
-            }
-        });
-
-
-
-        //Todo 1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
-
-        //Todo 2-- 파이어베이스에서 인기글 받아오는 것 구현 (일단 그냥 좋아요 가장 많은 것부터 가져온다)
-
-        //Todo 3-- 파이어베이스에서 가져온 정보 VO에 저장시킨다음에 어댑터에 넣어줘서 메인으로 만들기 << 일단하긴했음
-        // DTO만 잘 정의해주면 여러번 써먹을 수 있음
-
-        //Todo 4-- 타이틀바 활용해서 꾸며보기
-
-
-        return v;
-    }
-
-    // 파이어베이스 데이터 접근을 하기 위한 콜백 인터페이스
-    public interface Data_Access_Callback {
-        void onCallback(List<Board> value);
-    }
-
-    // 모든 데이터를 다 받아왔음을 알리는 콜백 인터페이스
-    public interface Data_Road_OK_Callback {
-        void onSuccess(List<Board> value);
-    }
-
-    // 기숙사와 밥 데이터 로드
-    public void roadData_1(Data_Access_Callback data_access_callback){
         firestore
                 .collection("기숙사와 밥")
                 .orderBy("regDate",Query.Direction.DESCENDING)
@@ -139,7 +91,8 @@ public class MainFragment extends Fragment {
                                 boardDTO = document.toObject(Board.class);
                                 boards.add(boardDTO);
                             }
-                            data_access_callback.onCallback(boards);
+                            mainListViewTypeList.get(0).setBoards(boards);
+                            mainListAdapter.notifyDataSetChanged();
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
                         }
@@ -160,9 +113,8 @@ public class MainFragment extends Fragment {
                 .addOnFailureListener(task -> {
                     Toast.makeText(getContext(), "데이터를 받아오는데 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
                 });
-    }
 
-    public void roadData_2(Data_Access_Callback data_access_callback){
+        // 스포츠와 게임 데이터 로드
         firestore
                 .collection("스포츠와 게임")
                 .orderBy("regDate",Query.Direction.DESCENDING)
@@ -176,7 +128,8 @@ public class MainFragment extends Fragment {
                                 boardDTO = document.toObject(Board.class);
                                 boards.add(boardDTO);
                             }
-                            data_access_callback.onCallback(boards);
+                            mainListViewTypeList.get(1).setBoards(boards);
+                            mainListAdapter.notifyDataSetChanged();
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
                         }
@@ -185,10 +138,20 @@ public class MainFragment extends Fragment {
                 .addOnFailureListener(task -> {
                     Toast.makeText(getContext(), "데이터를 받아오는데 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
                 });
-    }
 
-    public void roadOK(Data_Road_OK_Callback data_road_ok_callback){
 
+
+        //Todo 1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
+
+        //Todo 2-- 파이어베이스에서 인기글 받아오는 것 구현 (일단 그냥 좋아요 가장 많은 것부터 가져온다)
+
+        //Todo 3-- 파이어베이스에서 가져온 정보 VO에 저장시킨다음에 어댑터에 넣어줘서 메인으로 만들기 << 일단하긴했음
+        // DTO만 잘 정의해주면 여러번 써먹을 수 있음
+
+        //Todo 4-- 타이틀바 활용해서 꾸며보기
+
+
+        return v;
     }
 
 }
