@@ -63,8 +63,6 @@ public class BoardFragment extends Fragment {
         bod_sub1 = (FloatingActionButton) rootView.findViewById(R.id.bod_sub1);
         bod_sub2 = (FloatingActionButton) rootView.findViewById(R.id.bod_sub2);
 
-        board_FragmentOne = new Board_Child_FragmentOne();
-
         //스피너 적용
         ArrayAdapter<String> ad = new ArrayAdapter<>(getActivity(),
                 R.layout.custom_board_spinner,
@@ -89,7 +87,7 @@ public class BoardFragment extends Fragment {
                         board_switch_value=0;
                         if(board_FragmentOne == null){
                             board_FragmentOne = new Board_Child_FragmentOne();
-                            board_FragmentManager.beginTransaction().add(R.id.main_frame,board_FragmentOne).commit();
+                            board_FragmentManager.beginTransaction().add(R.id.bod_main_frame,board_FragmentOne).commit();
 
                         }
                         if(board_FragmentOne!=null){
@@ -106,7 +104,7 @@ public class BoardFragment extends Fragment {
                         board_switch_value=1;
                         if(board_FragmentTwo == null){
                             board_FragmentTwo = new Board_Child_FragmentTwo();
-                            board_FragmentManager.beginTransaction().add(R.id.main_frame,board_FragmentTwo).commit();
+                            board_FragmentManager.beginTransaction().add(R.id.bod_main_frame,board_FragmentTwo).commit();
                         }
                         if(board_FragmentOne!=null){
                             board_FragmentManager.beginTransaction().hide(board_FragmentOne).commit();

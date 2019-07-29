@@ -19,6 +19,8 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -35,9 +37,9 @@ import javax.annotation.Nullable;
 // 김연준
 public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String cate="의류";
-    public RecyclerView mMainRecyclerView;
+    public RecyclerView board_mMainRecyclerView;
     private BoardAdapter board_mAdapter;
     private List<Board2> board_mBoardList2 = null;
     private Board2 data2;
@@ -51,22 +53,14 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_feed__child__fragment_two, container, false);
-        mMainRecyclerView = rootView.findViewById(R.id.board_recycler_view);
-        mSwipeRefreshLayout2 = (SwipeRefreshLayout)rootView.findViewById(R.id.swref2);
+        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_board__child__fragment_two, container, false);
+        board_mMainRecyclerView = rootView.findViewById(R.id.board_recycler_view2);
+        mSwipeRefreshLayout2 = (SwipeRefreshLayout)rootView.findViewById(R.id.board_swref2);
         mSwipeRefreshLayout2.setOnRefreshListener(this);
-        /*rootView.findViewById(R.id.main_write_button2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FeedWriteActivity.class);
-                startActivityForResult(intent,REQUEST_CODE);
-            }
-        });*/
-        //container.findViewById(R.id.main_write_button).setOnClickListener(this);
-        //피드 글 적용시키기
-        //이제 파이베 연동 시 writeActivity에서 클릭 시 여기로 이동하는데 파이어베이스로 겟을 통해 각 적용시켜준다.
+
         board_mBoardList2=new ArrayList<>();
-        db.collection(cate).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        Query query = db.collection(cate);
+        ListenerRegistration registration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
@@ -82,6 +76,7 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                             String name = (String)dc.getDocument().getData().get("name");
                             String category = (String)dc.getDocument().getData().get("category");
                             String regDate = (String)dc.getDocument().getData().get("regDate");
+                            Log.i("sd","title"+title);
                             Calendar calendar = new GregorianCalendar(Locale.KOREA);
                             //현재 년도일 경우 없애서 보여주고 작년 일 경우 년도 표시하기
                             int nYear = calendar.get(Calendar.YEAR);
@@ -95,12 +90,16 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                                 regDateModify = regDate.substring(0,17);
                             }
                             Long replyCnt = (Long)dc.getDocument().getData().get("replyCnt");
-                            data2 = new Board2(id,category,title,contents,name,regDateModify,replyCnt);
+                            Long likeCnt = (Long)dc.getDocument().getData().get("likeCnt");
+
+                            data2 = new Board2(id,category,title,contents,name,regDate,replyCnt,regDateModify,likeCnt);
                             board_mBoardList2.add(data2);
                             Log.i("dd","ADDED");
 
                             break;
                         case MODIFIED:
+                            Long likeCnt1 = (Long)dc.getDocument().getData().get("likeCnt");
+
                             Long replyCnt1 = (Long)dc.getDocument().getData().get("replyCnt");
                             String id1 = (String)dc.getDocument().getData().get("id");
                             String title1 = (String)dc.getDocument().getData().get("title");
@@ -121,7 +120,7 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                                 regDateModify1 = regDate1.substring(0,17);
                             }
                             //수정 된 게시글에 대한 정보를 담은 Board를 백업하여 이를 가지고 리스트에 set으로 수정함
-                            Board2 datacopy = new Board2(id1,category1,title1,contents1,name1,regDateModify1,replyCnt1);
+                            Board2 datacopy = new Board2(id1,category1,title1,contents1,name1,regDate1,replyCnt1,regDateModify1,likeCnt1);
 
                             //리스트에서 해당 수정된 객체를 찾아서 그 리스트에서 수정
                             Board2 temp = new Board2();
@@ -134,8 +133,8 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                                     board_mBoardList2.set(index,datacopy);
                                 }
                             }
-
                             break;
+
                         case REMOVED:
                             break;
                     }
@@ -146,7 +145,7 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                 board_mAdapter = new BoardAdapter(board_mBoardList2);
 
                 //  board_mAdapter.notifyDataSetChanged();
-                mMainRecyclerView.setAdapter(board_mAdapter);
+                board_mMainRecyclerView.setAdapter(board_mAdapter);
 
 
             }
