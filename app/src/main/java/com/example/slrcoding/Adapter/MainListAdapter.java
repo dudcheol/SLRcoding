@@ -86,9 +86,10 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // AHolder에서 보여줄 것 구현
             ((AHolder)holder).subject.setText(mainListViewTypeList.get(position).getName());
 
-            BoardListAdapter boardListAdapter = new BoardListAdapter((Activity) v_A.getContext(),mainListViewTypeList.get(position).getBoards());
-            ((AHolder)holder).listView.setAdapter(boardListAdapter);
-
+            if(mainListViewTypeList.get(position).getBoards()!=null) {
+                BoardListAdapter boardListAdapter = new BoardListAdapter((Activity) v_A.getContext(), mainListViewTypeList.get(position).getBoards());
+                ((AHolder) holder).listView.setAdapter(boardListAdapter);
+            }
         }else if(holder instanceof  BHolder){
             // BHolder에서 보여줄 것 구현
         }
