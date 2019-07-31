@@ -13,12 +13,12 @@ import com.example.slrcoding.R;
 
 import java.util.List;
 
-public class BoardListAdapter extends BaseAdapter {
+public class Main_BoardListAdapter extends BaseAdapter {
     List<Board> boardList;
     LayoutInflater mLayoutInflater;
     Activity activity;
 
-    public BoardListAdapter(Activity activity, List<Board> data){
+    public Main_BoardListAdapter(Activity activity, List<Board> data){
         this.boardList = data;
         this.activity = activity;
     }
