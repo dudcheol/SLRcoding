@@ -1,6 +1,7 @@
 package com.example.slrcoding.Adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import java.util.List;
 // 리사이클러뷰 어댑터
 // 리사이클러뷰 뷰타입 사용.txt 확인하기
 
-public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // 뷰 타입 별로 다른 뷰 제공
     // type : flag : subject
     // A : 0 : 인기글
@@ -34,14 +35,11 @@ public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     // 순서별로 어떤 뷰를 보여줄지 리스트에 담아서 결정한다
     private List<MainListViewType> mainListViewTypeList;
 
-    private List<Board> board_A,board_B;
     private View v_A;
 
     // 받아올 리스트형 객체
-    public mainListAdapter(List<MainListViewType> mainListViewTypeList, List<Board> board_A, List<Board> board_B) {
+    public MainListAdapter(List<MainListViewType> mainListViewTypeList) {
         this.mainListViewTypeList = mainListViewTypeList; // 부모 리사이클러뷰에 어떤 아이템이 들어갈지 결정
-        this.board_A = board_A; // 0번째에 들어갈 객체
-        this.board_B = board_B; // 1번째에 들어갈 객체
     }
 
     @NonNull
@@ -86,11 +84,12 @@ public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 받아온 객체를  가져와서 여기서 보여준다
             // position 써서
             // AHolder에서 보여줄 것 구현
-            ((AHolder)holder).subject.setText("인기글");
+            ((AHolder)holder).subject.setText(mainListViewTypeList.get(position).getName());
 
-            BoardListAdapter boardListAdapter = new BoardListAdapter((Activity) v_A.getContext(),board_A);
-            ((AHolder)holder).listView.setAdapter(boardListAdapter);
-
+            if(mainListViewTypeList.get(position).getBoards()!=null) {
+                BoardListAdapter boardListAdapter = new BoardListAdapter((Activity) v_A.getContext(), mainListViewTypeList.get(position).getBoards());
+                ((AHolder) holder).listView.setAdapter(boardListAdapter);
+            }
         }else if(holder instanceof  BHolder){
             // BHolder에서 보여줄 것 구현
         }

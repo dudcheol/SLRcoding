@@ -28,7 +28,6 @@
 
     </RelativeLayout>
 
-    <!-- TODO: Update blank fragment layout -->
     <ExpandableListView
         android:id="@+id/mypage_parentListView"
         android:layout_width="match_parent"
