@@ -27,15 +27,15 @@ import java.util.List;
 public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // 뷰 타입 별로 다른 뷰 제공
     // type : flag : subject
-    // A : 0 : 인기글
-    // B : 1 : test
+    // A : 0 : 게시글종류
+    // B : 1 : 내정보
     public static final int VIEW_TYPE_A = 0;
     public static final int VIEW_TYPE_B = 1;
 
     // 순서별로 어떤 뷰를 보여줄지 리스트에 담아서 결정한다
     private List<MainListViewType> mainListViewTypeList;
 
-    private View v_A;
+    private View v_A,v_B;
 
     // 받아올 리스트형 객체
     public MainListAdapter(List<MainListViewType> mainListViewTypeList) {
@@ -52,10 +52,14 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .inflate(R.layout.main_board,parent,false);
             return new AHolder(v_A);
         }
+        else if(viewType == VIEW_TYPE_B){
+            v_B = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.main_myinfo,parent,false);
+            return new BHolder(v_B);
+        }
         else{
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.main_cardview_latest,parent,false);
-            return new BHolder(v);
+            // Todo : 정보를 받아오는데 에러가 발생했다는 것을 알리는 레이아웃 생성해도 괜찮을듯
+            return null;
         }
     }
 
@@ -78,7 +82,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        // Todo -- 영철 : 이제 여기에서 어떻게 지지고 볶을지 고민해볼것
+        // 이제 여기에서 어떻게 지지고 볶을지 고민해볼것
 
         if(holder instanceof AHolder){
             // 받아온 객체를  가져와서 여기서 보여준다
@@ -92,6 +96,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         }else if(holder instanceof  BHolder){
             // BHolder에서 보여줄 것 구현
+
         }
     }
 

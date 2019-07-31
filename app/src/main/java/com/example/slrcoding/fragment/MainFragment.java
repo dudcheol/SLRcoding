@@ -73,7 +73,8 @@ public class MainFragment extends Fragment {
         // 뷰 타입 별로 다른 뷰 제공
         // type : flag : subject
         // A : 0 : 게시글종류
-        // B : 1 : test로 그냥 아무거나 넣어봄
+        // B : 1 : 내정보
+        mainListViewTypeList.add(new MainListViewType(1,"내정보"));
         mainListViewTypeList.add(new MainListViewType(0,"기숙사와 밥"));
         mainListViewTypeList.add(new MainListViewType(0,"스포츠와 게임"));
 
@@ -91,7 +92,7 @@ public class MainFragment extends Fragment {
                                 boardDTO = document.toObject(Board.class);
                                 boards.add(boardDTO);
                             }
-                            mainListViewTypeList.get(0).setBoards(boards);
+                            mainListViewTypeList.get(1).setBoards(boards);
                             mainListAdapter.notifyDataSetChanged();
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
@@ -128,7 +129,7 @@ public class MainFragment extends Fragment {
                                 boardDTO = document.toObject(Board.class);
                                 boards.add(boardDTO);
                             }
-                            mainListViewTypeList.get(1).setBoards(boards);
+                            mainListViewTypeList.get(2).setBoards(boards);
                             mainListAdapter.notifyDataSetChanged();
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
