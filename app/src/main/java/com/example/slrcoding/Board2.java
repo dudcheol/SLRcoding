@@ -17,7 +17,7 @@ public class Board2 {
 
     }
 
-    public Board2(String id, String category, String title, String contents, String name, String regDate, Long replyCnt) {
+    public Board2(String id, String category, String title, String contents, String name, String regDate, Long replyCnt,String regModifyDate,Long likeCnt) {
         this.id = id;
         this.category= category;
         this.title = title;
