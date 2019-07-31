@@ -1,6 +1,7 @@
 package com.example.slrcoding.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,10 +14,14 @@ import android.view.ViewGroup;
 
 import com.example.slrcoding.Adapter.mainListAdapter;
 import com.example.slrcoding.Board;
+import com.example.slrcoding.LoginActivity;
+import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.famousAdapter;
 import com.example.slrcoding.latestAdapter;
 import com.example.slrcoding.R;
 import com.example.slrcoding.util.MainListViewType;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;

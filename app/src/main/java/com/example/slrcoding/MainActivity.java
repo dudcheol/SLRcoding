@@ -16,10 +16,15 @@ import com.example.slrcoding.fragment.FeedFragment;
 import com.example.slrcoding.fragment.MainFragment;
 import com.example.slrcoding.fragment.MessageFragment;
 import com.example.slrcoding.fragment.MypageFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     int flag=0;
 
+    // (최민철 수정 19.07.28)
+    private FirebaseAuth firebaseAuth;  // 파이어베이스 인증 객체 생성
+    private FirebaseUser currentUser;   // 현재 로그인 된 정보를 담은 객체 생성
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -69,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
         setTitle("홈");
         Intent intent = getIntent();
 
+        // (최민철 수정 19.07.28)
+        firebaseAuth = FirebaseAuth.getInstance();
+
         if(intent.getExtras()!=null){
             flag =intent.getExtras().getInt("flag");
         }
@@ -88,6 +96,17 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.commit();
             BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        }
+    }
+
+    // 로그인 되지 않은 경우 login페이지로 이동 (최민철 수정 19.07.28)
+    @Override
+    public void onStart(){
+        super.onStart();
+        currentUser = firebaseAuth.getCurrentUser();
+        if(currentUser == null){
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
         }
     }
 

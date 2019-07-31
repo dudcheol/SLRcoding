@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -16,7 +17,6 @@
         <activity android:name=".Mypage_sub3_Rule"/>
         <activity android:name=".Mypage_sub3_Notice" />
         <activity android:name=".Mypage_sub3_Question" />
-        <activity android:name=".Mypage_sub2_Message" />
         <activity android:name=".Mypage_sub2_Alarm" />
         <activity android:name=".Mypage_sub0_Scrap" />
         <activity android:name=".Mypage_sub0_Comment" />
