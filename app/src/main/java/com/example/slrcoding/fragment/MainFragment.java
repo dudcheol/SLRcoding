@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.slrcoding.Adapter.MainListAdapter;
 import com.example.slrcoding.Board;
 import com.example.slrcoding.R;
+import com.example.slrcoding.VO.Main_JunggoVO;
 import com.example.slrcoding.util.MainListViewType;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -36,9 +37,6 @@ public class MainFragment extends Fragment {
 
     //리스트뷰 아이템별 뷰타입을 정해주는 리스트
     private List<MainListViewType> mainListViewTypeList;
-
-    // 데이터 받은 거 확인하는 플래그
-    private int DATA_OK_FLAG=0;
 
     RecyclerView.Adapter mainListAdapter;
     Board boardDTO;
@@ -65,6 +63,7 @@ public class MainFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
 
         mainListViewTypeList=new ArrayList<>();
+
         RecyclerView.Adapter mainListAdapter = new MainListAdapter(mainListViewTypeList);
         mRecyclerView.setAdapter(mainListAdapter);
 
@@ -73,9 +72,23 @@ public class MainFragment extends Fragment {
         // 뷰 타입 별로 다른 뷰 제공
         // type : flag : subject
         // A : 0 : 게시글종류
-        // B : 1 : test로 그냥 아무거나 넣어봄
+        // B : 1 : 내정보
+        // C : 2 : 중고장터
+        mainListViewTypeList.add(new MainListViewType(1,"내정보"));
         mainListViewTypeList.add(new MainListViewType(0,"기숙사와 밥"));
         mainListViewTypeList.add(new MainListViewType(0,"스포츠와 게임"));
+        mainListViewTypeList.add(new MainListViewType(2,"중고장터"));
+
+        // 중고장터 이미지 임시데이터
+        List<Main_JunggoVO> test = new ArrayList<>();
+        test.add(new Main_JunggoVO(1));
+        test.add(new Main_JunggoVO(2));
+        test.add(new Main_JunggoVO(3));
+        test.add(new Main_JunggoVO(4));
+        test.add(new Main_JunggoVO(5));
+        test.add(new Main_JunggoVO(6));
+        mainListViewTypeList.get(3).setJunggos(test);
+        mainListAdapter.notifyDataSetChanged();
 
         // 기숙사와 밥 데이터 로드
         firestore
@@ -91,7 +104,7 @@ public class MainFragment extends Fragment {
                                 boardDTO = document.toObject(Board.class);
                                 boards.add(boardDTO);
                             }
-                            mainListViewTypeList.get(0).setBoards(boards);
+                            mainListViewTypeList.get(1).setBoards(boards);
                             mainListAdapter.notifyDataSetChanged();
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
@@ -128,7 +141,7 @@ public class MainFragment extends Fragment {
                                 boardDTO = document.toObject(Board.class);
                                 boards.add(boardDTO);
                             }
-                            mainListViewTypeList.get(1).setBoards(boards);
+                            mainListViewTypeList.get(2).setBoards(boards);
                             mainListAdapter.notifyDataSetChanged();
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
@@ -141,13 +154,9 @@ public class MainFragment extends Fragment {
 
 
 
-
-        //Todo 1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
+        //1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
 
         //Todo 2-- 파이어베이스에서 인기글 받아오는 것 구현 (일단 그냥 좋아요 가장 많은 것부터 가져온다)
-
-        //Todo 3-- 파이어베이스에서 가져온 정보 VO에 저장시킨다음에 어댑터에 넣어줘서 메인으로 만들기 << 일단하긴했음
-        // DTO만 잘 정의해주면 여러번 써먹을 수 있음
 
         //Todo 4-- 타이틀바 활용해서 꾸며보기
 

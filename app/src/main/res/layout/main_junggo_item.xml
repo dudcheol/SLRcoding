@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp">
+    <ImageView
+        android:id="@+id/junggo_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/splash2"
+        android:background="@drawable/background_rounding" />
+    <TextView
+        android:id="@+id/junggo_title"
+        android:layout_width="100dp"
+        android:layout_height="28dp"
+        android:text="타이틀 제목"
+        android:textSize="12dp"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        android:ellipsize="end"
+        android:layout_below="@+id/junggo_image"
+        android:background="@drawable/background_rounding"
+        android:backgroundTint="#ffffff"
+        />
+</RelativeLayout>

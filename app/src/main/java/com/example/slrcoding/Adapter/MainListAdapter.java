@@ -1,23 +1,21 @@
 package com.example.slrcoding.Adapter;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.slrcoding.Board;
 import com.example.slrcoding.R;
-import com.example.slrcoding.fragment.MainFragment;
+import com.example.slrcoding.VO.Main_JunggoVO;
 import com.example.slrcoding.util.MainListViewType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // 박영철
@@ -27,15 +25,17 @@ import java.util.List;
 public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // 뷰 타입 별로 다른 뷰 제공
     // type : flag : subject
-    // A : 0 : 인기글
-    // B : 1 : test
+    // A : 0 : 게시글종류
+    // B : 1 : 내정보
+    // C : 2 : 중고장터
     public static final int VIEW_TYPE_A = 0;
     public static final int VIEW_TYPE_B = 1;
+    public static final int VIEW_TYPE_C = 2;
 
     // 순서별로 어떤 뷰를 보여줄지 리스트에 담아서 결정한다
     private List<MainListViewType> mainListViewTypeList;
 
-    private View v_A;
+    private View v_A,v_B,v_C;
 
     // 받아올 리스트형 객체
     public MainListAdapter(List<MainListViewType> mainListViewTypeList) {
@@ -45,17 +45,24 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // 지금은 테스트를 위해 main_board만 사용했지만
-        // 나중에 데이터가 쌓이면 다른 형태의 뷰타입을 사용할 수 있음
         if(viewType == VIEW_TYPE_A){
             v_A = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.main_board,parent,false);
             return new AHolder(v_A);
         }
+        else if(viewType == VIEW_TYPE_B){
+            v_B = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.main_myinfo,parent,false);
+            return new BHolder(v_B);
+        }
+        else if(viewType == VIEW_TYPE_C){
+            v_C = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.main_junggo,parent,false);
+            return new CHolder(v_C);
+        }
         else{
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.main_cardview_latest,parent,false);
-            return new BHolder(v);
+            // Todo : 정보를 받아오는데 에러가 발생했다는 것을 알리는 레이아웃 생성해도 괜찮을듯
+            return null;
         }
     }
 
@@ -69,7 +76,8 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 return VIEW_TYPE_A;
             case VIEW_TYPE_B:
                 return VIEW_TYPE_B;
-
+            case VIEW_TYPE_C:
+                return VIEW_TYPE_C;
                 // Todo : 디폴트의 경우 에러처리 아니면 if문으로 바꾸기
                 default:
                     return -1;
@@ -78,7 +86,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        // Todo -- 영철 : 이제 여기에서 어떻게 지지고 볶을지 고민해볼것
+        // 이제 여기에서 어떻게 지지고 볶을지 고민해볼것
 
         if(holder instanceof AHolder){
             // 받아온 객체를  가져와서 여기서 보여준다
@@ -87,11 +95,23 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((AHolder)holder).subject.setText(mainListViewTypeList.get(position).getName());
 
             if(mainListViewTypeList.get(position).getBoards()!=null) {
-                BoardListAdapter boardListAdapter = new BoardListAdapter((Activity) v_A.getContext(), mainListViewTypeList.get(position).getBoards());
+                Main_BoardListAdapter boardListAdapter = new Main_BoardListAdapter((Activity) v_A.getContext(), mainListViewTypeList.get(position).getBoards());
                 ((AHolder) holder).listView.setAdapter(boardListAdapter);
             }
         }else if(holder instanceof  BHolder){
             // BHolder에서 보여줄 것 구현
+
+        }else if(holder instanceof CHolder){
+            ((CHolder)holder).subject.setText(mainListViewTypeList.get(position).getName());
+            if(mainListViewTypeList.get(position).getJunggos()!=null){
+                Main_JunggoListAdapter main_junggoListAdapter = new Main_JunggoListAdapter((Activity)v_C.getContext(),mainListViewTypeList.get(position).getJunggos());
+                ((CHolder) holder).junggo_image_album.setHasFixedSize(true);
+                ((CHolder) holder).junggo_image_album.setLayoutManager(new LinearLayoutManager(v_C.getContext()
+                        , LinearLayoutManager.HORIZONTAL
+                        ,false));
+                //((CHolder) holder).junggo_card.bringChildToFront(((CHolder) holder).junggo_image_album);
+                ((CHolder)holder).junggo_image_album.setAdapter(main_junggoListAdapter);
+            }
         }
     }
 
@@ -115,6 +135,18 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class BHolder extends RecyclerView.ViewHolder{
         public BHolder(@NonNull View itemView) {
             super(itemView);
+        }
+    }
+
+    private class CHolder extends RecyclerView.ViewHolder {
+        TextView subject;
+        RecyclerView junggo_image_album;
+        CardView junggo_card;
+        public CHolder(@NonNull View itemView) {
+            super(itemView);
+            subject = (TextView)itemView.findViewById(R.id.subject);
+            junggo_image_album = itemView.findViewById(R.id.junggo_image_album);
+            junggo_card = itemView.findViewById(R.id.junggo_card);
         }
     }
 }
