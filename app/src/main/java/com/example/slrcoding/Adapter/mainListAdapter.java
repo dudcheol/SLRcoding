@@ -32,7 +32,7 @@ import java.util.List;
 // 박영철
 // 리사이클러뷰 어댑터
 // 리사이클러뷰 뷰타입 사용.txt 확인하기
-
+//
 public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // 뷰 타입 별로 다른 뷰 제공
     // type : flag : subject
