@@ -93,7 +93,8 @@ public class FeedDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_detail);
-
+        //파베에서 좋아요누른 유저들 가져와서 리스트에 넣어주고 이를 통해 좋아요를 누른 유저면 setLiked 안누른 유저는 그냥 setLiked(false)
+        //likeflag=1;
         titleTextView = findViewById(R.id.detail_item_title_text);
         contentTextView = findViewById(R.id.feed_context);
         categoryTextView =findViewById(R.id.feed_detail_category);
@@ -270,13 +271,16 @@ public class FeedDetailActivity extends AppCompatActivity {
         //mReplyRecyclerView.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
 
 
-        if(likeflag ==1){
-            likelyButton.setPressed(true);
-        }else if (likeflag == 0){
-            likelyButton.setPressed(false);
-        }
+
         setClickEvent();
         setReplySubmit();
+        //좋아요 누른 사용자 (LikeUsers 컬렉션의 문서(usreID)를 모두 가져와서 if문으로 비교후 좋아요를 누른 사용자라면 하트 켜고 좋아요 누른 적이 없다며 하트 끄기
+        Log.i("flag","likeflag: "+likeflag);
+        if(likeflag ==1){
+            likelyButton.setLiked(true);
+        }else if (likeflag == 0){
+            likelyButton.setLiked(false);
+        }
     }
     //댓글 등록 시 파베에 넣기
     //댓글 수도 업데이트하기..
@@ -341,7 +345,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     private void setClickEvent(){
         likelyButton.setOnLikeListener(new OnLikeListener() {
             @Override
-            public void liked(LikeButton likeButton) {
+            public void liked(final LikeButton likeButton) {
                 Context context = likeButton.getContext();
 
                 Toast.makeText(context, "좋아요 버튼 클릭!!", Toast.LENGTH_SHORT).show();
@@ -360,11 +364,13 @@ public class FeedDetailActivity extends AppCompatActivity {
 
                     }
                 });
+                //로그인 한 유저 정보를 가져와서 댓글을 좋아요 누르면 LikeUsers라는 컬렉션을 내부에서 생성해서
+                //UserId를 문서로 넣는다. (좋아요 누른 사용자들을 넣어줌 )
 
             }
 
             @Override
-            public void unLiked(LikeButton likeButton) {
+            public void unLiked(final LikeButton likeButton) {
                 Context context = likeButton.getContext();
 
                 Toast.makeText(context, "좋아요 버튼 취소!!", Toast.LENGTH_SHORT).show();
@@ -383,6 +389,7 @@ public class FeedDetailActivity extends AppCompatActivity {
 
                     }
                 });
+                //LikeUsers 컬렉션 문서도 삭제한다.(해당 로그인 사용자 ID)
             }
        });
     }
@@ -414,7 +421,6 @@ public class FeedDetailActivity extends AppCompatActivity {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
-
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
