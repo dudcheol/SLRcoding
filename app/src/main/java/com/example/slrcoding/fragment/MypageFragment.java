@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.text.InputFilter;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -17,42 +19,54 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.slrcoding.Adapter.MypageListAdapter;
 import com.example.slrcoding.LoginActivity;
+import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.Mypage_sub0_Comment;
 import com.example.slrcoding.Mypage_sub0_Scrap;
 import com.example.slrcoding.Mypage_sub0_mywrite;
 import com.example.slrcoding.Mypage_sub2_Alarm;
-import com.example.slrcoding.Mypage_sub2_Message;
 import com.example.slrcoding.Mypage_sub3_Notice;
 import com.example.slrcoding.Mypage_sub3_Question;
 import com.example.slrcoding.Mypage_sub3_Rule;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.ChildListData;
 import com.example.slrcoding.VO.ParentListData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-//최민철
+// 최민철(수정 : 19.07.28)
 public class MypageFragment extends Fragment {
 
     String submenu1[] = {"내가 쓴 글", "댓글 단 글", "스크랩"};
     String submenu2[] = {"프로필 이미지 변경", "닉네임 변경", "로그 아웃"};
-    String submenu3[] = {"알림 설정", "메시지 설정"};
+    String submenu3[] = {"알림 설정"};
     String submenu4[] = {"문의하기", "공지사항", "커뮤니티 이용규칙"};
 
     private ArrayList<ParentListData> parentListData;
     private ExpandableListView parentListView;
     private TextView tv_username;;
     private ImageView iv_profile;
+    private String category = "사용자 정보";
     public MypageListAdapter adpater;
+    private FirebaseAuth firebaseAuth;           // 파이어베이스 인증 객체 생성
+    private FirebaseFirestore firebasestore;     // 파이어베이스 스토어 객체 생성
+    private FirebaseUser currentUser;
+    private String currentUser_id;
 
     public MypageFragment() {
         // Required empty public constructor
@@ -84,6 +98,12 @@ public class MypageFragment extends Fragment {
         tv_username = (TextView) MyPage_View.findViewById(R.id.mypage_userid);
         iv_profile = (ImageView)MyPage_View.findViewById(R.id.mypage_profile_image);
         registerForContextMenu(parentListView);
+
+        firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언
+        firebasestore = FirebaseFirestore.getInstance();    // 파이어베이스 스토어 객체 선언
+        currentUser = firebaseAuth.getCurrentUser();        // 현재 로그인한 사용자 가져오기
+
+        String currentUser_email = currentUser.getEmail();
 
         Display newDisplay = getActivity().getWindowManager().getDefaultDisplay();
         int width = newDisplay.getWidth();
@@ -178,10 +198,6 @@ public class MypageFragment extends Fragment {
                             case 0:
                                 Intent intent4 = new Intent(getActivity(), Mypage_sub2_Alarm.class);
                                 startActivity(intent4);
-                                return true;
-                            case 1:
-                                Intent intent5 = new Intent(getActivity(), Mypage_sub2_Message.class);
-                                startActivity(intent5);
                                 return true;
                         }
                         return true;
@@ -283,6 +299,7 @@ public class MypageFragment extends Fragment {
         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                firebaseAuth.signOut();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -299,4 +316,5 @@ public class MypageFragment extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show(); // 창 띄우기
     }
+
 }

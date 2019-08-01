@@ -18,9 +18,15 @@ import com.example.slrcoding.fragment.FeedFragment;
 import com.example.slrcoding.fragment.MainFragment;
 import com.example.slrcoding.fragment.MessageFragment;
 import com.example.slrcoding.fragment.MypageFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     int flag=0;
+
+    // (최민철 수정 19.07.28)
+    private FirebaseAuth firebaseAuth;  // 파이어베이스 인증 객체 생성
+    private FirebaseUser currentUser;   // 현재 로그인 된 정보를 담은 객체 생성
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
