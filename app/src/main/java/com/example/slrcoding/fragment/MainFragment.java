@@ -2,33 +2,25 @@ package com.example.slrcoding.fragment;
 
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.slrcoding.Adapter.mainListAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.slrcoding.Adapter.MainListAdapter;
 import com.example.slrcoding.Board;
-import com.example.slrcoding.famousAdapter;
-import com.example.slrcoding.latestAdapter;
 import com.example.slrcoding.R;
 import com.example.slrcoding.util.MainListViewType;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +48,6 @@ public class MainFragment extends Fragment {
     private RecyclerView mRecyclerView_famous;
     private RecyclerView.Adapter mAdapter_latest;
     private RecyclerView.Adapter mAdapter_famous;
-
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.LayoutManager mLayoutManager2;*/
 
@@ -125,7 +116,6 @@ public class MainFragment extends Fragment {
                         //mainListAdapter = new mainListAdapter(mainListViewTypeList,boards,null);
                         /*mainListAdapter.notifyDataSetChanged();
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
-
                         mRecyclerView.setLayoutManager(layoutManager);
                         mRecyclerView.setAdapter(mainListAdapter);*/
                         mReceiveDataListener.onReceivedEvent();
@@ -161,7 +151,7 @@ public class MainFragment extends Fragment {
                 //  그리고 어댑터 구조를 손으로 그려가면서 본 다음 수정해야함
                 //  이 방법 알아본다음 메인에 기숙사와밥,스포츠와 게임 두개 최신글 리스트에 넣어본다
 
-                RecyclerView.Adapter mainListAdapter = new mainListAdapter(mainListViewTypeList,boards1,boards2);
+                RecyclerView.Adapter mainListAdapter = new MainListAdapter(mainListViewTypeList,boards1,boards2);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
 
                 mRecyclerView.setLayoutManager(layoutManager);
@@ -187,26 +177,21 @@ public class MainFragment extends Fragment {
 
         //서버가 없으므로 임시로 추가한 데이터
         /*
-
-
         // 리사이클러뷰 생성
         mRecyclerView_latest=(RecyclerView) v.findViewById(R.id.latest_content);
         mRecyclerView_famous=(RecyclerView) v.findViewById(R.id.famous_content);
         mRecyclerView_latest.setHasFixedSize(true);
         mRecyclerView_famous.setHasFixedSize(true);
-
         // 현재는 보여주기식으로 만들어서 인기글과 최신글이 동일한 내용 사용
         mAdapter_latest = new latestAdapter(mBoardList); // 최신글
         mAdapter_famous = new famousAdapter(mBoardList); // 인기글
         mAdapter_latest.notifyDataSetChanged();
         mAdapter_famous.notifyDataSetChanged();
-
         // 인기글
         mLayoutManager2=new LinearLayoutManager(v.getContext());
         ((LinearLayoutManager) mLayoutManager2).setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecyclerView_famous.setLayoutManager(mLayoutManager2);
         mRecyclerView_famous.setAdapter(mAdapter_famous);
-
         // 최신글
         mLayoutManager=new LinearLayoutManager(v.getContext());
         mRecyclerView_latest.setLayoutManager(mLayoutManager);

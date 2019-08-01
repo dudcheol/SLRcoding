@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+// 최민철(수정 : xx.xx.xx)
 public class Mypage_sub2_Alarm extends AppCompatActivity {
 
     @Override

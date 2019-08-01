@@ -36,7 +36,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.firebase:firebase-firestore:20.1.0'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'androidx.fragment:fragment:1.0.0'
+    implementation project(path: ':mail')
+    implementation project(path: ':additionnal')
+    implementation project(path: ':activation')
 
 }
 

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,17 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.slrcoding.Board;
 import com.example.slrcoding.R;
-import com.example.slrcoding.fragment.MainFragment;
 import com.example.slrcoding.util.MainListViewType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // 박영철
 // 리사이클러뷰 어댑터
 // 리사이클러뷰 뷰타입 사용.txt 확인하기
 
-public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // 뷰 타입 별로 다른 뷰 제공
     // type : flag : subject
     // A : 0 : 인기글
@@ -38,7 +35,7 @@ public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private View v_A;
 
     // 받아올 리스트형 객체
-    public mainListAdapter(List<MainListViewType> mainListViewTypeList, List<Board> board_A, List<Board> board_B) {
+    public MainListAdapter(List<MainListViewType> mainListViewTypeList, List<Board> board_A, List<Board> board_B) {
         this.mainListViewTypeList = mainListViewTypeList; // 부모 리사이클러뷰에 어떤 아이템이 들어갈지 결정
         this.board_A = board_A; // 0번째에 들어갈 객체
         this.board_B = board_B; // 1번째에 들어갈 객체
@@ -72,9 +69,9 @@ public class mainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case VIEW_TYPE_B:
                 return VIEW_TYPE_B;
 
-                // Todo : 디폴트의 경우 에러처리 아니면 if문으로 바꾸기
-                default:
-                    return -1;
+            // Todo : 디폴트의 경우 에러처리 아니면 if문으로 바꾸기
+            default:
+                return -1;
         }
     }
 
