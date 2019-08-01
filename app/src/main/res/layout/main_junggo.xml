@@ -9,14 +9,14 @@
         android:id="@+id/junggo_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardElevation="8dp"
+        card_view:cardElevation="5dp"
         card_view:cardCornerRadius="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="170dp"
             android:layout_margin="10dp">
             <TextView
                 android:id="@+id/subject"
@@ -30,10 +30,15 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"/>
             <TextView
+                android:id="@+id/go_to_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="더보기>"
-                android:layout_alignParentRight="true"/>
+                android:text="더보기"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:textColor="@color/mainColor_dark"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"/>
 
         </RelativeLayout>
 
@@ -42,7 +47,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/junggo_image_album"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140dp"
         android:layout_marginTop="55dp"
         android:elevation="10dp"
         />

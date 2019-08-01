@@ -2,14 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".fragment.MainFragment"
     android:background="#ffffff">
 
    <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/main_recyclerView_for_mainFrag"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/main_recyclerView_for_mainFrag">
+       android:layout_height="match_parent">
 
    </androidx.recyclerview.widget.RecyclerView>
     <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -1,19 +1,30 @@
 package com.example.slrcoding.Adapter;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.slrcoding.Board;
+import com.example.slrcoding.BoardDetailActivity;
+import com.example.slrcoding.FeedDetailActivity;
+import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.Main_JunggoVO;
+import com.example.slrcoding.fragment.BoardFragment;
+import com.example.slrcoding.fragment.FeedFragment;
+import com.example.slrcoding.fragment.MainFragment;
 import com.example.slrcoding.util.MainListViewType;
 
 import java.util.List;
@@ -36,10 +47,14 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<MainListViewType> mainListViewTypeList;
 
     private View v_A,v_B,v_C;
+    private Context mContext;
+    private Activity mActivity;
 
     // 받아올 리스트형 객체
-    public MainListAdapter(List<MainListViewType> mainListViewTypeList) {
+    public MainListAdapter(List<MainListViewType> mainListViewTypeList, Context context, Activity activity) {
         this.mainListViewTypeList = mainListViewTypeList; // 부모 리사이클러뷰에 어떤 아이템이 들어갈지 결정
+        this.mContext=context;
+        this.mActivity = activity;
     }
 
     @NonNull
@@ -94,10 +109,26 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // AHolder에서 보여줄 것 구현
             ((AHolder)holder).subject.setText(mainListViewTypeList.get(position).getName());
 
-            if(mainListViewTypeList.get(position).getBoards()!=null) {
-                Main_BoardListAdapter boardListAdapter = new Main_BoardListAdapter((Activity) v_A.getContext(), mainListViewTypeList.get(position).getBoards());
+            List<Board> boards = mainListViewTypeList.get(position).getBoards();
+            if(boards!=null) {
+                Main_BoardListAdapter boardListAdapter = new Main_BoardListAdapter((Activity) v_A.getContext(), boards);
                 ((AHolder) holder).listView.setAdapter(boardListAdapter);
+                ((AHolder) holder).listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent intent = new Intent(mContext, FeedDetailActivity.class);
+                        intent.putExtra("category",boards.get(i).getCategory());
+                        intent.putExtra("id",boards.get(i).getId());
+                        mContext.startActivity(intent);
+                    }
+                });
             }
+
+            ((AHolder) holder).go_to_detail.setOnClickListener(view -> {
+                MainActivity activity = (MainActivity)mContext;
+                activity.replaceFragment(new FeedFragment(),1);
+            });
+
         }else if(holder instanceof  BHolder){
             // BHolder에서 보여줄 것 구현
 
@@ -112,6 +143,11 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 //((CHolder) holder).junggo_card.bringChildToFront(((CHolder) holder).junggo_image_album);
                 ((CHolder)holder).junggo_image_album.setAdapter(main_junggoListAdapter);
             }
+
+            ((CHolder) holder).go_to_detail.setOnClickListener(v->{
+                MainActivity activity = (MainActivity)mContext;
+                activity.replaceFragment(new BoardFragment(),2);
+            });
         }
     }
 
@@ -121,7 +157,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class AHolder extends RecyclerView.ViewHolder{
-        TextView subject,title,content;
+        TextView subject,go_to_detail;
         ListView listView;
 
         public AHolder(@NonNull View itemView) {
@@ -129,6 +165,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 여기서 A홀더에 있는 것들 findviewid 해준다.
             subject = (TextView)itemView.findViewById(R.id.subject);
             listView = (ListView)itemView.findViewById(R.id.list);
+            go_to_detail = itemView.findViewById(R.id.go_to_detail);
         }
     }
 
@@ -139,7 +176,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private class CHolder extends RecyclerView.ViewHolder {
-        TextView subject;
+        TextView subject,go_to_detail;
         RecyclerView junggo_image_album;
         CardView junggo_card;
         public CHolder(@NonNull View itemView) {
@@ -147,6 +184,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             subject = (TextView)itemView.findViewById(R.id.subject);
             junggo_image_album = itemView.findViewById(R.id.junggo_image_album);
             junggo_card = itemView.findViewById(R.id.junggo_card);
+            go_to_detail = itemView.findViewById(R.id.go_to_detail);
         }
     }
 }

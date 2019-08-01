@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,6 @@ public class MainFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,7 +64,8 @@ public class MainFragment extends Fragment {
 
         mainListViewTypeList=new ArrayList<>();
 
-        RecyclerView.Adapter mainListAdapter = new MainListAdapter(mainListViewTypeList);
+        MainFragment fragment=new MainFragment();
+        RecyclerView.Adapter mainListAdapter = new MainListAdapter(mainListViewTypeList,v.getContext(),getActivity());
         mRecyclerView.setAdapter(mainListAdapter);
 
 
@@ -89,6 +90,13 @@ public class MainFragment extends Fragment {
         test.add(new Main_JunggoVO(6));
         mainListViewTypeList.get(3).setJunggos(test);
         mainListAdapter.notifyDataSetChanged();
+        // 실행됐을때 가장 스크롤포지션이 가장 위에 있도록 하기 위한 핸들러
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.scrollToPosition(0);
+            }
+        }, 200);
 
         // 기숙사와 밥 데이터 로드
         firestore

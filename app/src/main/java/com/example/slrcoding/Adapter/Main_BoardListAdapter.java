@@ -46,11 +46,11 @@ public class Main_BoardListAdapter extends BaseAdapter {
         if (view == null)
             view = mLayoutInflater.inflate(R.layout.main_board_list, null);
         //View v = mLayoutInflater.inflate(R.layout.main_board_list,viewGroup);
-        TextView category = (TextView)view.findViewById(R.id.category);
-        TextView title = (TextView)view.findViewById(R.id.title);
+        TextView title = (TextView)view.findViewById(R.id.category);
+        TextView contents = (TextView)view.findViewById(R.id.title);
 
-        category.setText(boardList.get(i).getCategory());
         title.setText(boardList.get(i).getTitle());
+        contents.setText(boardList.get(i).getContents());
 
         return view;
     }
