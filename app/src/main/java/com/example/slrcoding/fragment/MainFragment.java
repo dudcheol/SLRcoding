@@ -2,18 +2,21 @@ package com.example.slrcoding.fragment;
 
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.example.slrcoding.Adapter.MainListAdapter;
 import com.example.slrcoding.Board;
 import com.example.slrcoding.R;
+import com.example.slrcoding.VO.Main_JunggoVO;
 import com.example.slrcoding.util.MainListViewType;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -36,25 +39,12 @@ public class MainFragment extends Fragment {
     //리스트뷰 아이템별 뷰타입을 정해주는 리스트
     private List<MainListViewType> mainListViewTypeList;
 
-    // 데이터 받은 거 확인하는 리스너
-    private ReceiveDataListener mReceiveDataListener;
-
     RecyclerView.Adapter mainListAdapter;
-
     Board boardDTO;
-    List<Board> boards1, boards2;
-
-    /*private RecyclerView mRecyclerView_latest;
-    private RecyclerView mRecyclerView_famous;
-    private RecyclerView.Adapter mAdapter_latest;
-    private RecyclerView.Adapter mAdapter_famous;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.LayoutManager mLayoutManager2;*/
 
     public MainFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,45 +55,65 @@ public class MainFragment extends Fragment {
         // 파이어베이스 설정작업
         firestore = FirebaseFirestore.getInstance();
 
-        //테스트데이터
-        mBoardList = new ArrayList<>();
-
-        mBoardList.add(new Board(null,"축구","축구 할사람 여러분","내용입니다","android","10분전",0L,"10분전",0L));
-        mBoardList.add(new Board(null,"축구","와~~토트넘 ", "내용입니다","server","10분전",0L,"10분전",0L));
-        mBoardList.add(new Board(null,"축구","레알마드리드??","내용입니다","java","10분전",0L,"10분전",0L));
-        mBoardList.add(new Board(null,"축구","히딩크 돌아와라","내용입니다","php","10분전",0L,"10분전",0L));
-        mBoardList.add(new Board(null,"축구","박항서","내용입니다","python","10분전",0L,"10분전",0L));
-        /*mBoardList.add(new Board(null,"축구","손흥민 잘한다..","내용입니다","server","10분전",0L,"10분전",0L));
-        mBoardList.add(new Board(null,"축구","제 2의 박지성이냐","내용입니다","java","10분전",0L,"10분전",0L));
-        mBoardList.add(new Board(null,"축구","축구는 뭐다?","내용입니다","php","10분전",0L,"10분전",0L));
-        mBoardList.add(new Board(null,"축구","축구다!","내용입니다","python","10분전",0L,"10분전",0L));*/
-
 
         mRecyclerView = (RecyclerView)v.findViewById(R.id.main_recyclerView_for_mainFrag);
         mRecyclerView.setHasFixedSize(true);
 
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        mainListViewTypeList=new ArrayList<>();
+
+        MainFragment fragment=new MainFragment();
+        RecyclerView.Adapter mainListAdapter = new MainListAdapter(mainListViewTypeList,v.getContext(),getActivity());
+        mRecyclerView.setAdapter(mainListAdapter);
+
+
         // mainListViewTypeList를 먼저 만들어준다
         // 뷰 타입 별로 다른 뷰 제공
         // type : flag : subject
-        // A : 0 : 인기글
-        // B : 1 : test로 그냥 아무거나 넣어봄
-        mainListViewTypeList = new ArrayList<>();
-        mainListViewTypeList.add(new MainListViewType(0));
+        // A : 0 : 게시글종류
+        // B : 1 : 내정보
+        // C : 2 : 중고장터
+        mainListViewTypeList.add(new MainListViewType(1,"내정보"));
+        mainListViewTypeList.add(new MainListViewType(0,"기숙사와 밥"));
+        mainListViewTypeList.add(new MainListViewType(0,"스포츠와 게임"));
+        mainListViewTypeList.add(new MainListViewType(2,"중고장터"));
 
-        //완료 -- 파이어베이스에서 피드 정보 받아오기
-        boards1 = new ArrayList<>();
+        // 중고장터 이미지 임시데이터
+        List<Main_JunggoVO> test = new ArrayList<>();
+        test.add(new Main_JunggoVO(1));
+        test.add(new Main_JunggoVO(2));
+        test.add(new Main_JunggoVO(3));
+        test.add(new Main_JunggoVO(4));
+        test.add(new Main_JunggoVO(5));
+        test.add(new Main_JunggoVO(6));
+        mainListViewTypeList.get(3).setJunggos(test);
+        mainListAdapter.notifyDataSetChanged();
+        // 실행됐을때 가장 스크롤포지션이 가장 위에 있도록 하기 위한 핸들러
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.scrollToPosition(0);
+            }
+        }, 200);
+
+        // 기숙사와 밥 데이터 로드
         firestore
                 .collection("기숙사와 밥")
                 .orderBy("regDate",Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
+                        List<Board> boards = new ArrayList<>();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.v(TAG, document.getId() + " => " + document.getData());
                                 boardDTO = document.toObject(Board.class);
-                                boards1.add(boardDTO);
+                                boards.add(boardDTO);
                             }
+                            mainListViewTypeList.get(1).setBoards(boards);
+                            mainListAdapter.notifyDataSetChanged();
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
                         }
@@ -113,103 +123,53 @@ public class MainFragment extends Fragment {
                         // 여기 들어가면 리사이클러뷰 아이템의 특정 Position 위치만 바뀌었을 경우 거기만  동작?하게 할 수 있는듯
                         // mainListAdapter의 생성자 안에 들어가는 모든 데이터들을 담고있는 객체 하나 만들어서 처음띄울땐 전부 다 받아오고
                         // 실시간 데이터만 getter setter 이용해서 그것만 어댑터에 전달해서 바꾸는식으로 해야하나...?? 고민해봐야할듯..
-                        //mainListAdapter = new mainListAdapter(mainListViewTypeList,boards,null);
-                        /*mainListAdapter.notifyDataSetChanged();
+                        //MainListAdapter = new MainListAdapter(mainListViewTypeList,boards,null);
+                        /*MainListAdapter.notifyDataSetChanged();
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+
                         mRecyclerView.setLayoutManager(layoutManager);
-                        mRecyclerView.setAdapter(mainListAdapter);*/
-                        mReceiveDataListener.onReceivedEvent();
+                        mRecyclerView.setAdapter(MainListAdapter);*/
                     }
+                })
+                .addOnFailureListener(task -> {
+                    Toast.makeText(getContext(), "데이터를 받아오는데 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
                 });
 
-        boards2 = new ArrayList<>();
+        // 스포츠와 게임 데이터 로드
         firestore
                 .collection("스포츠와 게임")
                 .orderBy("regDate",Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
+                        List<Board> boards = new ArrayList<>();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.v(TAG, document.getId() + " => " + document.getData());
                                 boardDTO = document.toObject(Board.class);
-                                boards2.add(boardDTO);
+                                boards.add(boardDTO);
                             }
+                            mainListViewTypeList.get(2).setBoards(boards);
+                            mainListAdapter.notifyDataSetChanged();
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
                         }
-
-                        mReceiveDataListener.onReceivedEvent();
                     }
+                })
+                .addOnFailureListener(task -> {
+                    Toast.makeText(getContext(), "데이터를 받아오는데 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
                 });
 
 
-        setOnSampleReceivedEvent(new ReceiveDataListener() {
-            @Override
-            public void onReceivedEvent() {
-                // Todo 0724 : ASYNCtask 로 받아오는거 해봐야할듯 // or 리스너 달아놓는 방법 생각해야할 듯 => 내채팅방에기록해둠
-                //  그리고 어댑터 구조를 손으로 그려가면서 본 다음 수정해야함
-                //  이 방법 알아본다음 메인에 기숙사와밥,스포츠와 게임 두개 최신글 리스트에 넣어본다
 
-                RecyclerView.Adapter mainListAdapter = new MainListAdapter(mainListViewTypeList,boards1,boards2);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
-
-                mRecyclerView.setLayoutManager(layoutManager);
-                mRecyclerView.setAdapter(mainListAdapter);
-                mainListAdapter.notifyDataSetChanged();
-            }
-        });
-
-
-
-
-
-        //Todo 1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
+        //1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
 
         //Todo 2-- 파이어베이스에서 인기글 받아오는 것 구현 (일단 그냥 좋아요 가장 많은 것부터 가져온다)
-
-        //Todo 3-- 파이어베이스에서 가져온 정보 VO에 저장시킨다음에 어댑터에 넣어줘서 메인으로 만들기 << 일단하긴했음
-        // DTO만 잘 정의해주면 여러번 써먹을 수 있음
 
         //Todo 4-- 타이틀바 활용해서 꾸며보기
 
 
-
-        //서버가 없으므로 임시로 추가한 데이터
-        /*
-        // 리사이클러뷰 생성
-        mRecyclerView_latest=(RecyclerView) v.findViewById(R.id.latest_content);
-        mRecyclerView_famous=(RecyclerView) v.findViewById(R.id.famous_content);
-        mRecyclerView_latest.setHasFixedSize(true);
-        mRecyclerView_famous.setHasFixedSize(true);
-        // 현재는 보여주기식으로 만들어서 인기글과 최신글이 동일한 내용 사용
-        mAdapter_latest = new latestAdapter(mBoardList); // 최신글
-        mAdapter_famous = new famousAdapter(mBoardList); // 인기글
-        mAdapter_latest.notifyDataSetChanged();
-        mAdapter_famous.notifyDataSetChanged();
-        // 인기글
-        mLayoutManager2=new LinearLayoutManager(v.getContext());
-        ((LinearLayoutManager) mLayoutManager2).setOrientation(LinearLayoutManager.HORIZONTAL);
-        mRecyclerView_famous.setLayoutManager(mLayoutManager2);
-        mRecyclerView_famous.setAdapter(mAdapter_famous);
-        // 최신글
-        mLayoutManager=new LinearLayoutManager(v.getContext());
-        mRecyclerView_latest.setLayoutManager(mLayoutManager);
-        mRecyclerView_latest.setAdapter(mAdapter_latest);*/
-
-
-        // Inflate the layout for this fragment
         return v;
     }
 
-    public interface ReceiveDataListener{
-
-        void onReceivedEvent();
-
-    }
-
-    public void setOnSampleReceivedEvent(ReceiveDataListener listener){
-        mReceiveDataListener = listener;
-
-    }
 }

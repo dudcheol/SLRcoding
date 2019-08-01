@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
@@ -74,9 +76,6 @@ public class MainActivity extends AppCompatActivity {
         setTitle("홈");
         Intent intent = getIntent();
 
-        // (최민철 수정 19.07.28)
-        firebaseAuth = FirebaseAuth.getInstance();
-
         if(intent.getExtras()!=null){
             flag =intent.getExtras().getInt("flag");
         }
@@ -99,15 +98,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // 로그인 되지 않은 경우 login페이지로 이동 (최민철 수정 19.07.28)
-    @Override
-    public void onStart(){
-        super.onStart();
-        currentUser = firebaseAuth.getCurrentUser();
-        if(currentUser == null){
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
+    // 다른 프래그먼트나 어댑터에서 프래그먼트 전환이 필요할때 씀
+    public void replaceFragment(Fragment fragment,int item_flag) {
+
+        if(!isFinishing() && !isDestroyed()){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.main_content, fragment).commit();
+
+            BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.navigation);
+
+            // item_flag 는 선택된 아이템을 바꾸기 위한 변수
+            // 0 ~ 4 : home, feed, board, message, mypage
+            navigationView.getMenu().getItem(item_flag).setChecked(true);
         }
     }
-
 }
