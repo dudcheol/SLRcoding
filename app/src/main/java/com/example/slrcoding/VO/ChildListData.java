@@ -1,4 +1,6 @@
 package com.example.slrcoding.VO;
+
+// 최민철(수정 : xx.xx.xx)
 public class ChildListData {
 
     private String title;

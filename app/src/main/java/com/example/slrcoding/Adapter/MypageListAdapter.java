@@ -13,6 +13,7 @@ import com.example.slrcoding.VO.ParentListData;
 
 import java.util.ArrayList;
 
+// 최민철(수정 : xx.xx.xx)
 public class MypageListAdapter extends BaseExpandableListAdapter {
     private static final int PARENT_ROW = R.layout.mypage_parent_row;
     private static final int CHILD_ROW = R.layout.mypage_child_row;
