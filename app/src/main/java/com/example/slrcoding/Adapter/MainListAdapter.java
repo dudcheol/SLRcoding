@@ -146,7 +146,6 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((CHolder) holder).junggo_image_album.setLayoutManager(new LinearLayoutManager(v_C.getContext()
                         , LinearLayoutManager.HORIZONTAL
                         ,false));
-                //((CHolder) holder).junggo_card.bringChildToFront(((CHolder) holder).junggo_image_album);
                 ((CHolder)holder).junggo_image_album.setAdapter(main_junggoListAdapter);
             }
 
