@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -30,6 +32,10 @@ public class FeedWriteActivity extends AppCompatActivity {
     private EditText mWriteContentsText;
     private Button bt;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //2019-08-02 로그인 정보 가져오기 위해 선언(이정찬)
+    private FirebaseAuth firebaseAuth;           // 파이어베이스 인증 객체 생성
+    private FirebaseUser currentUser;
+
     private String category=null;
     private int code =0;
     private String id;
@@ -53,6 +59,11 @@ public class FeedWriteActivity extends AppCompatActivity {
         }else if(code == 2){
             category = "스포츠와 게임";
         }
+        //Todo: 여기서 로그인 유저를 가져온다. 아이디를 담아둔다.
+        //2019-08-02 현재 로그인 정보 가져오기 추가 (이정찬)
+        firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언
+        currentUser = firebaseAuth.getCurrentUser();        // 현재 로그인한 사용자 가져오기
+        //Toast.makeText(this, "userEmail:"+userEmail, Toast.LENGTH_SHORT).show();
 
     }
     //추가된 소스, ToolBar에 menu.xml을 인플레이트함
@@ -91,7 +102,9 @@ public class FeedWriteActivity extends AppCompatActivity {
                 time1 = format1.format(time);
                 replyCnt=0L;
                 likeCnt=0L;
-
+                //이메일 받아오기
+                String userEmail = currentUser.getEmail();
+                //TOdo: 아이디를 넣어줘야함.
                 id = db.collection(category).document().getId();
                 Map<String,Object> post = new HashMap<>();
                 post.put("id",id);
@@ -102,7 +115,7 @@ public class FeedWriteActivity extends AppCompatActivity {
                 post.put("regDate",time1);
                 post.put("replyCnt",replyCnt);
                 post.put("likeCnt",likeCnt);
-
+                post.put("userEmail",userEmail);
                 db.collection(category)
                         .document(id).set(post)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
