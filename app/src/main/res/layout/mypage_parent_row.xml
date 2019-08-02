@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--최민철 수정(xx.xx.xx)-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:background="#EBEBEB">
+
+    <TextView
+        android:id="@+id/mypage_menu_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"/>
+
+</RelativeLayout>

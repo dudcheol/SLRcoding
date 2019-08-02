@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="1dp"
+    android:id="@+id/cardView"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    app:cardMaxElevation="2dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
+    android:elevation="20dp"
+
+    >
+
+    <RelativeLayout
+        android:id="@+id/re"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#00BCD4"
+            android:layout_marginLeft="8dp"
+            />
+        <View
+            android:id="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/category_name"
+            android:layout_height="0.3dp"
+            android:background="#4682B4" />
+
+        <TextView
+            android:id="@+id/item_title_text"
+            android:layout_below="@id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="3dp"
+            android:text="반갑습니다. 여러분"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/feed_write_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10분전"
+            android:textSize="10dp"
+
+            android:layout_below="@id/line"
+            android:layout_alignBottom="@id/item_title_text"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="150dp"/>
+
+        <TextView
+            android:id="@+id/item_name_text"
+            android:layout_below="@id/item_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:drawableStart="@drawable/ic_person"
+            android:text="name"
+
+            />
+        <!--<ImageButton
+            android:id="@+id/like_button"
+            android:layout_marginRight="3dp"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/like_cnt"
+            android:layout_alignBottom="@id/item_name_text"
+            android:src="@drawable/heart_4"
+            />-->
+        <com.like.LikeButton
+            android:id="@+id/heart_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:icon_size="10dp"
+            app:anim_scale_factor="3"
+            android:layout_alignBottom="@id/item_name_text"
+            android:layout_toLeftOf="@id/like_cnt"
+            app:like_drawable="@drawable/heart_4_on"
+            app:unlike_drawable="@drawable/heart_4"
+            app:icon_type="heart" />
+        <TextView
+            android:id="@+id/like_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_title_text"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="40dp"
+            android:textColor="#FF2C0E"
+            android:text="0"
+            android:textSize="8sp"
+            android:layout_alignTop="@id/heart_button"
+            />
+        <ImageButton
+            android:id="@+id/reply_button"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@id/heart_button"
+            android:layout_alignBottom="@id/item_name_text"
+            android:src="@drawable/chat"
+
+            />
+        <TextView
+            android:id="@+id/reply_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_title_text"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@id/reply_button"
+            android:textColor="#FF2C0E"
+            android:text="0"
+            android:textSize="8sp"
+            android:layout_alignTop="@id/reply_button"
+
+
+
+            />
+        <!--<TextView
+            android:id="@+id/reply_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_title_text"
+            android:drawableStart="@drawable/ic_chat_bubble"
+            android:layout_marginLeft="362dp"
+            android:layout_marginTop="10dp"
+            android:text="0"
+            />-->
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>
