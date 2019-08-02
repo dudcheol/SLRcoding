@@ -3,10 +3,14 @@ package com.example.slrcoding.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -93,7 +97,6 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 return VIEW_TYPE_B;
             case VIEW_TYPE_C:
                 return VIEW_TYPE_C;
-                // Todo : 디폴트의 경우 에러처리 아니면 if문으로 바꾸기
                 default:
                     return -1;
         }
@@ -127,10 +130,13 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((AHolder) holder).go_to_detail.setOnClickListener(view -> {
                 MainActivity activity = (MainActivity)mContext;
                 activity.replaceFragment(new FeedFragment(),1);
+                // Todo : 스포츠와 게임에서 더보기 누르면 기숙사와 밥으로 넘어감 해결해야함
             });
 
         }else if(holder instanceof  BHolder){
-            // BHolder에서 보여줄 것 구현
+            //GradientDrawable drawable=(GradientDrawable)mContext.getDrawable(R.drawable.background_rounding);
+            ((BHolder) holder).profile.setBackground(new ShapeDrawable(new OvalShape()));
+            ((BHolder) holder).profile.setClipToOutline(true);
 
         }else if(holder instanceof CHolder){
             ((CHolder)holder).subject.setText(mainListViewTypeList.get(position).getName());
@@ -170,8 +176,10 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class BHolder extends RecyclerView.ViewHolder{
+        ImageView profile;
         public BHolder(@NonNull View itemView) {
             super(itemView);
+            profile = itemView.findViewById(R.id.profile);
         }
     }
 

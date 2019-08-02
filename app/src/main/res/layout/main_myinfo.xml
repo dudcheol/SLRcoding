@@ -26,7 +26,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_alignBottom="@+id/my_info_layout"
-        android:src="@drawable/defaultimage" />
+        android:src="@drawable/defaultimage"/>
 
     <RelativeLayout
         android:id="@+id/my_info_layout"
