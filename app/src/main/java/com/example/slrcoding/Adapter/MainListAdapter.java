@@ -51,6 +51,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     // 순서별로 어떤 뷰를 보여줄지 리스트에 담아서 결정한다
     private List<MainListViewType> mainListViewTypeList;
+
     private View v_A,v_B,v_C;
     private Context mContext;
     private Activity mActivity;
