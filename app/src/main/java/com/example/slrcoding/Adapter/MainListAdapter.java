@@ -88,7 +88,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // AHolder에서 보여줄 것 구현
             ((AHolder)holder).subject.setText("최신글");
 
-            BoardListAdapter boardListAdapter = new BoardListAdapter((Activity) v_A.getContext(),board_A);
+            Main_BoardListAdapter boardListAdapter = new Main_BoardListAdapter((Activity) v_A.getContext(),board_A);
             ((AHolder)holder).listView.setAdapter(boardListAdapter);
 
         }else if(holder instanceof  BHolder){
