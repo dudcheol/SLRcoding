@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(flag==2){
             Log.i("first","first");
-            fragmentTransaction.add(R.id.main_content, new FeedFragment());
+            fragmentTransaction.add(R.id.main_content, new BoardFragment());
             fragmentTransaction.commit();
             BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
             navigation.getMenu().getItem(2).setChecked(true);
