@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+// 최민철(수정 : xx.xx.xx)
 public class Mypage_sub3_Notice extends AppCompatActivity {
 
     @Override

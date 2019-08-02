@@ -43,7 +43,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MainViewHold
         holder.board_mCategoryTextView.setText(data.getCategory());
         holder.board_mTitleTextView.setText(data.getTitle());
         holder.board_mNameTextView.setText(data.getName());
-        holder.board_mRegDateView.setText(data.getRegDate());
+        holder.board_mRegDateView.setText(data.getRegModifyDate());
         holder.board_mReplyCntVIew.setText(String.valueOf(data.getReplyCnt()));
         holder.board_mContentTextView.setText(data.getContents());
         holder.board_mLikeCntView.setText(String.valueOf(data.getLikeCnt()));

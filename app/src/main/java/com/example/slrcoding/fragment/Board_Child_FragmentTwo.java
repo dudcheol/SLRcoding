@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
 // 김연준
 public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String cate="의류";
     public RecyclerView board_mMainRecyclerView;
     private BoardAdapter board_mAdapter;
@@ -53,9 +53,9 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_feed__child__fragment_two, container, false);
+        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_board__child__fragment_two, container, false);
         board_mMainRecyclerView = rootView.findViewById(R.id.board_recycler_view2);
-        mSwipeRefreshLayout2 = (SwipeRefreshLayout)rootView.findViewById(R.id.swref2);
+        mSwipeRefreshLayout2 = (SwipeRefreshLayout)rootView.findViewById(R.id.board_swref2);
         mSwipeRefreshLayout2.setOnRefreshListener(this);
 
         board_mBoardList2=new ArrayList<>();
@@ -76,6 +76,7 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                             String name = (String)dc.getDocument().getData().get("name");
                             String category = (String)dc.getDocument().getData().get("category");
                             String regDate = (String)dc.getDocument().getData().get("regDate");
+                            Log.i("sd","title"+title);
                             Calendar calendar = new GregorianCalendar(Locale.KOREA);
                             //현재 년도일 경우 없애서 보여주고 작년 일 경우 년도 표시하기
                             int nYear = calendar.get(Calendar.YEAR);
@@ -89,12 +90,16 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                                 regDateModify = regDate.substring(0,17);
                             }
                             Long replyCnt = (Long)dc.getDocument().getData().get("replyCnt");
-                            data2 = new Board2(id,category,title,contents,name,regDateModify,replyCnt);
+                            Long likeCnt = (Long)dc.getDocument().getData().get("likeCnt");
+
+                            data2 = new Board2(id,category,title,contents,name,regDate,replyCnt,regDateModify,likeCnt);
                             board_mBoardList2.add(data2);
                             Log.i("dd","ADDED");
 
                             break;
                         case MODIFIED:
+                            Long likeCnt1 = (Long)dc.getDocument().getData().get("likeCnt");
+
                             Long replyCnt1 = (Long)dc.getDocument().getData().get("replyCnt");
                             String id1 = (String)dc.getDocument().getData().get("id");
                             String title1 = (String)dc.getDocument().getData().get("title");
@@ -115,7 +120,7 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                                 regDateModify1 = regDate1.substring(0,17);
                             }
                             //수정 된 게시글에 대한 정보를 담은 Board를 백업하여 이를 가지고 리스트에 set으로 수정함
-                            Board2 datacopy = new Board2(id1,category1,title1,contents1,name1,regDateModify1,replyCnt1);
+                            Board2 datacopy = new Board2(id1,category1,title1,contents1,name1,regDate1,replyCnt1,regDateModify1,likeCnt1);
 
                             //리스트에서 해당 수정된 객체를 찾아서 그 리스트에서 수정
                             Board2 temp = new Board2();

@@ -13,12 +13,12 @@ import com.example.slrcoding.R;
 
 import java.util.List;
 
-public class BoardListAdapter extends BaseAdapter {
+public class Main_BoardListAdapter extends BaseAdapter {
     List<Board> boardList;
     LayoutInflater mLayoutInflater;
     Activity activity;
 
-    public BoardListAdapter(Activity activity, List<Board> data){
+    public Main_BoardListAdapter(Activity activity, List<Board> data){
         this.boardList = data;
         this.activity = activity;
     }
@@ -46,11 +46,11 @@ public class BoardListAdapter extends BaseAdapter {
         if (view == null)
             view = mLayoutInflater.inflate(R.layout.main_board_list, null);
         //View v = mLayoutInflater.inflate(R.layout.main_board_list,viewGroup);
-        TextView category = (TextView)view.findViewById(R.id.category);
-        TextView title = (TextView)view.findViewById(R.id.title);
+        TextView title = (TextView)view.findViewById(R.id.category);
+        TextView contents = (TextView)view.findViewById(R.id.title);
 
-        category.setText(boardList.get(i).getCategory());
         title.setText(boardList.get(i).getTitle());
+        contents.setText(boardList.get(i).getContents());
 
         return view;
     }

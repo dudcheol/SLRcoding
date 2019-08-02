@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,10 +18,15 @@ import com.example.slrcoding.fragment.FeedFragment;
 import com.example.slrcoding.fragment.MainFragment;
 import com.example.slrcoding.fragment.MessageFragment;
 import com.example.slrcoding.fragment.MypageFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     int flag=0;
 
+    // (최민철 수정 19.07.28)
+    private FirebaseAuth firebaseAuth;  // 파이어베이스 인증 객체 생성
+    private FirebaseUser currentUser;   // 현재 로그인 된 정보를 담은 객체 생성
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -91,4 +98,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // 다른 프래그먼트나 어댑터에서 프래그먼트 전환이 필요할때 씀
+    public void replaceFragment(Fragment fragment,int item_flag) {
+
+        if(!isFinishing() && !isDestroyed()){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.main_content, fragment).commit();
+
+            BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.navigation);
+
+            // item_flag 는 선택된 아이템을 바꾸기 위한 변수
+            // 0 ~ 4 : home, feed, board, message, mypage
+            navigationView.getMenu().getItem(item_flag).setChecked(true);
+        }
+    }
 }
