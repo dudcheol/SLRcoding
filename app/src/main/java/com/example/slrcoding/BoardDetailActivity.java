@@ -323,16 +323,16 @@ public class BoardDetailActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.menu_delete:
+            case R.id.board_delete:
                 db.collection(category).document(idfrom)
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 //Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                Toast.makeText(getApplicationContext(), "피드 삭제성공", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "게시글 삭제성공", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                                intent.putExtra("flag",1);
+                                intent.putExtra("flag",2);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
