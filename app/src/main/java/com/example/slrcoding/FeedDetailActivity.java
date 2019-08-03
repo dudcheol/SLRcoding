@@ -95,6 +95,8 @@ public class FeedDetailActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;           // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;
     public static boolean likeuserconfirm; //좋아요 누른 사용자를 확인하는 플래그
+    private String likeid;
+    private String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class FeedDetailActivity extends AppCompatActivity {
         //2019-08-02 현재 로그인 정보 가져오기 추가 (이정찬)
         firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언
         currentUser = firebaseAuth.getCurrentUser();        // 현재 로그인한 사용자 가져오기
-        String userEmail = currentUser.getEmail();
+        userEmail = currentUser.getEmail();
 
         //likeflag=1;
         titleTextView = findViewById(R.id.detail_item_title_text);
@@ -288,17 +290,17 @@ public class FeedDetailActivity extends AppCompatActivity {
         //TOdo:좋아요 누른 사용자 (LikeUsers 컬렉션의 문서(usreID)를 모두 가져와서 if문으로 비교후 좋아요를 누른 사용자라면 하트 켜고 좋아요 누른 적이 없다며 하트 끄기
         //Todo: confrimLike 메서드 사용하기.
         // 좋아요누른 사용자 있는지 확인 후 setLiked
-//        confirmLikeUser(userEmail, new FeedCallback() {
-//            @Override
-//            public void onCallback(boolean value) {
-//                if(value){
-//                    likelyButton.setLiked(false);
-//                }else{
-//                    likelyButton.setLiked(true);
-//                }
-//            }
-//        });
-        
+        confirmLikeUser(userEmail, new FeedCallback() {
+            @Override
+            public void onCallback(boolean value) {
+                if(value){
+                    likelyButton.setLiked(false);
+                }else{
+                    likelyButton.setLiked(true);
+                }
+            }
+        });
+
     }
     //댓글 등록 시 파베에 넣기
     //댓글 수도 업데이트하기..
@@ -373,7 +375,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(FeedDetailActivity.this, "좋아요 수 증가!!", Toast.LENGTH_SHORT).show();
-                        likeflag =1;
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -384,6 +386,26 @@ public class FeedDetailActivity extends AppCompatActivity {
                 });
                 //Todo:로그인 한 유저 정보를 가져와서 댓글을 좋아요 누르면 LikeUsers라는 컬렉션을 내부에서 생성해서
                 //Todo: UserId를 문서로 넣는다. (좋아요 누른 사용자들을 넣어줌 )
+                //likeid = db.collection(category).document(idfrom).collection("LikeUsers").document().getId();
+                Map<String,Object> post = new HashMap<>();
+                post.put("userEmail",userEmail);
+                //post.put("likeid",likeid);
+                db.collection(category)
+                        .document(idfrom).collection("LikeUsers").document(userEmail).set(post)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(FeedDetailActivity.this, "좋아요댓글유저 등록 완료", Toast.LENGTH_SHORT).show();
+                            }
+
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Log.w(TAG, "Error adding document", e);
+                                Toast.makeText(FeedDetailActivity.this, "좋아요댓글유저 등록 실패", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
             }
 
@@ -408,6 +430,23 @@ public class FeedDetailActivity extends AppCompatActivity {
                     }
                 });
                 //TOdo:LikeUsers 컬렉션 문서도 삭제한다.(해당 로그인 사용자 ID)
+
+                db.collection(category)
+                        .document(idfrom).collection("LikeUsers").document(userEmail).delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(FeedDetailActivity.this, "좋아요댓글유저 삭제 완료", Toast.LENGTH_SHORT).show();
+                            }
+
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Log.w(TAG, "Error adding document", e);
+                                Toast.makeText(FeedDetailActivity.this, "좋아요댓글유저 삭제 실패", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
        });
     }
@@ -462,21 +501,21 @@ public class FeedDetailActivity extends AppCompatActivity {
     }
     //Todo: 콜백을 통한 likeusers 컬렉션에서 아이디가 존재하는지 확인 구현 중
     // 중복되는 아이디 존재 확인.(파이어베이스의 비동기 처리문제로 인해 외부에서 데이터 접근하기 위해 콜백함수 사용)
-//    public void confirmLikeUser(String userEmail, FeedCallback mycallback){
-//        db.collection(category).document(idfrom).collection("LikeUsers").whereEqualTo("userEmail", userEmail).get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if(task.isSuccessful()){
-//                            likeuserconfirm=task.getResult().isEmpty();
-//                            mycallback.onCallback(likeuserconfirm);       // flag값이 수신됐을때 시스템에서 콜백함수 호출
-//                        }
-//                    }
-//                });
-//    }
-//
-//    // 비동기 처리 해결하기 위해 생성한 콜백함수
-//    public interface FeedCallback{
-//        void onCallback(boolean value);
-//    }
+    public void confirmLikeUser(String userEmail, FeedCallback mycallback){
+        db.collection(category).document(idfrom).collection("LikeUsers").whereEqualTo("userEmail", userEmail).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            likeuserconfirm=task.getResult().isEmpty();
+                            mycallback.onCallback(likeuserconfirm);       // flag값이 수신됐을때 시스템에서 콜백함수 호출
+                        }
+                    }
+                });
+    }
+
+    // 비동기 처리 해결하기 위해 생성한 콜백함수
+    public interface FeedCallback{
+        void onCallback(boolean value);
+    }
 }
