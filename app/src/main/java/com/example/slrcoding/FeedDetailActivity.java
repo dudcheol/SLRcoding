@@ -25,6 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -89,11 +91,20 @@ public class FeedDetailActivity extends AppCompatActivity {
     Toolbar toolbar;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    //2019-08-02 로그인 정보 가져오기 위해 선언(이정찬)
+    private FirebaseAuth firebaseAuth;           // 파이어베이스 인증 객체 생성
+    private FirebaseUser currentUser;
+    public static boolean likeuserconfirm; //좋아요 누른 사용자를 확인하는 플래그
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_detail);
-        //Todo: 파베에서 좋아요누른 유저들 가져와서  이를 통해 좋아요를 누른 유저면 setLiked 안누른 유저는 그냥 setLiked(false)
+        //2019-08-02 현재 로그인 정보 가져오기 추가 (이정찬)
+        firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언
+        currentUser = firebaseAuth.getCurrentUser();        // 현재 로그인한 사용자 가져오기
+        String userEmail = currentUser.getEmail();
+
         //likeflag=1;
         titleTextView = findViewById(R.id.detail_item_title_text);
         contentTextView = findViewById(R.id.feed_context);
@@ -275,12 +286,19 @@ public class FeedDetailActivity extends AppCompatActivity {
         setClickEvent();
         setReplySubmit();
         //TOdo:좋아요 누른 사용자 (LikeUsers 컬렉션의 문서(usreID)를 모두 가져와서 if문으로 비교후 좋아요를 누른 사용자라면 하트 켜고 좋아요 누른 적이 없다며 하트 끄기
-        Log.i("flag","likeflag: "+likeflag);
-        if(likeflag ==1){
-            likelyButton.setLiked(true);
-        }else if (likeflag == 0){
-            likelyButton.setLiked(false);
-        }
+        //Todo: confrimLike 메서드 사용하기.
+        // 좋아요누른 사용자 있는지 확인 후 setLiked
+//        confirmLikeUser(userEmail, new FeedCallback() {
+//            @Override
+//            public void onCallback(boolean value) {
+//                if(value){
+//                    likelyButton.setLiked(false);
+//                }else{
+//                    likelyButton.setLiked(true);
+//                }
+//            }
+//        });
+        
     }
     //댓글 등록 시 파베에 넣기
     //댓글 수도 업데이트하기..
@@ -442,4 +460,23 @@ public class FeedDetailActivity extends AppCompatActivity {
             return o2.getReplyDate().compareTo(o1.getReplyDate());
         }
     }
+    //Todo: 콜백을 통한 likeusers 컬렉션에서 아이디가 존재하는지 확인 구현 중
+    // 중복되는 아이디 존재 확인.(파이어베이스의 비동기 처리문제로 인해 외부에서 데이터 접근하기 위해 콜백함수 사용)
+//    public void confirmLikeUser(String userEmail, FeedCallback mycallback){
+//        db.collection(category).document(idfrom).collection("LikeUsers").whereEqualTo("userEmail", userEmail).get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if(task.isSuccessful()){
+//                            likeuserconfirm=task.getResult().isEmpty();
+//                            mycallback.onCallback(likeuserconfirm);       // flag값이 수신됐을때 시스템에서 콜백함수 호출
+//                        }
+//                    }
+//                });
+//    }
+//
+//    // 비동기 처리 해결하기 위해 생성한 콜백함수
+//    public interface FeedCallback{
+//        void onCallback(boolean value);
+//    }
 }
