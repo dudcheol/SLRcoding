@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
         <item
-            android:id="@+id/menu_delete"
+            android:id="@+id/board_delete"
             android:title="삭제"
             />
     </group>

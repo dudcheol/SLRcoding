@@ -89,7 +89,16 @@ public class MainActivity extends AppCompatActivity {
             BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
             navigation.getMenu().getItem(1).setChecked(true);
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        }else {
+        }
+        else if(flag==2){
+            Log.i("first","first");
+            fragmentTransaction.add(R.id.main_content, new BoardFragment());
+            fragmentTransaction.commit();
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+            navigation.getMenu().getItem(2).setChecked(true);
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        }
+        else {
             Log.i("first","two");
             fragmentTransaction.add(R.id.main_content, new MainFragment());
             fragmentTransaction.commit();
