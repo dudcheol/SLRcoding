@@ -39,6 +39,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
+import org.w3c.dom.Document;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -97,7 +99,8 @@ public class FeedDetailActivity extends AppCompatActivity {
     public static boolean likeuserconfirm; //좋아요 누른 사용자를 확인하는 플래그
     private String likeid;
     private String userEmail;
-
+    public static boolean delete_flag;
+    public static boolean delete_flag2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -301,6 +304,13 @@ public class FeedDetailActivity extends AppCompatActivity {
             }
         });
 
+        confirmdelete(userEmail, new FeedCallback() {
+            @Override
+            public void onCallback(boolean value) {
+                delete_flag2=value;
+            }
+        });
+
     }
     //댓글 등록 시 파베에 넣기
     //댓글 수도 업데이트하기..
@@ -466,26 +476,34 @@ public class FeedDetailActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.menu_delete:
-                db.collection(category).document(idfrom)
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                //Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                Toast.makeText(getApplicationContext(), "피드 삭제성공", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                                intent.putExtra("flag",1);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                //Log.w(TAG, "Error deleting document", e);
-                            }
-                        });
+                //Todo: 콜백으로 해당 글 작성자를 읽어온 후 delete_flag에 true면 내가 쓴글로 삭제하게 하고 false면 삭제할 때 Toast로 작성자외 삭제할 수 없습니다. 뜨게하기.
+                //Todo: 여기서 if문으로 flag로 가르기.
+
+                if(delete_flag2){
+                    db.collection(category).document(idfrom)
+                            .delete()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                    Toast.makeText(getApplicationContext(), "피드 삭제성공", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                    intent.putExtra("flag",1);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    //Log.w(TAG, "Error deleting document", e);
+                                }
+                            });
+                }else{
+                    Toast.makeText(this, "작성자 외 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                }
+                
 
         }
         return super.onOptionsItemSelected(item);
@@ -512,6 +530,23 @@ public class FeedDetailActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    //Todo: 삭제 시 해당 유저가 쓴글인지 확인하여 flag를 콜백하는 함수.
+    public void confirmdelete(String userEmail, FeedCallback mycallback2){
+        db.collection(category).document(idfrom).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(userEmail.equals(document.get("userEmail"))){
+                        delete_flag = true;
+                    }else{
+                        delete_flag = false;
+                    }
+                    mycallback2.onCallback(delete_flag);
+                }
+            }
+        });
     }
 
     // 비동기 처리 해결하기 위해 생성한 콜백함수
