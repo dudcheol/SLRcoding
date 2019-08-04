@@ -4,11 +4,17 @@ package com.example.slrcoding.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +59,12 @@ public class FeedFragment extends Fragment {
     private FloatingActionButton fab_main, fab_sub1, fab_sub2;
     public int switch_value;
     public static final int REQUEST_CODE = 1000;
+    public static SearchView mSearchView;
+    public Toolbar toolbar;
     public FeedFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -207,6 +216,11 @@ public class FeedFragment extends Fragment {
                 startActivityForResult(intent,REQUEST_CODE);
             }
         });*/
+        toolbar =rootView.findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.search);
+
+        mSearchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+        Log.i("searchView2","searchVIew2 "+mSearchView);
         return rootView;
     }
 

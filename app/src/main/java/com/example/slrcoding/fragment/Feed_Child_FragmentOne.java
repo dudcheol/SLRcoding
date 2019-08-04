@@ -2,6 +2,8 @@ package com.example.slrcoding.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,7 +50,7 @@ public class Feed_Child_FragmentOne extends Fragment implements SwipeRefreshLayo
     private List<Board> mBoardList1 =null;
     private Board data1;
     private int i=0;
-
+    FeedFragment feedFragment;
     public static final int REQUEST_CODE = 1000;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     public Feed_Child_FragmentOne() {
@@ -158,6 +160,20 @@ public class Feed_Child_FragmentOne extends Fragment implements SwipeRefreshLayo
                 //mAdapter.notifyDataSetChanged();
                 mMainRecyclerView.setAdapter(mAdapter);
 
+            }
+        });
+        feedFragment = new FeedFragment();
+        Log.i("searchVIew","searchView"+feedFragment.mSearchView);
+        feedFragment.mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
+                return false;
             }
         });
         return rootView;
