@@ -9,24 +9,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.like.LikeButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //피드 리사이클러 어댑터
 //이정찬
 //어댑터
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder>{
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> implements Filterable {
 
     private static final int RESULT_OK = 3000;
     private List<Board> mBoardList;
+    //Todo: 검색 기능을 위한 변수
+    private List<Board> mBoardListFull;
 
 
     public MainAdapter(List<Board> mBoardList) {
         this.mBoardList = mBoardList;
+        mBoardListFull = new ArrayList<>(mBoardList);
 
 
     }
@@ -70,6 +76,42 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public int getItemCount() {
         return mBoardList.size();
     }
+    //Todo: 검색 함수
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    //Todo: 검색 함수
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Board> filteredList = new ArrayList<>();
+
+            if(constraint == null || constraint.length() == 0){
+                filteredList.addAll(mBoardListFull);
+            }else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for(Board item : mBoardListFull){
+                    if(item.getTitle().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mBoardList.clear();
+            mBoardList.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     //하나당 세부 내용을 위한 뷰 홀더
     class MainViewHolder extends RecyclerView.ViewHolder{
