@@ -1,35 +1,38 @@
 package com.example.slrcoding;
 
-// 최민철(수정 : 19.07.22)
+// 최민철(수정 : 19.08.06)
 public class UserVO {
 
-    private String id;
     private String user_id;
     private String user_email;
-    private String user_password;
     private String user_name;
     private String user_year;
     private String user_month;
     private String user_day;
     private String user_phone_num;
     private String user_sex;
+    private boolean push_alarm;
+    private boolean comment_alarm;
+    private boolean info_alarm;
 
     public UserVO(){}
 
-    public void UserVO(String id, String user_id, String user_email, String user_password, String user_name, String user_year,
-                       String user_month, String user_day, String user_phone_num, String user_sex){
-        this.id=id;
+    public void UserVO(String user_id, String user_email, String user_name, String user_year,
+                       String user_month, String user_day, String user_phone_num, String user_sex, boolean push_alarm,
+                       boolean comment_alarm, boolean info_alarm){
         this.user_id=user_id;
         this.user_email=user_email;
-        this.user_password=user_password;
         this.user_name=user_name;
         this.user_year=user_year;
         this.user_month=user_month;
         this.user_day=user_day;
         this.user_phone_num=user_phone_num;
         this.user_phone_num=user_phone_num;
+        this.user_sex=user_sex;
+        this.push_alarm=push_alarm;
+        this.comment_alarm=comment_alarm;
+        this.info_alarm=info_alarm;
     }
-
 
     public String getUser_id() {
         return user_id;
@@ -45,14 +48,6 @@ public class UserVO {
 
     public void setUser_email(String user_email) {
         this.user_email = user_email;
-    }
-
-    public String getUser_password() {
-        return user_password;
-    }
-
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
     }
 
     public String getUser_name() {
@@ -103,11 +98,27 @@ public class UserVO {
         this.user_sex = user_sex;
     }
 
-    public String getId() {
-        return id;
+    public boolean isPush_alarm() {
+        return push_alarm;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public boolean isComment_alarm() {
+        return comment_alarm;
+    }
+
+    public boolean isInfo_alarm() {
+        return info_alarm;
+    }
+
+    public void setPush_alarm(boolean push_alarm) {
+        this.push_alarm = push_alarm;
+    }
+
+    public void setComment_alarm(boolean comment_alarm) {
+        this.comment_alarm = comment_alarm;
+    }
+
+    public void setInfo_alarm(boolean info_alarm) {
+        this.info_alarm = info_alarm;
     }
 }

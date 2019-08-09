@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -24,11 +25,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-// 최민철(수정 : 19.07.28)
+// 최민철(수정 : 19.08.06)
 public class LoginActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     InputMethodManager editManager;
     EditText EmailInput, PasswordInput;
+    CheckBox Autologin_check;
     private FirebaseAuth firebaseAuth;  // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;   // 현재 로그인 된 정보를 담은 객체 생성
 
@@ -45,6 +47,19 @@ public class LoginActivity extends AppCompatActivity {
         Button bt_signup = (Button)findViewById(R.id.signupButton);
         EmailInput = (EditText)findViewById(R.id.emailInput);
         PasswordInput = (EditText)findViewById(R.id.passwordInput);
+        Autologin_check = (CheckBox)findViewById(R.id.autologin_check);
+
+        // 자동 로그인 체크박스 이벤트 처리
+        Autologin_check.setOnClickListener(new CheckBox.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(((CheckBox)v).isChecked()){
+                    Toast.makeText(LoginActivity.this, "자동로그인이 활성화 되었습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(LoginActivity.this, "자동로그인이 비 활성화 되었습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         // 로그인 버튼 이벤트 처리
         bt_login.setOnClickListener(new View.OnClickListener() {

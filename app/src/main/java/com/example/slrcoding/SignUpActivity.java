@@ -227,7 +227,7 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             hide_Key_Board();
-                            firebase_id = firebasestore.collection(category).document().getId();
+                            firebase_id = email;
                             Map<String, Object> post = new HashMap<>();
                             post.put("user_id", id);
                             post.put("user_email", email);

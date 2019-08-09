@@ -47,9 +47,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import javax.crypto.Mac;
+
 import static android.app.Activity.RESULT_OK;
 
-// 최민철(수정 : 19.07.28)
+// 최민철(수정 : 19.08.06)
 public class MypageFragment extends Fragment {
 
     String submenu1[] = {"내가 쓴 글", "댓글 단 글", "스크랩"};
@@ -59,14 +61,10 @@ public class MypageFragment extends Fragment {
 
     private ArrayList<ParentListData> parentListData;
     private ExpandableListView parentListView;
-    private TextView tv_username;;
+    private TextView tv_username;
     private ImageView iv_profile;
-    private String category = "사용자 정보";
     public MypageListAdapter adpater;
     private FirebaseAuth firebaseAuth;           // 파이어베이스 인증 객체 생성
-    private FirebaseFirestore firebasestore;     // 파이어베이스 스토어 객체 생성
-    private FirebaseUser currentUser;
-    private String currentUser_id;
 
     public MypageFragment() {
         // Required empty public constructor
@@ -88,7 +86,6 @@ public class MypageFragment extends Fragment {
                 }
             }
         }
-
     }
 
     @Override
@@ -100,10 +97,9 @@ public class MypageFragment extends Fragment {
         registerForContextMenu(parentListView);
 
         firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언
-        firebasestore = FirebaseFirestore.getInstance();    // 파이어베이스 스토어 객체 선언
-        currentUser = firebaseAuth.getCurrentUser();        // 현재 로그인한 사용자 가져오기
 
-        String currentUser_email = currentUser.getEmail();
+        // MainActivity의 uservo객체를 이용하여 user id의 텍스트뷰 세팅
+        tv_username.setText(((MainActivity)getActivity()).uservo.getUser_id());
 
         Display newDisplay = getActivity().getWindowManager().getDefaultDisplay();
         int width = newDisplay.getWidth();
@@ -270,6 +266,8 @@ public class MypageFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(et.getText().toString().length()>0){             // 입력 받은 값 username 설정 But, 입력을 아무것도 안할시 dialog 종료
                     tv_username.setText(et.getText().toString());
+                    ((MainActivity)getActivity()).uservo.setUser_id(et.getText().toString()); // uservo 객체에 아이디 변경
+
                 }
                 else{
                     dialogInterface.dismiss();
