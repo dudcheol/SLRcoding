@@ -557,4 +557,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     public interface FeedCallback{
         void onCallback(boolean value);
     }
+
+    //Todo: xml에서 카카오톡 모양의 이미지 버튼을 만들어주고 onClick으로 메소드 생성해준다.
+    // 그 다음 파베에서 해당 글의 카카오톡 링크를 받아와서 누르면 링크로 이동하게 끔 구현한다.
 }
