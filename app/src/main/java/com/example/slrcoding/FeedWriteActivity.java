@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.slrcoding.MainActivity.uservo;
+
 
 public class FeedWriteActivity extends AppCompatActivity {
 
@@ -61,8 +63,8 @@ public class FeedWriteActivity extends AppCompatActivity {
         }
         //Todo: 여기서 로그인 유저를 가져온다. 아이디를 담아둔다.
         //2019-08-02 현재 로그인 정보 가져오기 추가 (이정찬)
-        firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언
-        currentUser = firebaseAuth.getCurrentUser();        // 현재 로그인한 사용자 가져오기
+//        firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언
+//        currentUser = firebaseAuth.getCurrentUser();        // 현재 로그인한 사용자 가져오기
         //Toast.makeText(this, "userEmail:"+userEmail, Toast.LENGTH_SHORT).show();
 
     }
@@ -103,8 +105,9 @@ public class FeedWriteActivity extends AppCompatActivity {
                 replyCnt=0L;
                 likeCnt=0L;
                 //이메일 받아오기
-                String userEmail = currentUser.getEmail();
-                //TOdo: 아이디를 넣어줘야함.
+                String userEmail = uservo.getUser_email();
+                //TOdo: 카카오톡 URL 링크를 삽입할 예정
+                // 위에서 링크 적합성 여부 파악하기.
                 id = db.collection(category).document().getId();
                 Map<String,Object> post = new HashMap<>();
                 post.put("id",id);
