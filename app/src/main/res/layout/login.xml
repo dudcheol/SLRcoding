@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--최민철 수정(19.08.06)-->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +17,6 @@
         android:id="@+id/emailInput"
         android:layout_centerHorizontal="true"
         android:inputType="text"
-        android:maxLength="10"
         android:singleLine="true"
         android:hint="ID"
         android:layout_marginTop="151dp" />
@@ -27,10 +27,17 @@
         android:id="@+id/passwordInput"
         android:inputType="textPassword"
         android:singleLine="true"
-        android:maxLength="10"
         android:layout_centerHorizontal="true"
         android:hint="Password"
         android:layout_below="@+id/emailInput" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="자동로그인"
+        android:id="@+id/autologin_check"
+        android:layout_marginLeft="55dp"
+        android:layout_below="@+id/passwordInput"/>
 
     <Button
         android:layout_width="150dp"
@@ -44,8 +51,7 @@
         android:shadowRadius="5"
         android:id="@+id/loginButton"
         android:textAllCaps="false"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/passwordInput"
+        android:layout_below="@+id/autologin_check"
         android:layout_toStartOf="@+id/signupButton"
         android:layout_toLeftOf="@+id/signupButton" />
 

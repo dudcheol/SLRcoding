@@ -3,6 +3,9 @@ package com.example.slrcoding;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.fragment.app.Fragment;
@@ -20,13 +23,19 @@ import com.example.slrcoding.fragment.MessageFragment;
 import com.example.slrcoding.fragment.MypageFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
     int flag=0;
+    // (최민철 수정 19.08.06)
+    public static UserVO uservo;
 
     // (최민철 수정 19.07.28)
-    private FirebaseAuth firebaseAuth;  // 파이어베이스 인증 객체 생성
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언;  // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;   // 현재 로그인 된 정보를 담은 객체 생성
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,6 +85,32 @@ public class MainActivity extends AppCompatActivity {
         setTitle("홈");
         Intent intent = getIntent();
 
+        // uservo객체에 현재 로그인한 회원정보 저장.(최민철 수정 19.08.06)
+        // 각 프레그먼트에서 ex) ((MainActivity)getActivity()).uservo.getUser_id() uservo 접근 가능
+        uservo = new UserVO();
+        currentUser = firebaseAuth.getCurrentUser();
+        db.collection("사용자 정보").document(currentUser.getEmail()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            uservo.setUser_id((String)documentSnapshot.getData().get("user_id"));
+                            uservo.setUser_email((String)documentSnapshot.getData().get("user_email"));
+                            uservo.setUser_name((String)documentSnapshot.getData().get("user_name"));
+                            uservo.setUser_year((String)documentSnapshot.getData().get("user_year"));
+                            uservo.setUser_month((String)documentSnapshot.getData().get("user_month"));
+                            uservo.setUser_day((String)documentSnapshot.getData().get("user_day"));
+                            uservo.setUser_phone_num((String)documentSnapshot.getData().get("user_phoneNum"));
+                            uservo.setUser_sex((String)documentSnapshot.getData().get("user_sex"));
+                            uservo.setPush_alarm((boolean)documentSnapshot.getData().get("user_push_alarm"));
+                            uservo.setComment_alarm((boolean)documentSnapshot.getData().get("user_comment_alarm"));
+                            uservo.setInfo_alarm((boolean)documentSnapshot.getData().get("user_info_alarm"));
+                        }
+                    }
+                });
+        // 여기까지
+
         if(intent.getExtras()!=null){
             flag =intent.getExtras().getInt("flag");
         }
@@ -120,6 +155,17 @@ public class MainActivity extends AppCompatActivity {
             // item_flag 는 선택된 아이템을 바꾸기 위한 변수
             // 0 ~ 4 : home, feed, board, message, mypage
             navigationView.getMenu().getItem(item_flag).setChecked(true);
+        }
+    }
+
+    // 로그인 되지 않은 경우 login페이지로 이동 (최민철 수정 19.07.28)
+    @Override
+    public void onStart(){
+        super.onStart();
+        currentUser = firebaseAuth.getCurrentUser();
+        if(currentUser == null){
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
         }
     }
 }
