@@ -55,6 +55,8 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import static com.example.slrcoding.MainActivity.uservo;
+
 public class FeedDetailActivity extends AppCompatActivity {
     //좋아요 댓글 수 데이터 교환 가능해야함
     private TextView titleTextView;
@@ -106,10 +108,12 @@ public class FeedDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_detail);
         //2019-08-02 현재 로그인 정보 가져오기 추가 (이정찬)
-        firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언
-        currentUser = firebaseAuth.getCurrentUser();        // 현재 로그인한 사용자 가져오기
-        userEmail = currentUser.getEmail();
-
+//        firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언
+//        currentUser = firebaseAuth.getCurrentUser();        // 현재 로그인한 사용자 가져오기
+//       // userEmail = currentUser.getEmail();
+        //메인에서 static 변수를 이용하여 가져오기.
+        userEmail = uservo.getUser_email();
+        Log.i("userEmail: ","메인에서받아온userEmail: "+userEmail);
         //likeflag=1;
         titleTextView = findViewById(R.id.detail_item_title_text);
         contentTextView = findViewById(R.id.feed_context);
@@ -553,4 +557,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     public interface FeedCallback{
         void onCallback(boolean value);
     }
+
+    //Todo: xml에서 카카오톡 모양의 이미지 버튼을 만들어주고 onClick으로 메소드 생성해준다.
+    // 그 다음 파베에서 해당 글의 카카오톡 링크를 받아와서 누르면 링크로 이동하게 끔 구현한다.
 }
