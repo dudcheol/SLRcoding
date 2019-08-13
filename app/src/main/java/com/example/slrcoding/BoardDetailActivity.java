@@ -90,10 +90,10 @@ public class BoardDetailActivity extends AppCompatActivity {
     private String time1;
     Toolbar toolbar;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     // 로그인 정보 가져오기 위한 선언
     private FirebaseAuth firebaseAuth;           // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;
+
     public static boolean likeuserconfirm; //좋아요 누른 사용자를 확인하는 플래그
     private String likeid;
     private String userEmail;
