@@ -125,7 +125,6 @@ public class FeedDetailActivity extends AppCompatActivity {
         replyCntView = findViewById(R.id.reply_cnt2); //게시글 댓글 수
         likeCntView = findViewById(R.id.like_cnt2);
 
-
         replyName = findViewById(R.id.feed_reply_name);
         replyContent=findViewById(R.id.feed_reply_content);
         replyRegDate = findViewById(R.id.feed_reply_date);
