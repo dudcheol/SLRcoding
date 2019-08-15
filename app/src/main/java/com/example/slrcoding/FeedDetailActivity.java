@@ -6,6 +6,8 @@ import android.graphics.drawable.ColorDrawable;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +43,7 @@ import com.like.OnLikeListener;
 
 import org.w3c.dom.Document;
 
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,7 +60,7 @@ import javax.annotation.Nullable;
 
 import static com.example.slrcoding.MainActivity.uservo;
 
-public class FeedDetailActivity extends AppCompatActivity {
+public class FeedDetailActivity extends AppCompatActivity implements View.OnClickListener {
     //좋아요 댓글 수 데이터 교환 가능해야함
     private TextView titleTextView;
     private TextView contentTextView;
@@ -65,6 +68,8 @@ public class FeedDetailActivity extends AppCompatActivity {
     private TextView nameTextView;
     private TextView dateTextView;
     private LikeButton likelyButton;
+    private TextView kakaoLinkTextView;
+    private String kakaoUrl;
 
     private RecyclerView mReplyRecyclerView;
     private List<FeedReplyVO> feedReplyVOList;
@@ -83,6 +88,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     private Long replyCnt;
     private Long likeCnt;
 
+    private String kakaolink; //카카오 링크
     private TextView replyName;//닉네임
     private TextView replyContent;//댓글 내용
     private TextView replyRegDate; //댓글 작성 일자
@@ -124,6 +130,7 @@ public class FeedDetailActivity extends AppCompatActivity {
         replyButton = findViewById(R.id.feed_reply_submit);
         replyCntView = findViewById(R.id.reply_cnt2); //게시글 댓글 수
         likeCntView = findViewById(R.id.like_cnt2);
+        kakaoLinkTextView = findViewById(R.id.feed_detail_kakaoLink);
 
         replyName = findViewById(R.id.feed_reply_name);
         replyContent=findViewById(R.id.feed_reply_content);
@@ -170,6 +177,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                             }
                             replyCnt =(Long)documentSnapshot.getData().get("replyCnt");
                             likeCnt = (Long)documentSnapshot.getData().get("likeCnt");
+                            kakaoUrl = (String)documentSnapshot.getData().get("kakaolink");
                             Log.i("title","title: "+title);
                             Log.i("title","contents: "+contents);
                             Log.i("title","category2: "+category2);
@@ -313,8 +321,29 @@ public class FeedDetailActivity extends AppCompatActivity {
                 delete_flag2=value;
             }
         });
+        //카카오 링크 클릭 이벤트
+        kakaoLinkTextView.setOnClickListener(this);
 
     }
+    //카카오 링크 클릭 이벤트트
+    @Override
+   public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.feed_detail_kakaoLink:
+                try {
+                    Intent intent = Intent.parseUri(kakaoUrl,Intent.URI_INTENT_SCHEME);
+                    Intent existPackage = getPackageManager().getLaunchIntentForPackage(intent.getPackage());
+                    if(existPackage!=null){
+                        startActivity(intent);
+                    }
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
+    }
+
     //댓글 등록 시 파베에 넣기
     //댓글 수도 업데이트하기..
     private void setReplySubmit(){
@@ -511,6 +540,8 @@ public class FeedDetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
     static class CompareRegDateDesc implements Comparator<FeedReplyVO> {
 
