@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                             uservo.setUser_sex((String)documentSnapshot.getData().get("user_sex"));
                             uservo.setPush_alarm((boolean)documentSnapshot.getData().get("user_push_alarm"));
                             uservo.setComment_alarm((boolean)documentSnapshot.getData().get("user_comment_alarm"));
-                            uservo.setInfo_alarm((boolean)documentSnapshot.getData().get("user_info_alarm"));
+                            uservo.setEvent_alarm((boolean)documentSnapshot.getData().get("user_event_alarm"));
                         }
                     }
                 });

@@ -46,7 +46,7 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 
-// 최민철(수정 : 19.07.30)
+// 최민철(수정 : 19.08.09)
 public class SignUpActivity extends AppCompatActivity {
 
     RelativeLayout relativeLayout1;
@@ -55,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
     Button Button_Check, Button_email_check;
     RadioGroup Radio_Sex;
     public String Save_ID, Save_Email, Save_PW, Save_Name, Save_Year, Save_Month, Save_Day, Save_PhoneNum, Save_Sex;
-    public boolean push_alarm, comment_alarm, info_alarm;
+    public boolean push_alarm, comment_alarm, event_alarm;
     InputMethodManager editManager;
     private FirebaseAuth firebaseAuth;          // 파이어베이스 인증 객체 생성
     private FirebaseFirestore firebasestore;    // 파이어베이스 스토어 객체 생성
@@ -179,7 +179,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Save_Sex = rb1.getText().toString();
                     push_alarm = false;
                     comment_alarm = false;
-                    info_alarm = false;
+                    event_alarm = false;
 
                     // 중복되는 아이디 있는지 확인 및 회원 생성
                     readQueryEqualId(Save_ID, new MyCallback() {
@@ -187,7 +187,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onCallback(boolean value) {
                             if(value){
                                 Create_User(Save_ID, Save_Email, Save_PW, Save_Name, Save_Year, Save_Month, Save_Day, Save_PhoneNum, Save_Sex,
-                                        push_alarm, comment_alarm, info_alarm); // 회원 생성
+                                        push_alarm, comment_alarm, event_alarm); // 회원 생성
                             }else{
                                 Toast.makeText(getApplicationContext(), "중복되는 아이디가 존재합니다. value : "+value, Toast.LENGTH_SHORT).show();
                                 return;
@@ -220,7 +220,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     // 회원가입.(이메일과 비밀번호를 사용하여 파이어베이스에 회원가입 정보 저장)
     private void Create_User(String id, String email, String password, String name, String year, String month, String day, String phoneNum, String sex,
-                             boolean push_alarm, boolean comment_alarm, boolean info_alarm){
+                             boolean push_alarm, boolean comment_alarm, boolean event_alarm){
         firebaseAuth.createUserWithEmailAndPassword(email, password).
                 addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -240,7 +240,7 @@ public class SignUpActivity extends AppCompatActivity {
                             post.put("user_sex", sex);
                             post.put("user_push_alarm", push_alarm);
                             post.put("user_comment_alarm", comment_alarm);
-                            post.put("user_info_alarm", info_alarm);
+                            post.put("user_event_alarm", event_alarm);
 
                             firebasestore.collection(category)
                                     .document(firebase_id).set(post)

@@ -1,6 +1,6 @@
 package com.example.slrcoding;
 
-// 최민철(수정 : 19.08.06)
+// 최민철(수정 : 19.08.09)
 public class UserVO {
 
     private String user_id;
@@ -13,13 +13,13 @@ public class UserVO {
     private String user_sex;
     private boolean push_alarm;
     private boolean comment_alarm;
-    private boolean info_alarm;
+    private boolean event_alarm;
 
     public UserVO(){}
 
     public void UserVO(String user_id, String user_email, String user_name, String user_year,
                        String user_month, String user_day, String user_phone_num, String user_sex, boolean push_alarm,
-                       boolean comment_alarm, boolean info_alarm){
+                       boolean comment_alarm, boolean event_alarm){
         this.user_id=user_id;
         this.user_email=user_email;
         this.user_name=user_name;
@@ -31,7 +31,7 @@ public class UserVO {
         this.user_sex=user_sex;
         this.push_alarm=push_alarm;
         this.comment_alarm=comment_alarm;
-        this.info_alarm=info_alarm;
+        this.event_alarm=event_alarm;
     }
 
     public String getUser_id() {
@@ -106,10 +106,6 @@ public class UserVO {
         return comment_alarm;
     }
 
-    public boolean isInfo_alarm() {
-        return info_alarm;
-    }
-
     public void setPush_alarm(boolean push_alarm) {
         this.push_alarm = push_alarm;
     }
@@ -118,7 +114,11 @@ public class UserVO {
         this.comment_alarm = comment_alarm;
     }
 
-    public void setInfo_alarm(boolean info_alarm) {
-        this.info_alarm = info_alarm;
+    public boolean isEvent_alarm() {
+        return event_alarm;
+    }
+
+    public void setEvent_alarm(boolean event_alarm) {
+        this.event_alarm = event_alarm;
     }
 }
