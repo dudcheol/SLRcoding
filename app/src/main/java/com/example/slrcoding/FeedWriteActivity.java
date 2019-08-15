@@ -32,6 +32,7 @@ public class FeedWriteActivity extends AppCompatActivity {
     Toolbar toolbar;
     private EditText mWriteTitleText;
     private EditText mWriteContentsText;
+    private EditText mWriteKakaoLinkText;
     private Button bt;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     //2019-08-02 로그인 정보 가져오기 위해 선언(이정찬)
@@ -54,6 +55,8 @@ public class FeedWriteActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mWriteContentsText = (EditText)findViewById(R.id.feed_memo_edit);
         mWriteTitleText = (EditText)findViewById(R.id.feed_title_editText);
+        //카카오 링크 받아올 곳
+        mWriteKakaoLinkText = (EditText)findViewById(R.id.kakaolinkedit);
         Intent intent = getIntent();
         code = intent.getExtras().getInt("code");
         if(code == 1){
@@ -93,6 +96,11 @@ public class FeedWriteActivity extends AppCompatActivity {
                     Toast.makeText(this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return false;
                 }
+                if(mWriteKakaoLinkText.getText().toString().equals("")){
+                    Toast.makeText(this, "링크를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                //Todo: 카카오링크 유효성 판단
 
                 //여기서 파이어베이서 데이터에 저장 각 입력 정보들을 넣는다..
                 //대신 카테고리 별로 if문을 이용해서 따로 저장을 한다.??
@@ -119,6 +127,7 @@ public class FeedWriteActivity extends AppCompatActivity {
                 post.put("replyCnt",replyCnt);
                 post.put("likeCnt",likeCnt);
                 post.put("userEmail",userEmail);
+                post.put("kakaolink",mWriteKakaoLinkText.getText().toString());
                 db.collection(category)
                         .document(id).set(post)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
