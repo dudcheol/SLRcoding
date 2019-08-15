@@ -66,6 +66,7 @@ public class Mypage_sub3_Question extends AppCompatActivity {
         });
     }
 
+    // 각 문의 카테고리에 따라 작성 글로 이동
     private void goto_write(String class_name){
         Intent intent = new Intent(Mypage_sub3_Question.this, question_write_activity.class);
         intent.putExtra("class_name", class_name);

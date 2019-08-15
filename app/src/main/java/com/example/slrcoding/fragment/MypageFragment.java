@@ -9,7 +9,6 @@ import android.os.Bundle;
 
 import android.text.InputFilter;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -19,13 +18,11 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.slrcoding.Adapter.MypageListAdapter;
 import com.example.slrcoding.LoginActivity;
 import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.Mypage_sub0_Comment;
-import com.example.slrcoding.Mypage_sub0_Scrap;
 import com.example.slrcoding.Mypage_sub0_mywrite;
 import com.example.slrcoding.Mypage_sub2_Alarm;
 import com.example.slrcoding.Mypage_sub3_Notice;
@@ -34,27 +31,18 @@ import com.example.slrcoding.Mypage_sub3_Rule;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.ChildListData;
 import com.example.slrcoding.VO.ParentListData;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-
-import javax.crypto.Mac;
 
 import static android.app.Activity.RESULT_OK;
 
 // 최민철(수정 : 19.08.10)
 public class MypageFragment extends Fragment {
 
-    String submenu1[] = {"내가 쓴 글", "댓글 단 글", "스크랩"};
+    String submenu1[] = {"내가 쓴 글", "댓글 단 글"};
     String submenu2[] = {"프로필 이미지 변경", "닉네임 변경", "로그 아웃"};
     String submenu3[] = {"알림 설정"};
     String submenu4[] = {"문의하기", "공지사항", "커뮤니티 이용규칙"};
@@ -189,10 +177,6 @@ public class MypageFragment extends Fragment {
                             case 1:
                                 Intent intent2 = new Intent(getActivity(), Mypage_sub0_Comment.class);
                                 startActivity(intent2);
-                                return true;
-                            case 2:
-                                Intent intent3 = new Intent(getActivity(), Mypage_sub0_Scrap.class);
-                                startActivity(intent3);
                                 return true;
                         }
                         return true;
