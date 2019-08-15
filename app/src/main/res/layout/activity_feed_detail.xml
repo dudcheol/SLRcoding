@@ -150,6 +150,14 @@
                 android:layout_height="1dp"
                 android:background="#bababa" />
 
+            <TextView
+                android:id="@+id/feed_detail_kakaoLink"
+                android:drawableLeft="@drawable/kakaolink_btn_small"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_height="wrap_content"
+                android:text="카카오톡 오픈채팅 URL LINK"
+                android:textAlignment="center"/>
         </LinearLayout>
 
 
@@ -172,8 +180,7 @@
                     android:id="@+id/feed_reply_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
-                   />
+                    />
             </LinearLayout>
 
             <View

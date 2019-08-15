@@ -58,6 +58,7 @@ public class FeedFragment extends Fragment {
     String categoryName;
     private FloatingActionButton fab_main, fab_sub1, fab_sub2;
     public int switch_value;
+    private int flag;
     public static final int REQUEST_CODE = 1000;
     public static SearchView mSearchView;
     public Toolbar toolbar;
@@ -107,16 +108,23 @@ public class FeedFragment extends Fragment {
                         Toast.makeText(getContext(), "categoryName: "+categoryName, Toast.LENGTH_SHORT).show();
 
                         switch_value=0;
-                        if(fragmentOne == null){
+                        //flag는 검색기능을 위해서 피드 내에서 계속 스피너로 이동 시 보드 리스트를 최신화시키기 위해서 add를 해줌.
+                        if(fragmentOne == null || flag == 1){
+                            Log.i("FeedFragment","1");
                             fragmentOne = new Feed_Child_FragmentOne();
                             fragmentManager.beginTransaction().add(R.id.main_frame,fragmentOne).commit();
+                            flag=0;
 
                         }
                         if(fragmentOne!=null){
+                            Log.i("FeedFragment","2");
+
                             fragmentManager.beginTransaction().show(fragmentOne).commit();
 
                         }
                         if(fragmentTwo!=null){
+                            Log.i("FeedFragment","3");
+
                             fragmentManager.beginTransaction().hide(fragmentTwo).commit();
                         }
                         break;
@@ -124,15 +132,22 @@ public class FeedFragment extends Fragment {
                         categoryName="스포츠와 게임";
                         Toast.makeText(getContext(), "categoryName: "+categoryName, Toast.LENGTH_SHORT).show();
                         switch_value=1;
+                        flag =1;
                         if(fragmentTwo == null){
+                            Log.i("FeedFragment","4");
+
                             fragmentTwo = new Feed_Child_FragmentTwo();
                             fragmentManager.beginTransaction().add(R.id.main_frame,fragmentTwo).commit();
                         }
                         if(fragmentOne!=null){
+                            Log.i("FeedFragment","5");
+
                             fragmentManager.beginTransaction().hide(fragmentOne).commit();
 
                         }
                         if(fragmentTwo!=null){
+                            Log.i("FeedFragment","6");
+
                             fragmentManager.beginTransaction().show(fragmentTwo).commit();
 
                         }

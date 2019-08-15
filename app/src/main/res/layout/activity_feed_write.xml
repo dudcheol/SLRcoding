@@ -26,7 +26,13 @@
         android:background="@android:drawable/edit_text"
         android:layout_below="@+id/toolbar2"
         android:hint="제목을 입력하세요"/>
-
+    <EditText
+        android:id="@+id/kakaolinkedit"
+        android:hint="오픈채팅 URL"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/feed_title_editText"
+        android:layout_toRightOf="@id/feed_title_editText"/>
     <EditText
         android:id="@+id/feed_memo_edit"
         android:layout_marginLeft="20dp"
