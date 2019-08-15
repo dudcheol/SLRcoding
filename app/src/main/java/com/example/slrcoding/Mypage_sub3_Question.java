@@ -1,14 +1,18 @@
 package com.example.slrcoding;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-// 최민철(수정 : xx.xx.xx)
+// 최민철(수정 : 19.08.10)
 public class Mypage_sub3_Question extends AppCompatActivity {
+
+    public String str1 = "인증 문의", str2 = "커뮤니티 문의", str3 = "신고/접근제한 문의", str4 = "기타 문의", str5 = "제휴/광고 문의";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,7 @@ public class Mypage_sub3_Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Mypage_sub3_Question.this, "인증 문의", Toast.LENGTH_SHORT).show();
+                goto_write(str1);
             }
         });
 
@@ -32,6 +37,7 @@ public class Mypage_sub3_Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Mypage_sub3_Question.this, "커뮤니티 문의", Toast.LENGTH_SHORT).show();
+                goto_write(str2);
             }
         });
 
@@ -39,6 +45,7 @@ public class Mypage_sub3_Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Mypage_sub3_Question.this, "신고/접근제한 문의", Toast.LENGTH_SHORT).show();
+                goto_write(str3);
             }
         });
 
@@ -46,6 +53,7 @@ public class Mypage_sub3_Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Mypage_sub3_Question.this, "기타 문의", Toast.LENGTH_SHORT).show();
+                goto_write(str4);
             }
         });
 
@@ -53,8 +61,14 @@ public class Mypage_sub3_Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Mypage_sub3_Question.this, "제휴/광고 문의", Toast.LENGTH_SHORT).show();
+                goto_write(str5);
             }
         });
+    }
 
+    private void goto_write(String class_name){
+        Intent intent = new Intent(Mypage_sub3_Question.this, question_write_activity.class);
+        intent.putExtra("class_name", class_name);
+        startActivity(intent);
     }
 }
