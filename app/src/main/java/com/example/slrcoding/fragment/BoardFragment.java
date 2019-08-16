@@ -164,7 +164,7 @@ public class BoardFragment extends Fragment {
             }
         });
         toolbar =rootView.findViewById(R.id.board_toolbar);
-        toolbar.inflateMenu(R.menu.search);
+        toolbar.inflateMenu(R.menu.board_search);
 
         mSearchView = (SearchView) toolbar.getMenu().findItem(R.id.board_action_search).getActionView();
         Log.i("searchView2","searchVIew2 "+mSearchView);
