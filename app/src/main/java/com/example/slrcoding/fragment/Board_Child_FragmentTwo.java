@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -36,13 +37,14 @@ import javax.annotation.Nullable;
 // 자식 프래그먼트 부모 프래그먼트인 BoardFragment에서 넘어온 것이다.
 // 김연준
 public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String cate="의류";
     public RecyclerView board_mMainRecyclerView;
     private BoardAdapter board_mAdapter;
     private List<Board2> board_mBoardList2 = null;
     private Board2 data2;
+
+    BoardFragment boardFragment;
     public static final int REQUEST_CODE = 1000;
     private SwipeRefreshLayout mSwipeRefreshLayout2;
 
@@ -59,24 +61,18 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
         mSwipeRefreshLayout2.setOnRefreshListener(this);
 
         board_mBoardList2=new ArrayList<>();
-        Query query = db.collection(cate);
-        ListenerRegistration registration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection(cate).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-
                 for(DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()){
-
                     switch(dc.getType()){
                         case ADDED:
-
                             String id = (String) dc.getDocument().getData().get("id");
                             String title = (String)dc.getDocument().getData().get("title");
                             String contents=(String)dc.getDocument().getData().get("contents");
                             String name = (String)dc.getDocument().getData().get("name");
                             String category = (String)dc.getDocument().getData().get("category");
                             String regDate = (String)dc.getDocument().getData().get("regDate");
-                            Log.i("sd","title"+title);
                             Calendar calendar = new GregorianCalendar(Locale.KOREA);
                             //현재 년도일 경우 없애서 보여주고 작년 일 경우 년도 표시하기
                             int nYear = calendar.get(Calendar.YEAR);
@@ -97,9 +93,9 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                             Log.i("dd","ADDED");
 
                             break;
+
                         case MODIFIED:
                             Long likeCnt1 = (Long)dc.getDocument().getData().get("likeCnt");
-
                             Long replyCnt1 = (Long)dc.getDocument().getData().get("replyCnt");
                             String id1 = (String)dc.getDocument().getData().get("id");
                             String title1 = (String)dc.getDocument().getData().get("title");
@@ -146,10 +142,23 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
 
                 //  board_mAdapter.notifyDataSetChanged();
                 board_mMainRecyclerView.setAdapter(board_mAdapter);
-
-
             }
         });
+        boardFragment = new BoardFragment();
+        Log.i("searchVIew","searchView"+boardFragment.mSearchView);
+        boardFragment.mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                board_mAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         return rootView;
     }
 
@@ -176,6 +185,6 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                 mSwipeRefreshLayout2.setRefreshing(false);
                 Toast.makeText(getActivity(), "로딩 완료", Toast.LENGTH_SHORT).show();
             }
-        },3000);
+        },1500);
     }
 }

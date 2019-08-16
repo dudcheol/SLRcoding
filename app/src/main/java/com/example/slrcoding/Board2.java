@@ -14,7 +14,6 @@ public class Board2 {
     private Long likeCnt;
 
     public Board2(){
-
     }
 
     public Board2(String id, String category, String title, String contents, String name, String regDate, Long replyCnt,String regModifyDate,Long likeCnt) {

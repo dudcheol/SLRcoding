@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -45,6 +46,7 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
     private List<Board2> board_mBoardList1 = null;
     private Board2 data1;
 
+    BoardFragment boardFragment;
     public static final int REQUEST_CODE = 1000;
     private SwipeRefreshLayout board_mSwipeRefreshLayout;
 
@@ -60,9 +62,9 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
         board_mMainRecyclerView = rootView.findViewById(R.id.board_recycler_view);
         board_mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.board_swref);
         board_mSwipeRefreshLayout.setOnRefreshListener(this);
+
         //이제 파이베 연동 시 writeActivity에서 클릭 시 여기로 이동하는데 파이어베이스로 겟을 통해 각 적용시켜준다.
         //피드 글 적용시키기
-
         board_mBoardList1 = new ArrayList<>();
         Query query = db.collection(cate);
         ListenerRegistration registration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -72,7 +74,6 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                     switch (dc.getType()) {
                         case ADDED:
-
                             String id = (String) dc.getDocument().getData().get("id");
                             String title = (String) dc.getDocument().getData().get("title");
                             String contents = (String) dc.getDocument().getData().get("contents");
@@ -95,10 +96,11 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                             Long likeCnt = (Long)dc.getDocument().getData().get("likeCnt");
 
                             data1 = new Board2(id, category, title, contents, name, regDate, replyCnt,regDateModify,likeCnt);
+
                             board_mBoardList1.add(data1);
                             Log.i("dd", "ADDED");
-                            // Log.i("dd",""+board_mBoardList1);
                             break;
+
                         case MODIFIED:
                             Long replyCnt1 = (Long) dc.getDocument().getData().get("replyCnt");
                             Long likeCnt1 = (Long)dc.getDocument().getData().get("likeCnt");
@@ -123,9 +125,9 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                             //수정 된 게시글에 대한 정보를 담은 Board를 백업하여 이를 가지고 리스트에 set으로 수정함
                             Board2 data2 = new Board2(id1, category1, title1, contents1, name1, regDate1, replyCnt1,regDateModify1,likeCnt1);
 
-
                             Log.i("dd", "data1: " + data1);
                             Log.i("dd", "Modify");
+
                             //리스트에서 해당 수정된 객체를 찾아서 그 리스트에서 수정
                             Board2 temp = new Board2();
                             temp.setId(id1);
@@ -142,19 +144,29 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
 
                         case REMOVED:
                             break;
-
                     }
                 }
-
-
                 // Log.i("for","통과2");
-                Collections.sort(board_mBoardList1, new Board_Child_FragmentOne.CompareRegDateDesc());
+                Collections.sort(board_mBoardList1, new CompareRegDateDesc());
                 board_mAdapter = new BoardAdapter(board_mBoardList1);
-                //mAdapter.notifyDataSetChanged();
                 board_mMainRecyclerView.setAdapter(board_mAdapter);
-
             }
         });
+        boardFragment = new BoardFragment();
+        Log.i("searchVIew","searchView"+boardFragment.mSearchView);
+        boardFragment.mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                board_mAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         return rootView;
     }
 
@@ -168,7 +180,6 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
     }
 
     static class CompareRegDateDesc implements Comparator<Board2> {
-
         @Override
         public int compare(Board2 b1, Board2 b2) {
             return b2.getRegDate().compareTo(b1.getRegDate());
@@ -183,6 +194,6 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                 board_mSwipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(getActivity(), "로딩 완료", Toast.LENGTH_SHORT).show();
             }
-        }, 3000);
+        }, 1500);
     }
 }

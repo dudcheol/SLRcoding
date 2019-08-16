@@ -4,10 +4,16 @@ package com.example.slrcoding.fragment;
 import android.content.Intent;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,20 +40,28 @@ public class BoardFragment extends Fragment {
     Board_Child_FragmentOne board_FragmentOne;
     Board_Child_FragmentTwo board_FragmentTwo;
 
+    private GridLayoutManager mGridLayoutManager;
+    private LinearLayoutManager mLinearLayoutManager;
+    private boolean Grid_Linear=true;
+    private boolean Grid_Linear2=true;
+
     //에니메이션
     private Animation bod_open, bod_close;
     private boolean isBodOpen = false;
 
     //플로팅버튼
+    String board_categoryName;
     private FloatingActionButton bod_main, bod_sub1, bod_sub2;
     public int board_switch_value;
     public static final int REQUEST_CODE = 1000;
-    String board_categoryName;
+
+    private int flag;
+    public static SearchView mSearchView;
+    public Toolbar toolbar;
 
     public BoardFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,16 +99,18 @@ public class BoardFragment extends Fragment {
                         Toast.makeText(getContext(), "categoryName: "+board_categoryName, Toast.LENGTH_SHORT).show();
 
                         board_switch_value=0;
-                        if(board_FragmentOne == null){
+                        if(board_FragmentOne == null || flag == 1){
+                            Log.i("BoardFragment","1");
                             board_FragmentOne = new Board_Child_FragmentOne();
                             board_FragmentManager.beginTransaction().add(R.id.bod_main_frame,board_FragmentOne).commit();
-
+                            flag=0;
                         }
                         if(board_FragmentOne!=null){
+                            Log.i("BoardFragment","2");
                             board_FragmentManager.beginTransaction().show(board_FragmentOne).commit();
-
                         }
                         if(board_FragmentTwo!=null){
+                            Log.i("BoardFragment","3");
                             board_FragmentManager.beginTransaction().hide(board_FragmentTwo).commit();
                         }
                         break;
@@ -102,17 +118,20 @@ public class BoardFragment extends Fragment {
                         board_categoryName="의류";
                         Toast.makeText(getContext(), "categoryName: "+board_categoryName, Toast.LENGTH_SHORT).show();
                         board_switch_value=1;
+                        flag =1;
                         if(board_FragmentTwo == null){
+                            Log.i("BoardFragment","4");
                             board_FragmentTwo = new Board_Child_FragmentTwo();
                             board_FragmentManager.beginTransaction().add(R.id.bod_main_frame,board_FragmentTwo).commit();
                         }
                         if(board_FragmentOne!=null){
+                            Log.i("BoardFragment","5");
                             board_FragmentManager.beginTransaction().hide(board_FragmentOne).commit();
 
                         }
                         if(board_FragmentTwo!=null){
+                            Log.i("BoardFragment","6");
                             board_FragmentManager.beginTransaction().show(board_FragmentTwo).commit();
-
                         }
                         break;
                 }
@@ -120,7 +139,6 @@ public class BoardFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -139,17 +157,21 @@ public class BoardFragment extends Fragment {
                 //각 카테고리명 넘겨주기
                 if(board_categoryName.equals("책")){
                     intent.putExtra("code",1);
-
                 }else if(board_categoryName.equals("의류")){
                     intent.putExtra("code",2);
-
                 }
                 startActivity(intent);
             }
         });
+        toolbar =rootView.findViewById(R.id.board_toolbar);
+        toolbar.inflateMenu(R.menu.search);
+
+        mSearchView = (SearchView) toolbar.getMenu().findItem(R.id.board_action_search).getActionView();
+        Log.i("searchView2","searchVIew2 "+mSearchView);
 
         return rootView;
     }
+
     private void toggleFab() {
 
         if (isBodOpen) {
