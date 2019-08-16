@@ -217,7 +217,7 @@ public class BoardDetailActivity extends AppCompatActivity {
                     Log.i("Reply:", "replyContent: " + replyContent);
                     Log.i("Reply:", "replyName: " + replyName);
                     Log.i("Reply:", "replyDate: " + replyDate);
-                    BoardReplyVO replyVO = new BoardReplyVO(replyId, replyContent, replyName, replyDateModify);
+                    BoardReplyVO replyVO = new BoardReplyVO(replyId, replyContent, replyName, replyDate, replyDateModify);
                     //datacopy = data;
 
                     boardReplyVOList.add(replyVO);
@@ -475,7 +475,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         @Override
         public int compare(BoardReplyVO b1, BoardReplyVO b2) {
 
-            return b1.getReplyDate().compareTo(b2.getReplyDate());
+            return b2.getReplyDate().compareTo(b1.getReplyDate());
         }
     }
     //Todo: 콜백을 통한 likeusers 컬렉션에서 아이디가 존재하는지 확인 구현 중
