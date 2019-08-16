@@ -45,6 +45,9 @@ public class FeedWriteActivity extends AppCompatActivity {
     private  String time1;
     private Long replyCnt;
     private Long likeCnt;
+
+    private String kakaoValid="https://open.kakao.com";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +104,11 @@ public class FeedWriteActivity extends AppCompatActivity {
                     return false;
                 }
                 //Todo: 카카오링크 유효성 판단
-
+                if(mWriteKakaoLinkText.getText().toString().contains(kakaoValid)==false){
+                    Toast.makeText(this, "유효한 카카오링크가 아닙니다.", Toast.LENGTH_SHORT).show();
+                    mWriteKakaoLinkText.setText("");
+                    return false;
+                }
                 //여기서 파이어베이서 데이터에 저장 각 입력 정보들을 넣는다..
                 //대신 카테고리 별로 if문을 이용해서 따로 저장을 한다.??
                 //현재 년도를 비교하고 올해이면 MM/dd HH:mm 까지
