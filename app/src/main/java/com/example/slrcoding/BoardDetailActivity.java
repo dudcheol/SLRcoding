@@ -165,6 +165,8 @@ public class BoardDetailActivity extends AppCompatActivity {
                                 regDateModify = regDate.substring(0, 17);
                             }
                             replyCnt = (Long) documentSnapshot.getData().get("replyCnt");
+                            likeCnt = (Long)documentSnapshot.getData().get("likeCnt");
+                            
                             Log.i("title", "title: " + title);
                             Log.i("title", "contents: " + contents);
                             Log.i("title", "category2: " + category2);
