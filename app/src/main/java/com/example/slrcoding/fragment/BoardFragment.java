@@ -163,7 +163,7 @@ public class BoardFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        toolbar =rootView.findViewById(R.id.board_toolbar);
+        toolbar =rootView.findViewById(R.id.bod_toolbar);
         toolbar.inflateMenu(R.menu.board_search);
 
         mSearchView = (SearchView) toolbar.getMenu().findItem(R.id.board_action_search).getActionView();
