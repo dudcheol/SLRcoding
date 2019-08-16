@@ -103,6 +103,7 @@ public class BoardWriteActivity extends AppCompatActivity {
                 SimpleDateFormat format1 = new SimpleDateFormat("yyyy년 MM/dd HH:mm:ss");
                 Date time = new Date();
                 time1 = format1.format(time);
+                // L은 long 타입
                 replyCnt = 0L;
                 likeCnt = 0L;
 
