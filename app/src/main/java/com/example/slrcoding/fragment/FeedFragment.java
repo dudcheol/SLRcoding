@@ -105,7 +105,7 @@ public class FeedFragment extends Fragment {
                 {
                     case 0:
                         categoryName = "기숙사와 밥"; //카테고리 넘겨주기 위함.
-                        Toast.makeText(getContext(), "categoryName: "+categoryName, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "categoryName: "+categoryName, Toast.LENGTH_SHORT).show();
 
                         switch_value=0;
                         //flag는 검색기능을 위해서 피드 내에서 계속 스피너로 이동 시 보드 리스트를 최신화시키기 위해서 add를 해줌.
@@ -130,7 +130,7 @@ public class FeedFragment extends Fragment {
                         break;
                     case 1:
                         categoryName="스포츠와 게임";
-                        Toast.makeText(getContext(), "categoryName: "+categoryName, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "categoryName: "+categoryName, Toast.LENGTH_SHORT).show();
                         switch_value=1;
                         flag =1;
                         if(fragmentTwo == null){

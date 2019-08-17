@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.slrcoding.Board;
+import com.example.slrcoding.FeedDetailActivity;
 import com.example.slrcoding.FeedWriteActivity;
 import com.example.slrcoding.MainAdapter;
 import com.example.slrcoding.R;
@@ -39,6 +40,8 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nullable;
+
+import es.dmoral.toasty.Toasty;
 
 //자식 프래그먼트 부모 프래그먼트인 FeedFragment에서 넘어온 것이다.
 //이정찬
@@ -201,7 +204,7 @@ public class Feed_Child_FragmentOne extends Fragment implements SwipeRefreshLayo
 
                 mAdapter.notifyDataSetChanged();
                 mSwipeRefreshLayout.setRefreshing(false);
-                Toast.makeText(getActivity(), "로딩 완료", Toast.LENGTH_SHORT).show();
+                Toasty.success(getActivity(),"로딩완료",Toasty.LENGTH_SHORT,true).show();
             }
         },1500);
     }

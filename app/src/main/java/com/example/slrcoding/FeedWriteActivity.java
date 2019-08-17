@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.example.slrcoding.MainActivity.uservo;
 
 
@@ -89,23 +91,24 @@ public class FeedWriteActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.feed_done:
-                Toast.makeText(getApplicationContext(), "등록 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 //예외처리
                 if(mWriteTitleText.getText().toString().equals("")){
-                    Toast.makeText(this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(this,"제목을 입력하세요.",Toasty.LENGTH_SHORT,true).show();
                     return false;
                 }
                 if(mWriteContentsText.getText().toString().equals("")){
-                    Toast.makeText(this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(this,"내용을 입력하세요.",Toasty.LENGTH_SHORT,true).show();
                     return false;
                 }
                 if(mWriteKakaoLinkText.getText().toString().equals("")){
-                    Toast.makeText(this, "링크를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(this,"링크를 입력하세요.",Toasty.LENGTH_SHORT,true).show();
                     return false;
                 }
                 //Todo: 카카오링크 유효성 판단
                 if(mWriteKakaoLinkText.getText().toString().contains(kakaoValid)==false){
-                    Toast.makeText(this, "유효한 카카오링크가 아닙니다.", Toast.LENGTH_SHORT).show();
+                    Toasty.error(this,"유효한 카카오링크가 아닙니다.",Toasty.LENGTH_SHORT,true).show();
+
                     mWriteKakaoLinkText.setText("");
                     return false;
                 }
@@ -140,7 +143,9 @@ public class FeedWriteActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(FeedWriteActivity.this, "업로드 성공!!", Toast.LENGTH_SHORT).show();
+                                Toasty.success(FeedWriteActivity.this,"글이 등록되었습니다.",Toasty.LENGTH_SHORT,true).show();
+
+                               // Toast.makeText(FeedWriteActivity.this, "업로드 성공!!", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 
@@ -149,7 +154,9 @@ public class FeedWriteActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // Log.w(TAG, "Error adding document", e);
-                                Toast.makeText(FeedWriteActivity.this, "업로드 실패!!", Toast.LENGTH_SHORT).show();
+                                Toasty.error(FeedWriteActivity.this,"글 등록에 실패했습니다.",Toasty.LENGTH_SHORT,true).show();
+
+//                                Toast.makeText(FeedWriteActivity.this, "업로드 실패!!", Toast.LENGTH_SHORT).show();
                             }
                         });
 
