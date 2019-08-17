@@ -58,6 +58,8 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.example.slrcoding.MainActivity.uservo;
 
 public class FeedDetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -355,7 +357,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                 time1 = format1.format(time);
                 //예외처리
                 if(replyEditTextView.getText().toString().equals("")){
-                    Toast.makeText(FeedDetailActivity.this, "댓글 내용은 필수!", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(FeedDetailActivity.this,"댓글 내용은 필수!",Toasty.LENGTH_SHORT,true).show();
                     return;
                 }
 
@@ -372,7 +374,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(FeedDetailActivity.this, "업로드 성공!!", Toast.LENGTH_SHORT).show();
+                                Toasty.success(FeedDetailActivity.this,"댓글이 등록되었습니다.",Toasty.LENGTH_SHORT,true).show();
                                 // finish();
                             }
 
@@ -381,7 +383,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // Log.w(TAG, "Error adding document", e);
-                                Toast.makeText(FeedDetailActivity.this, "업로드 실패!!", Toast.LENGTH_SHORT).show();
+                                Toasty.error(FeedDetailActivity.this,"댓글 등록을 실패했습니다.",Toasty.LENGTH_SHORT,true).show();
                             }
                         });
 
@@ -389,12 +391,12 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                         .update("replyCnt",replyCnt+1L).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(FeedDetailActivity.this, "댓글 수 증가!!", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(FeedDetailActivity.this, "댓글 수 증가!!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(FeedDetailActivity.this, "댓글 수 증가 실패!!", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(FeedDetailActivity.this, "댓글 수 증가 실패!!", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -410,19 +412,20 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
             public void liked(final LikeButton likeButton) {
                 Context context = likeButton.getContext();
 
-                Toast.makeText(context, "좋아요 버튼 클릭!!", Toast.LENGTH_SHORT).show();
                 //Firebase에 좋아요 수 1증가 update 실행
                 db.collection(category).document(idfrom)
                         .update("likeCnt",likeCnt+1L).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(FeedDetailActivity.this, "좋아요 수 증가!!", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(FeedDetailActivity.this, "좋아요 수 증가!!", Toast.LENGTH_SHORT).show();
+                        Toasty.success(FeedDetailActivity.this,"좋아요가 반영되었습니다.",Toasty.LENGTH_SHORT,true).show();
+
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(FeedDetailActivity.this, "좋아요 수 증가 실패!!", Toast.LENGTH_SHORT).show();
+                        Toasty.error(FeedDetailActivity.this,"좋아요 실패!",Toasty.LENGTH_SHORT,true).show();
 
                     }
                 });
@@ -437,7 +440,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(FeedDetailActivity.this, "좋아요댓글유저 등록 완료", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(FeedDetailActivity.this, "좋아요댓글유저 등록 완료", Toast.LENGTH_SHORT).show();
                             }
 
                         })
@@ -445,7 +448,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // Log.w(TAG, "Error adding document", e);
-                                Toast.makeText(FeedDetailActivity.this, "좋아요댓글유저 등록 실패", Toast.LENGTH_SHORT).show();
+                                Toasty.error(FeedDetailActivity.this,"좋아요 댓글 유저 등록 실패",Toasty.LENGTH_SHORT,true).show();
                             }
                         });
 
@@ -455,19 +458,19 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
             public void unLiked(final LikeButton likeButton) {
                 Context context = likeButton.getContext();
 
-                Toast.makeText(context, "좋아요 버튼 취소!!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "좋아요 버튼 취소!!", Toast.LENGTH_SHORT).show();
                 //Firebase에 좋아요 수 1감소 update 실행
                 db.collection(category).document(idfrom)
                         .update("likeCnt",likeCnt-1L).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         likeflag=0;
-                        Toast.makeText(FeedDetailActivity.this, "좋아요 수 감소!!", Toast.LENGTH_SHORT).show();
+                        Toasty.success(FeedDetailActivity.this,"좋아요가 취소되었습니다.",Toasty.LENGTH_SHORT,true).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(FeedDetailActivity.this, "좋아요 수 감소 실패!!", Toast.LENGTH_SHORT).show();
+                        Toasty.error(FeedDetailActivity.this,"좋아요가 취소되지않아요!",Toasty.LENGTH_SHORT,true).show();
 
                     }
                 });
@@ -478,7 +481,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(FeedDetailActivity.this, "좋아요댓글유저 삭제 완료", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(FeedDetailActivity.this, "좋아요댓글유저 삭제 완료", Toast.LENGTH_SHORT).show();
                             }
 
                         })
@@ -486,7 +489,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // Log.w(TAG, "Error adding document", e);
-                                Toast.makeText(FeedDetailActivity.this, "좋아요댓글유저 삭제 실패", Toast.LENGTH_SHORT).show();
+                                Toasty.error(FeedDetailActivity.this,"좋아요 댓글유저 삭제 실패",Toasty.LENGTH_SHORT,true).show();
                             }
                         });
             }
@@ -518,7 +521,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     //Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                    Toast.makeText(getApplicationContext(), "피드 삭제성공", Toast.LENGTH_SHORT).show();
+                                    Toasty.success(FeedDetailActivity.this,"글이 삭제되었습니다.",Toasty.LENGTH_SHORT,true).show();
                                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                     intent.putExtra("flag",1);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -529,11 +532,11 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    //Log.w(TAG, "Error deleting document", e);
+                                    Toasty.error(FeedDetailActivity.this,"글 삭제 실패",Toasty.LENGTH_SHORT,true).show();
                                 }
                             });
                 }else{
-                    Toast.makeText(this, "작성자 외 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(FeedDetailActivity.this,"작성자 외 삭제할 수 없습니다.",Toasty.LENGTH_SHORT,true).show();
                 }
                 
 

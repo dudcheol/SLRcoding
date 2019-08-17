@@ -38,6 +38,8 @@ import java.util.Locale;
 
 import javax.annotation.Nullable;
 
+import es.dmoral.toasty.Toasty;
+
 //자식 프래그먼트 부모 프래그먼트인 FeedFragment에서 넘어온 것이다.
 //이정찬2014154031
 public class Feed_Child_FragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -204,7 +206,7 @@ public class Feed_Child_FragmentTwo extends Fragment implements SwipeRefreshLayo
             public void run() {
                 mAdapter.notifyDataSetChanged();
                 mSwipeRefreshLayout2.setRefreshing(false);
-                Toast.makeText(getActivity(), "로딩 완료", Toast.LENGTH_SHORT).show();
+                Toasty.success(getActivity(),"로딩완료",Toasty.LENGTH_SHORT,true).show();
             }
         },3000);
     }

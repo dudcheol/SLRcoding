@@ -41,7 +41,7 @@ dependencies {
     implementation project(path: ':mail')
     implementation project(path: ':additionnal')
     implementation project(path: ':activation')
-
+    implementation 'com.github.GrenderG:Toasty:1.4.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
