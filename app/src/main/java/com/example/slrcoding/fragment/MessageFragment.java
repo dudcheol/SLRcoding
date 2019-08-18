@@ -1,6 +1,7 @@
 package com.example.slrcoding.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,6 +20,7 @@ import android.widget.Spinner;
 import com.example.slrcoding.Adapter.MeetingAdapter;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.Meeting_UserVO;
+import com.example.slrcoding.meetingUserJoinActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +46,15 @@ public class MessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_message, container, false);
 
+        // 프로필, 자기소개가 null 이면 설정하는 액티비티로 이동하고, 아니면 바로 미팅탭으로 이동
+        // 하지만 아직 구현단계이므로 바로 가도록 설정
+        Intent intent = new Intent(v.getContext(),meetingUserJoinActivity.class);
+        startActivity(intent);
+
         setSpinnerItemClick(v);
 
         showRecyclerViewItem(v);
+
 
         return v;
     }
@@ -99,7 +107,6 @@ public class MessageFragment extends Fragment {
         spinner_sex = v.findViewById(R.id.spinner_sex);
         spinner_major = v.findViewById(R.id.spinner_major);
         //spinner_setting = v.findViewById(R.id.spinner_setting);
-
 
     }
 }
