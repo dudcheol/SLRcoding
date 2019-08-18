@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/meeting_profile_item_layout"
+    android:orientation="vertical"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="15dp"
+    android:elevation="20dp">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/meeting_profile_item_newbie_mark"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_new"
+            android:tint="#FDD835"
+            android:elevation="10dp"/>
+
+        <ImageView
+            android:id="@+id/meeting_profile_item_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/defaultimage"
+            android:background="@drawable/background_rounding" />
+
+        <RelativeLayout
+            android:id="@+id/meeting_profile_item_content"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignBottom="@+id/meeting_profile_item_image"
+            android:background="@drawable/background_rounding_bottom"
+            android:backgroundTint="#ffffff"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
+            <TextView
+                android:id="@+id/meeting_profile_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="닉네임"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"/>
+            <ImageView
+                android:id="@+id/meeting_profile_item_sex"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_man"
+                android:tint="#2962FF"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                />
+            <!--<ImageView
+                android:id="@+id/ic_woman"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_woman"
+                android:tint="#BA68C8"
+                android:layout_alignParentRight="true"/>-->
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/meeting_profile_item_connecting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="#FFF176"
+            android:layout_alignRight="@+id/meeting_profile_item_image"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="3dp"
+            app:cardElevation="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="접속중"
+                android:textSize="12dp"
+                android:layout_margin="2dp"
+                android:textColor="@color/black"/>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

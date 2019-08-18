@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import com.example.slrcoding.fragment.BoardFragment;
 import com.example.slrcoding.fragment.FeedFragment;
 import com.example.slrcoding.fragment.MainFragment;
 import com.example.slrcoding.util.MainListViewType;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -49,10 +51,10 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     // 순서별로 어떤 뷰를 보여줄지 리스트에 담아서 결정한다
     private List<MainListViewType> mainListViewTypeList;
-
     private View v_A,v_B,v_C;
     private Context mContext;
     private Activity mActivity;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     // 받아올 리스트형 객체
     public MainListAdapter(List<MainListViewType> mainListViewTypeList, Context context, Activity activity) {
@@ -107,6 +109,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // 이제 여기에서 어떻게 지지고 볶을지 고민해볼것
 
         if(holder instanceof AHolder){
+            // A : 게시글종류
             // 받아온 객체를  가져와서 여기서 보여준다
             // position 써서
             // AHolder에서 보여줄 것 구현
@@ -134,11 +137,16 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
 
         }else if(holder instanceof  BHolder){
-            //GradientDrawable drawable=(GradientDrawable)mContext.getDrawable(R.drawable.background_rounding);
+            // B : 내정보
+            // 프로필 이미지 동그랗게
             ((BHolder) holder).profile.setBackground(new ShapeDrawable(new OvalShape()));
             ((BHolder) holder).profile.setClipToOutline(true);
 
+            Log.i("check auth",firebaseAuth.getCurrentUser().toString());
+
+
         }else if(holder instanceof CHolder){
+            // C : 중고장터
             ((CHolder)holder).subject.setText(mainListViewTypeList.get(position).getName());
             if(mainListViewTypeList.get(position).getJunggos()!=null){
                 Main_JunggoListAdapter main_junggoListAdapter = new Main_JunggoListAdapter((Activity)v_C.getContext(),mainListViewTypeList.get(position).getJunggos());

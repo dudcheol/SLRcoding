@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.main_content, new BoardFragment());
                     fragmentTransaction.commit();
                     return true;
-                case R.id.navigation_message:
+                case R.id.navigation_favorite:
                     setTitle("메시지");
                     fragmentTransaction.replace(R.id.main_content, new MessageFragment());
                     fragmentTransaction.commit();

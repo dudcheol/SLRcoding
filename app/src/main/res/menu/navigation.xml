@@ -17,9 +17,9 @@
         android:title="게시판" />
 
     <item
-        android:id="@+id/navigation_message"
-        android:icon="@drawable/ic_mail_black_24dp"
-        android:title="메시지" />
+        android:id="@+id/navigation_favorite"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="미팅" />
 
     <item
         android:id="@+id/navigation_mypage"
