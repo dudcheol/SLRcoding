@@ -111,6 +111,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         titleTextView = findViewById(R.id.bard_title);
         contentTextView = findViewById(R.id.board_context);
         categoryTextView = findViewById(R.id.board_detail_category);
+
         nameTextView = findViewById(R.id.board_fname);
         dateTextView = findViewById(R.id.board_date);
         likelyButton = findViewById(R.id.board_like_button);
@@ -178,7 +179,9 @@ public class BoardDetailActivity extends AppCompatActivity {
                         titleTextView.setText(title);
                         contentTextView.setText(contents);
                         categoryTextView.setText(category2);
-                        nameTextView.setText(name);
+                        // nameTextView.setText(name);
+                        // 작성자 등록
+                        nameTextView.setText(userEmail);
                         dateTextView.setText(regDateModify);
                         replyCntView.setText(String.valueOf(replyCnt));
                         likeCntView.setText(String.valueOf(likeCnt));
