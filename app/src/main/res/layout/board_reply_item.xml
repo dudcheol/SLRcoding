@@ -27,10 +27,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="정찬"
                 android:textColor="@color/black"
                 android:textSize="13dp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/board_reply_date"
                 android:gravity="right"
