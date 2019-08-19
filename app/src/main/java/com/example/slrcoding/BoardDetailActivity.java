@@ -306,6 +306,7 @@ public class BoardDetailActivity extends AppCompatActivity {
                 post.put("id", replyId);
                 post.put("replyDate", time1);
                 post.put("replyContent", replyEditTextView.getText().toString());
+
                 String userName = uservo.getUser_name();
                 //post.put("replyName", "노익명");
                 post.put("replyName", userName);
