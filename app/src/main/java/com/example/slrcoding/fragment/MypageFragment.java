@@ -1,14 +1,17 @@
 package com.example.slrcoding.fragment;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.text.InputFilter;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -18,7 +21,9 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.slrcoding.Adapter.MypageListAdapter;
 import com.example.slrcoding.LoginActivity;
 import com.example.slrcoding.MainActivity;
@@ -31,15 +36,26 @@ import com.example.slrcoding.Mypage_sub3_Rule;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.ChildListData;
 import com.example.slrcoding.VO.ParentListData;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import io.grpc.Context;
+
 import static android.app.Activity.RESULT_OK;
 
-// 최민철(수정 : 19.08.10)
+// 최민철(수정 : 19.08.19)
 public class MypageFragment extends Fragment {
 
     String submenu1[] = {"내가 쓴 글", "댓글 단 글"};
@@ -47,14 +63,18 @@ public class MypageFragment extends Fragment {
     String submenu3[] = {"알림 설정"};
     String submenu4[] = {"문의하기", "공지사항", "커뮤니티 이용규칙"};
 
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();           // 파이어베이스 인증 객체 생성 및 선언
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();               // 파이어베이스 인증 객체 생성 및 선언
     private FirebaseFirestore firebasestore = FirebaseFirestore.getInstance();    // 파이어베이스 스토어 객체 생성 및 선언
+    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();      // 파이어베이스 스토리지 객체 생성
+    private StorageReference storageReference;
 
+    private Uri filepath;
     private ArrayList<ParentListData> parentListData;
     private ExpandableListView parentListView;
     private TextView tv_username;
     private ImageView iv_profile;
     public MypageListAdapter adpater;
+    private String prof_string = "_profileImage.png";
     private boolean push_alarm, comment_alarm, event_alarm;
     public boolean[] alarm_set = new boolean[3];
     private final int REQUEST_CODE1 = 100, REQUEST_CODE2 =200;
@@ -84,9 +104,11 @@ public class MypageFragment extends Fragment {
         if(requestCode == REQUEST_CODE2){
             if(resultCode == RESULT_OK){
                 try {
+                    filepath = data.getData();
                     InputStream in = getActivity().getContentResolver().openInputStream(data.getData());
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
+                    uploadFile();       // FireStorage에 이미지 업로드
                     iv_profile.setImageBitmap(img);
                 }catch (Exception e){
                     e.printStackTrace();
@@ -108,6 +130,9 @@ public class MypageFragment extends Fragment {
         push_alarm = ((MainActivity) getActivity()).uservo.isPush_alarm();
         comment_alarm = ((MainActivity) getActivity()).uservo.isComment_alarm();
         event_alarm = ((MainActivity) getActivity()).uservo.isEvent_alarm();
+
+        // 프로필 이미지 파베에 가져오기
+        downloadFile();
 
         Display newDisplay = getActivity().getWindowManager().getDefaultDisplay();
         int width = newDisplay.getWidth();
@@ -209,6 +234,7 @@ public class MypageFragment extends Fragment {
                         switch (i1) {
                             case 0:
                                 Intent intent6 = new Intent(getActivity(), Mypage_sub3_Question.class);
+                                intent6.putExtra("user_email", ((MainActivity) getActivity()).uservo.getUser_email());
                                 startActivity(intent6);
                                 return true;
                             case 1:
@@ -247,6 +273,18 @@ public class MypageFragment extends Fragment {
                         break;
                     case 1:
                         iv_profile.setImageResource(R.drawable.defaultimage);
+
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                        StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
+
+                        // 삭제할 파일을 가르키는 참조 만들기
+                        StorageReference pathReference = storageReference.child("Profile Images/"+((MainActivity) getActivity()).uservo.getUser_id() + prof_string);
+                        pathReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(),"이미지 삭제완료", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         break;
                 }
             }
@@ -254,6 +292,84 @@ public class MypageFragment extends Fragment {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    // FireStorage에 프로필 업로드
+    public void uploadFile(){
+
+        if(filepath!=null) {
+
+            // 업로드 진행 Dialog 보이기
+            final ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
+            progressDialog.setTitle("업로드중...");
+            progressDialog.show();
+
+            // 파일명 포맷
+            String filename = ((MainActivity) getActivity()).uservo.getUser_id() + prof_string;
+
+            // 사진 업로드
+            storageReference = firebaseStorage.getReferenceFromUrl("gs://slrcoding.appspot.com/").child("Profile Images/" + filename);
+            storageReference.putFile(filepath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // 이미지 uri를 통해 바로 이미지 뷰에 세팅
+                            Glide.with(getContext())
+                                    .load(storageReference.getDownloadUrl().toString())
+                                    .into(iv_profile);
+
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "업로드 성공", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "업로드 실패", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            //@SuppressWarnings("VisibleForTests")
+                            double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                        }
+                    });
+
+        }
+    }
+
+    // FireStorage에 프로필 다운로드
+    public void downloadFile(){
+
+        // 업로드 진행 Dialog 보이기
+        final ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
+        progressDialog.show();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
+
+        //다운로드할 파일을 가르키는 참조 만들기
+        StorageReference pathReference = storageReference.child("Profile Images/"+((MainActivity) getActivity()).uservo.getUser_id() + prof_string);
+
+        // download url을 가져와 사진이 존재하면 세팅 없으면 디폴트 이미지
+        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext())
+                        .load(uri.toString())
+                        .into(iv_profile);
+                progressDialog.dismiss();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                iv_profile.setImageResource(R.drawable.defaultimage);
+                progressDialog.dismiss();
+            }
+        });
     }
 
     // 닉네임 변경 Dialog 띄우기

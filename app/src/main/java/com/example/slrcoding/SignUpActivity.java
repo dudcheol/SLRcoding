@@ -46,7 +46,7 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 
-// 최민철(수정 : 19.08.09)
+// 최민철(수정 : 19.08.16)
 public class SignUpActivity extends AppCompatActivity {
 
     RelativeLayout relativeLayout1;
@@ -113,7 +113,6 @@ public class SignUpActivity extends AppCompatActivity {
         dayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         daySpinner.setAdapter(dayAdapter);
 
-        /*
         // 이메일 인증을 위한 전송 버튼
         Button_email_check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +145,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-        */
 
         // 작성완료 버튼 이벤트 처리
         Button_Check.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +152,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!validForm()){
                     return;
-                }/*else if(!valid_flag){
+                }else if(!valid_flag){
                     Toast.makeText(getApplicationContext(), "이메일 인증이 필요합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }else if(TextUtils.isEmpty(Edit_Check.getText())){
@@ -164,7 +162,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }else if(!email_code.equals(Edit_Check.getText().toString())){
                     Toast.makeText(getApplicationContext(), "이메일 인증코드가 알맞지 않습니다.", Toast.LENGTH_SHORT).show();
                     return;
-                }*/else{
+                }else{
                     // String값으로 EditText값들 저장.
                     Save_ID = Edit_ID.getText().toString();
                     Save_Email = Edit_Email.getText().toString();
