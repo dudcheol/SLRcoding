@@ -3,6 +3,7 @@ package com.example.slrcoding;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,12 +26,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-// 최민철(수정 : 19.08.06)
+// 최민철(수정 : 19.08.19)
 public class LoginActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     InputMethodManager editManager;
     EditText EmailInput, PasswordInput;
     CheckBox Autologin_check;
+
+    private SharedPreferences appdata;
+    private boolean auto_login_flag;
     private FirebaseAuth firebaseAuth;  // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;   // 현재 로그인 된 정보를 담은 객체 생성
 
@@ -53,11 +57,15 @@ public class LoginActivity extends AppCompatActivity {
         Autologin_check.setOnClickListener(new CheckBox.OnClickListener(){
             @Override
             public void onClick(View v){
+                // Editor사용하여 설정 값 저장
+                SharedPreferences.Editor editor = appdata.edit();
                 if(((CheckBox)v).isChecked()){
-                    Toast.makeText(LoginActivity.this, "자동로그인이 활성화 되었습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "자동 로그인이 활성화 되었습니다.", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(LoginActivity.this, "자동로그인이 비 활성화 되었습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "자동 로그인이 비 활성화 되었습니다.", Toast.LENGTH_SHORT).show();
                 }
+                editor.putBoolean("auto_login_flag", ((CheckBox)v).isChecked());
+                editor.apply();     // apply안하면 변경된 내용 저장되지 않음
             }
         });
 
@@ -134,14 +142,18 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    // 로그인 되어있으면 자동으로 메인페이지로 이동
+    // 자동 로그인 설정에 따라 시작화면 설정
     @Override
     public void onStart(){
         super.onStart();
-        currentUser = firebaseAuth.getCurrentUser();
-        if(currentUser != null){
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+        appdata = getSharedPreferences("appdata", MODE_PRIVATE); // 설정 값 불러오기
+        auto_login_flag = appdata.getBoolean("auto_login_flag", false);
+        if(auto_login_flag){
+            currentUser = firebaseAuth.getCurrentUser();
+            if(currentUser != null){
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            }
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.example.slrcoding;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.CompoundButton;
@@ -16,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-// 최민철(수정 : 19.08.10)
+// 최민철(수정 : 19.08.19)
 public class Mypage_sub2_Alarm extends AppCompatActivity {
 
     private boolean push_alarm, event_alarm, comment_alarm;
@@ -24,11 +27,25 @@ public class Mypage_sub2_Alarm extends AppCompatActivity {
     private Switch sw1, sw2, sw3;
     private FirebaseFirestore firebasestore = FirebaseFirestore.getInstance();    // 파이어베이스 스토어 객체 생성 및 선언
     private String user_email;
+    private NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage_sub2__alarm);
+
+        pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
+                new Intent(getApplicationContext(), MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification.Builder builder = new Notification.Builder(this)
+                .setSmallIcon(R.drawable.app_icon)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setContentTitle("알림제목")
+                .setContentText("알림내용")
+                .setTicker("한줄 출력")
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
+        notificationManager.notify(0, builder.build());
 
         sw1 = (Switch) findViewById(R.id.alarm_sw1);
         sw2 = (Switch) findViewById(R.id.alarm_sw2);
@@ -51,10 +68,18 @@ public class Mypage_sub2_Alarm extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b==true){
+                    sw2.setChecked(true);
+                    sw3.setChecked(true);
                     Set_Alarm("user_push_alarm", b, user_email);
+                    Set_Alarm("user_comment_alarm", b, user_email);
+                    Set_Alarm("user_event_alarm", b, user_email);
                     Toast.makeText(Mypage_sub2_Alarm.this, "푸시 알림 활성화", Toast.LENGTH_SHORT).show();
                 }else{
+                    sw2.setChecked(false);
+                    sw3.setChecked(false);
                     Set_Alarm("user_push_alarm", b, user_email);
+                    Set_Alarm("user_comment_alarm", b, user_email);
+                    Set_Alarm("user_event_alarm", b, user_email);
                     Toast.makeText(Mypage_sub2_Alarm.this, "푸시 알림 비 활성화", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -64,9 +89,11 @@ public class Mypage_sub2_Alarm extends AppCompatActivity {
         sw2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b==true){
+                if(b==true && sw1.isChecked()==true){
                     Set_Alarm("user_comment_alarm", b, user_email);
                     Toast.makeText(Mypage_sub2_Alarm.this, "내 글에 새 댓글 활성화", Toast.LENGTH_SHORT).show();
+                }else if(b==true){
+                    sw2.setChecked(false);
                 }else{
                     Set_Alarm("user_comment_alarm", b, user_email);
                     Toast.makeText(Mypage_sub2_Alarm.this, "내 글에 새 댓글 비 활성화", Toast.LENGTH_SHORT).show();
@@ -74,20 +101,21 @@ public class Mypage_sub2_Alarm extends AppCompatActivity {
             }
         });
 
-        // "이벤트 및 정보" 설정
+        // "댓글 단 글" 설정
         sw3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b==true){
+                if(b==true && sw1.isChecked()==true){
                     Set_Alarm("user_event_alarm", b, user_email);
                     Toast.makeText(Mypage_sub2_Alarm.this, "새 메시지 활성화", Toast.LENGTH_SHORT).show();
+                }else if(b==true){
+                    sw3.setChecked(false);
                 }else{
                     Set_Alarm("user_event_alarm", b, user_email);
                     Toast.makeText(Mypage_sub2_Alarm.this, "새 메시지 비 활성화", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
     }
 
     // 뒤로가기 이벤트처리(인텐트로 바뀐 알림 설정 값을 보냄)
