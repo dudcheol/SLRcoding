@@ -6,7 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".meetingUserJoinActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/container"
+        android:text="프로필 사진이 없으시군요 ! (1/2)"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"/>
+
     <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -15,13 +24,32 @@
         android:id="@+id/profile"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        app:cardElevation="5dp"
         app:cardCornerRadius="15dp"
+        app:cardBackgroundColor="#EAEDF0"
+        app:cardElevation="0dp"
         android:layout_centerHorizontal="true"
-        app:cardUseCompatPadding="true">
-
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/profile_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_add_photo"
+                android:background="@drawable/background_rounding"
+                android:backgroundTint="#EAEDF0"/>
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"/>
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
     <RelativeLayout
+        android:id="@+id/text_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/profile"
@@ -30,7 +58,7 @@
             android:id="@+id/txt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="모든 사람에게 보여질"
+            android:text="위 이미지를 터치하여"
             android:textColor="@color/black"
             android:textSize="20sp"/>
         <TextView
@@ -46,12 +74,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="을 골라주세요"
+            android:text="을 설정해주세요"
             android:layout_alignBaseline="@id/txt2"
             android:layout_toRightOf="@id/txt2"
             android:textSize="20sp"/>
     </RelativeLayout>
-    </RelativeLayout>
 
+        <Button
+            android:id="@+id/ok_btn"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="다음"
+            android:textSize="15sp"
+            android:background="@drawable/rectangle_btn"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/profile"
+            style="?android:attr/borderlessButtonStyle"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
