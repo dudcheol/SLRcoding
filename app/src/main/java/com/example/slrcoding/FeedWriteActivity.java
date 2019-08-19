@@ -47,7 +47,7 @@ public class FeedWriteActivity extends AppCompatActivity {
     private  String time1;
     private Long replyCnt;
     private Long likeCnt;
-
+    //유효성 검사
     private String kakaoValid="https://open.kakao.com";
 
     @Override
