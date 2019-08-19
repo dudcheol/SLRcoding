@@ -98,7 +98,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     private String likeid;
 
     private String userEmail;
-    private String userName;
+
 
     public static boolean delete_flag;
     public static boolean delete_flag2;
@@ -109,7 +109,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_board_detail);
 
         userEmail = uservo.getUser_email();
-        userName = uservo.getUser_name();
+
         Log.i("userEmail: ", "메인에서받아온 userEmail: " + userEmail);
 
         titleTextView = findViewById(R.id.bard_title);
@@ -180,12 +180,12 @@ public class BoardDetailActivity extends AppCompatActivity {
                         } else {
                             Log.i("error", "get Failed: " + task.getException());
                         }
+
                         titleTextView.setText(title);
                         contentTextView.setText(contents);
                         categoryTextView.setText(category2);
-                        // nameTextView.setText(name);
+                        nameTextView.setText(name);
                         // 작성자 등록
-                        nameTextView.setText(userName);
 
                         dateTextView.setText(regDateModify);
                         replyCntView.setText(String.valueOf(replyCnt));
@@ -306,6 +306,7 @@ public class BoardDetailActivity extends AppCompatActivity {
                 post.put("id", replyId);
                 post.put("replyDate", time1);
                 post.put("replyContent", replyEditTextView.getText().toString());
+                String userName = uservo.getUser_name();
                 //post.put("replyName", "노익명");
                 post.put("replyName", userName);
 
