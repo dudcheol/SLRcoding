@@ -107,7 +107,7 @@ public class FeedWriteActivity extends AppCompatActivity {
                 }
                 //Todo: 카카오링크 유효성 판단
                 if(mWriteKakaoLinkText.getText().toString().contains(kakaoValid)==false){
-                    Toasty.error(this,"유효한 카카오링크가 아닙니다.",Toasty.LENGTH_SHORT,true).show();
+                    Toasty.error(this,"유효한 카카오링크가 아닙니다. 다시 입력해주세요.",Toasty.LENGTH_SHORT,true).show();
 
                     mWriteKakaoLinkText.setText("");
                     return false;
