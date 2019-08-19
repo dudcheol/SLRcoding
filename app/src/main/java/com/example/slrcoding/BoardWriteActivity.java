@@ -107,15 +107,13 @@ public class BoardWriteActivity extends AppCompatActivity {
                 replyCnt = 0L;
                 likeCnt = 0L;
 
-                //이메일 받아오기
+                // 이메일과 이름 받아오기
                 String userEmail = uservo.getUser_email();
-                //TOdo: 카카오톡 URL 링크를 삽입할 예정
-                // 위에서 링크 적합성 여부 파악하기.
+                String userName = uservo.getUser_name();
 
                 id = db.collection(category).document().getId();
                 Map<String, Object> post = new HashMap<>();
                 post.put("id", id);
-                post.put("name", "익명");
                 post.put("title", mWriteTitleText.getText().toString());
                 post.put("contents", mWriteContentsText.getText().toString());
                 post.put("category", category);
@@ -123,6 +121,8 @@ public class BoardWriteActivity extends AppCompatActivity {
                 post.put("replyCnt", replyCnt);
                 post.put("likeCnt", likeCnt);
                 post.put("userEmail", userEmail);
+                // user의 이름 추가
+                post.put("name", userName);
 
                 db.collection(category)
                         .document(id).set(post)

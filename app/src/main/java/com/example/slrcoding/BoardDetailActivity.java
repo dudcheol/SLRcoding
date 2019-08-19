@@ -96,7 +96,10 @@ public class BoardDetailActivity extends AppCompatActivity {
 
     public static boolean likeuserconfirm; //좋아요 누른 사용자를 확인하는 플래그
     private String likeid;
+
     private String userEmail;
+    private String userName;
+
     public static boolean delete_flag;
     public static boolean delete_flag2;
 
@@ -106,6 +109,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_board_detail);
 
         userEmail = uservo.getUser_email();
+        userName = uservo.getUser_name();
         Log.i("userEmail: ", "메인에서받아온 userEmail: " + userEmail);
 
         titleTextView = findViewById(R.id.bard_title);
@@ -181,7 +185,8 @@ public class BoardDetailActivity extends AppCompatActivity {
                         categoryTextView.setText(category2);
                         // nameTextView.setText(name);
                         // 작성자 등록
-                        nameTextView.setText(userEmail);
+                        nameTextView.setText(userName);
+
                         dateTextView.setText(regDateModify);
                         replyCntView.setText(String.valueOf(replyCnt));
                         likeCntView.setText(String.valueOf(likeCnt));

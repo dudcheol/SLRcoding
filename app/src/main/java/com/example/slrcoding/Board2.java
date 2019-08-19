@@ -12,16 +12,18 @@ public class Board2 {
     private Long replyCnt;
     private String regModifyDate;
     private Long likeCnt;
+    private String userEmail;
 
     public Board2(){
     }
 
-    public Board2(String id, String category, String title, String contents, String name, String regDate, Long replyCnt,String regModifyDate,Long likeCnt) {
+    public Board2(String id, String category, String title, String contents, String name, String userEmail, String regDate, Long replyCnt,String regModifyDate,Long likeCnt) {
         this.id = id;
         this.category= category;
         this.title = title;
         this.contents = contents;
         this.name = name;
+        this.userEmail = userEmail;
         this.regDate =regDate;
         this.replyCnt = replyCnt;
         this.regModifyDate = regModifyDate;
@@ -62,6 +64,14 @@ public class Board2 {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getRegDate() {

@@ -77,11 +77,12 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                             String id = (String) dc.getDocument().getData().get("id");
                             String title = (String) dc.getDocument().getData().get("title");
                             String contents = (String) dc.getDocument().getData().get("contents");
-                            // String name = (String) dc.getDocument().getData().get("name");
+                            String name = (String) dc.getDocument().getData().get("name");
                             String userEmail = (String) dc.getDocument().getData().get("userEmail");
                             String category = (String) dc.getDocument().getData().get("category");
                             String regDate = (String) dc.getDocument().getData().get("regDate");
                             Calendar calendar = new GregorianCalendar(Locale.KOREA);
+
                             //현재 년도일 경우 없애서 보여주고 작년 일 경우 년도 표시하기
                             int nYear = calendar.get(Calendar.YEAR);
                             String year = Integer.toString(nYear);
@@ -96,7 +97,7 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                             Long replyCnt = (Long) dc.getDocument().getData().get("replyCnt");
                             Long likeCnt = (Long)dc.getDocument().getData().get("likeCnt");
 
-                            data1 = new Board2(id, category, title, contents, userEmail, regDate, replyCnt,regDateModify,likeCnt);
+                            data1 = new Board2(id, category, title, contents, name, userEmail, regDate, replyCnt,regDateModify,likeCnt);
 
                             board_mBoardList1.add(data1);
                             Log.i("dd", "ADDED");
@@ -108,7 +109,7 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                             String id1 = (String) dc.getDocument().getData().get("id");
                             String title1 = (String) dc.getDocument().getData().get("title");
                             String contents1 = (String) dc.getDocument().getData().get("contents");
-                            //String name1 = (String) dc.getDocument().getData().get("name");
+                            String name1 = (String) dc.getDocument().getData().get("name");
                             String userEmai1 = (String) dc.getDocument().getData().get("userEmail");
                             String category1 = (String) dc.getDocument().getData().get("category");
                             String regDate1 = (String) dc.getDocument().getData().get("regDate");
@@ -125,7 +126,7 @@ public class Board_Child_FragmentOne extends Fragment implements SwipeRefreshLay
                                 regDateModify1 = regDate1.substring(0, 17);
                             }
                             //수정 된 게시글에 대한 정보를 담은 Board를 백업하여 이를 가지고 리스트에 set으로 수정함
-                            Board2 data2 = new Board2(id1, category1, title1, contents1, userEmai1, regDate1, replyCnt1,regDateModify1,likeCnt1);
+                            Board2 data2 = new Board2(id1, category1, title1, contents1, name1, userEmai1, regDate1, replyCnt1,regDateModify1,likeCnt1);
 
                             Log.i("dd", "data1: " + data1);
                             Log.i("dd", "Modify");
