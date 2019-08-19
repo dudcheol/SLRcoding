@@ -297,7 +297,7 @@ public class BoardDetailActivity extends AppCompatActivity {
 
                 //예외처리
                 if (replyEditTextView.getText().toString().equals("")) {
-                    Toast.makeText(BoardDetailActivity.this, "댓글 내용은 필수!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BoardDetailActivity.this, "댓글 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -306,7 +306,8 @@ public class BoardDetailActivity extends AppCompatActivity {
                 post.put("id", replyId);
                 post.put("replyDate", time1);
                 post.put("replyContent", replyEditTextView.getText().toString());
-                post.put("replyName", "노익명");
+                //post.put("replyName", "노익명");
+                post.put("replyName", userName);
 
                 db.collection(category)
                         .document(idfrom).collection("reply").document(replyId).set(post)
