@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".meetingUserJoinActivity"></activity>
+        <activity android:name=".meetingUserJoin2Activity"></activity>
+        <activity android:name=".meetingUserJoinActivity" />
         <activity android:name=".question_write_activity" />
         <activity android:name=".Mypage_sub3_Rule" />
         <activity android:name=".Mypage_sub3_Notice" />
