@@ -5,7 +5,7 @@ public class BoardReplyVO {
     // 김연준
     private String board_replyId; //댓글 아이디
     private String board_replyContent; //댓글 내용
-    private String board_replyName;// 댓글 작성자(노 익명)
+    private String board_replyName;// 댓글 작성자(실명)
     private String board_replyDate;//날짜
     private String board_replyModifyDate; //날짜 변형
 

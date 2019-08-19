@@ -46,6 +46,9 @@ public class BoardWriteActivity extends AppCompatActivity {
     private Long replyCnt;
     private Long likeCnt;
 
+    String userEmail;
+    String userName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,8 +111,8 @@ public class BoardWriteActivity extends AppCompatActivity {
                 likeCnt = 0L;
 
                 // 이메일과 이름 받아오기
-                String userEmail = uservo.getUser_email();
-                String userName = uservo.getUser_name();
+                userEmail = uservo.getUser_email();
+                userName = uservo.getUser_name();
 
                 id = db.collection(category).document().getId();
                 Map<String, Object> post = new HashMap<>();
