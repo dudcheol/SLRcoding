@@ -1,5 +1,6 @@
 package com.example.slrcoding;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -339,6 +340,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                         startActivity(intent);
                     }
                 } catch (URISyntaxException e) {
+                    Toasty.error(FeedDetailActivity.this,"오픈채팅방 연결 에러!!",Toasty.LENGTH_SHORT,true);
                     e.printStackTrace();
                 }
                 break;
@@ -513,7 +515,9 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
             case R.id.menu_delete:
                 //Todo: 콜백으로 해당 글 작성자를 읽어온 후 delete_flag에 true면 내가 쓴글로 삭제하게 하고 false면 삭제할 때 Toast로 작성자외 삭제할 수 없습니다. 뜨게하기.
                 //Todo: 여기서 if문으로 flag로 가르기.
-
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("글 삭제중..");
+                progressDialog.show();
                 if(delete_flag2){
                     db.collection(category).document(idfrom)
                             .delete()
@@ -527,6 +531,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
+                                    progressDialog.dismiss();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

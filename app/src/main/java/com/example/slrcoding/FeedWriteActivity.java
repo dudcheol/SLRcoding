@@ -1,5 +1,6 @@
 package com.example.slrcoding;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -126,6 +127,9 @@ public class FeedWriteActivity extends AppCompatActivity {
                 String userEmail = uservo.getUser_email();
                 //TOdo: 카카오톡 URL 링크를 삽입할 예정
                 // 위에서 링크 적합성 여부 파악하기.
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("글 등록중..");
+                progressDialog.show();
                 id = db.collection(category).document().getId();
                 Map<String,Object> post = new HashMap<>();
                 post.put("id",id);
@@ -147,6 +151,8 @@ public class FeedWriteActivity extends AppCompatActivity {
 
                                // Toast.makeText(FeedWriteActivity.this, "업로드 성공!!", Toast.LENGTH_SHORT).show();
                                 finish();
+                                progressDialog.dismiss();
+
                             }
 
                         })
