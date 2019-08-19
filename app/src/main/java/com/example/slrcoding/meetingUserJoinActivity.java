@@ -38,12 +38,14 @@ import es.dmoral.toasty.Toasty;
 
 import static com.example.slrcoding.MainActivity.uservo;
 
+// 박영철
+
 public class meetingUserJoinActivity extends AppCompatActivity {
     final int PICK_PROFILE_FROM_ALBUM = 10;
     private String prof_string = "_profileImage.png";
 
-    CardView add_photo;
-    Button ok_btn;
+    private CardView add_photo;
+    private Button ok_btn;
     private RelativeLayout text_layout;
     private ImageView profile_img;
     private ProgressBar progressBar;
@@ -68,6 +70,7 @@ public class meetingUserJoinActivity extends AppCompatActivity {
         ok_btn.setOnClickListener(v -> {
             Intent intent = new Intent(this,meetingUserJoin2Activity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
         });
     }
 
@@ -90,10 +93,8 @@ public class meetingUserJoinActivity extends AppCompatActivity {
             Uri imageUri = data.getData();
 
             final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("프로필 설정하는 중");
+            progressDialog.setMessage("프로필 설정 중 ...");
             progressDialog.show();
-            text_layout.setVisibility(View.INVISIBLE);
-            ok_btn.setVisibility(View.VISIBLE);
 
             FirebaseStorage
                     .getInstance()
@@ -102,7 +103,6 @@ public class meetingUserJoinActivity extends AppCompatActivity {
                     .child(uservo.getUser_id() + prof_string)
                     .putFile(imageUri)
                     .addOnSuccessListener(Task -> {
-                        progressBar.setVisibility(View.VISIBLE);
                         Task.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(Uri -> {
                             Glide.with(this)
                                     .load(Uri)
@@ -121,6 +121,9 @@ public class meetingUserJoinActivity extends AppCompatActivity {
                                     })
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(15)))
                                     .into(profile_img);
+                            progressBar.setVisibility(View.VISIBLE);
+                            text_layout.setVisibility(View.INVISIBLE);
+                            ok_btn.setVisibility(View.VISIBLE);
                             progressDialog.dismiss();
                         });
                     })

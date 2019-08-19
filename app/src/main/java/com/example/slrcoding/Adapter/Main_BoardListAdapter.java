@@ -13,6 +13,8 @@ import com.example.slrcoding.R;
 
 import java.util.List;
 
+//박영철
+
 public class Main_BoardListAdapter extends BaseAdapter {
     List<Board> boardList;
     LayoutInflater mLayoutInflater;

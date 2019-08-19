@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언;  // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;   // 현재 로그인 된 정보를 담은 객체 생성
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    // (박영철 수정 19.08.20)
+    private BottomNavigationView navigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("홈");
         Intent intent = getIntent();
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
         // uservo객체에 현재 로그인한 회원정보 저장.(최민철 수정 19.08.06)
         // 각 프레그먼트에서 ex) ((MainActivity)getActivity()).uservo.getUser_id() uservo 접근 가능
@@ -139,6 +144,20 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.commit();
             BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        }
+
+        // 미팅 탭에서 초기 프로필 설정 끝나고 다시 메인으로 왔을 때
+        // 알림메시지 띄움
+        // 바로 미팅탭으로 이동시키고 싶으나 프로필사진을 못받아오는 오류가 있음
+        if(intent.getBooleanExtra("EXIT",false)){
+            //navigation.setSelectedItemId(R.id.navigation_favorite);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("프로필 설정을 완료했습니다.\n이제 Meeting에 참여할 수 있습니다!");
+            builder.setPositiveButton("닫기",(dialogInterface, i) -> {
+                dialogInterface.dismiss();
+            });
+            builder.create();
+            builder.show();
         }
     }
 

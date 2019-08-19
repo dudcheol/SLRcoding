@@ -6,79 +6,107 @@
     android:layout_height="match_parent"
     tools:context=".meetingUserJoinActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/container"
+        android:text="본인 사진이 없으시군요! (2/2)"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"/>
+
     <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
+
         <androidx.cardview.widget.CardView
             android:id="@+id/profile"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            app:cardCornerRadius="15dp"
-            app:cardBackgroundColor="#EAEDF0"
-            app:cardElevation="0dp"
             android:layout_centerHorizontal="true"
-            >
-            <ImageView
+            app:cardBackgroundColor="#EAEDF0"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_selfie"
-                android:layout_margin="20dp"/>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/profile_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_selfie" />
+
+                <ProgressBar
+                    android:id="@+id/progressbar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone" />
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
+
         <RelativeLayout
             android:id="@+id/text_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/profile"
             android:layout_marginTop="10dp">
+
             <TextView
                 android:id="@+id/txt1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="매칭 상대에게 보여질"
+                android:text="위 이미지를 터치하여"
                 android:textColor="@color/black"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/txt2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="본인 사진"
-                android:textStyle="bold"
-                android:textColor="@color/black"
                 android:layout_below="@id/txt1"
-                android:textSize="30sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:text="본인 사진"
                 android:textColor="@color/black"
-                android:text="을 골라주세요"
-                android:layout_alignBaseline="@id/txt2"
-                android:layout_toRightOf="@id/txt2"
-                android:textSize="20sp"/>
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="반드시 본인 얼굴을 등록해주세요"
-                android:textColor="#EF5350"
-                android:textStyle="bold"
+                android:layout_alignBaseline="@id/txt2"
+                android:layout_toRightOf="@id/txt2"
+                android:text="을 설정해주세요"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/txt2"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:text="미팅 매칭 시 상대에게 보여질 사진입니다."
+                android:textColor="#EF5350"
+                android:textStyle="bold" />
         </RelativeLayout>
+
         <Button
             android:id="@+id/ok_btn"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="확인"
-            android:textSize="15sp"
-            android:background="@drawable/rectangle_btn"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/profile"
-            style="?android:attr/borderlessButtonStyle"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rectangle_btn"
+            android:text="확인"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 

@@ -26,6 +26,7 @@ import com.example.slrcoding.Adapter.MeetingAdapter;
 import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.Meeting_UserVO;
+import com.example.slrcoding.meetingUserJoin2Activity;
 import com.example.slrcoding.meetingUserJoinActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,12 +36,12 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+// 박영철
+
 public class MessageFragment extends Fragment {
 
     private String prof_string = "_profileImage.png";
+    private String prof_string_to_face = "_faceImage.png";
 
     private RecyclerView mRecyclerView;
     private List<Meeting_UserVO> Meeting_UserVO_List;
@@ -121,7 +122,7 @@ public class MessageFragment extends Fragment {
 
         // 업로드 진행 Dialog 보이기
         final ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
-        progressDialog.setMessage("사용자 정보를 가져오는 중");
+        progressDialog.setMessage("사용자 정보를 가져오는 중 ...");
         progressDialog.show();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -129,26 +130,34 @@ public class MessageFragment extends Fragment {
 
         //다운로드할 파일을 가르키는 참조 만들기
         StorageReference pathReference = storageReference.child("Profile Images/"+((MainActivity) getActivity()).uservo.getUser_id() + prof_string);
+        StorageReference pathReference_to_face = storageReference.child("Face Profile Images/"+((MainActivity) getActivity()).uservo.getUser_id() + prof_string_to_face);
 
         // download url을 가져와
         // 사진이 존재하면 내용을 보여주고
         // 없으면 프로필 설정 액티비티로 이동동
-       pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                warning_message.setVisibility(View.GONE);
-                setSpinnerItemClick(v);
-                showRecyclerViewItem(v);
-                progressDialog.dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                warning_message.setVisibility(View.VISIBLE);
-                Intent intent = new Intent(v.getContext(),meetingUserJoinActivity.class);
-                startActivity(intent);
-                progressDialog.dismiss();
-            }
-        });
+       pathReference.getDownloadUrl().addOnSuccessListener(uri -> {
+           // 프로필 사진이 있으면
+           // 얼굴 사진이 있는지 확인
+           pathReference_to_face.getDownloadUrl().addOnSuccessListener(Uri -> {
+               // 얼굴 사진이 있으면 미팅 탭을 보여준다
+               warning_message.setVisibility(View.GONE);
+               setSpinnerItemClick(v);
+               showRecyclerViewItem(v);
+               progressDialog.dismiss();
+           })
+           .addOnFailureListener(e -> {
+               // 얼굴 사진이 없으면 얼굴 사진을 올리는 액티비티로 이동
+               warning_message.setVisibility(View.VISIBLE);
+               Intent intent = new Intent(v.getContext(), meetingUserJoin2Activity.class);
+               startActivity(intent);
+               progressDialog.dismiss();
+           });
+       }).addOnFailureListener(e -> {
+           // 프로필 사진이 없으면 프로필 사진을 올리는 액티비티로 이동
+           warning_message.setVisibility(View.VISIBLE);
+           Intent intent = new Intent(v.getContext(),meetingUserJoinActivity.class);
+           startActivity(intent);
+           progressDialog.dismiss();
+       });
     }
 }

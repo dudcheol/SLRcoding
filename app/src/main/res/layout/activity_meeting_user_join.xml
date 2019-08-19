@@ -6,7 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".meetingUserJoinActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/container"
+        android:text="프로필 사진이 없으시군요 ! (1/2)"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"/>
+
     <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -49,7 +58,7 @@
             android:id="@+id/txt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="모든 사람에게 보여질"
+            android:text="위 이미지를 터치하여"
             android:textColor="@color/black"
             android:textSize="20sp"/>
         <TextView
@@ -65,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="을 골라주세요"
+            android:text="을 설정해주세요"
             android:layout_alignBaseline="@id/txt2"
             android:layout_toRightOf="@id/txt2"
             android:textSize="20sp"/>
@@ -76,7 +85,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="확인"
+            android:text="다음"
             android:textSize="15sp"
             android:background="@drawable/rectangle_btn"
             android:textColor="#ffffff"

@@ -17,6 +17,8 @@ import com.example.slrcoding.VO.Main_JunggoVO;
 import java.util.ArrayList;
 import java.util.List;
 
+// 박영철
+
 public class Main_JunggoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<Main_JunggoVO> testList;
     Activity activity;
