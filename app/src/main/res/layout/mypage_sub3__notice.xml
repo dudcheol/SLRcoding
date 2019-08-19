@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--최민철 수정(xx.xx.xx)-->
+<!--최민철 수정(19.08.16)-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".Mypage_sub3_Notice">
+    tools:context=".Mypage_sub3_Notice"
+    android:background="#ffffff">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="공지사항이 없습니다" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mypage_notice_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+
 </LinearLayout>

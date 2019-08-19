@@ -1,5 +1,7 @@
 package com.example.slrcoding.VO;
 
+// 박영철
+
 public class Meeting_UserVO {
     // sex 1남자 2여자
     int sex;

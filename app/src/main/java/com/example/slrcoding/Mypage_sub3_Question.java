@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Mypage_sub3_Question extends AppCompatActivity {
 
     public String str1 = "인증 문의", str2 = "커뮤니티 문의", str3 = "신고/접근제한 문의", str4 = "기타 문의", str5 = "제휴/광고 문의";
+    public String user_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +26,15 @@ public class Mypage_sub3_Question extends AppCompatActivity {
         ViewGroup layout4 = (ViewGroup)findViewById(R.id.QA_Layout_other);
         ViewGroup layout5 = (ViewGroup)findViewById(R.id.QA_Layout_adv);
 
+        // 인텐트로 user email 받아오기
+        Intent intent = getIntent();
+        user_email = intent.getStringExtra("user_email");
+
         layout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Mypage_sub3_Question.this, "인증 문의", Toast.LENGTH_SHORT).show();
-                goto_write(str1);
+                goto_write(str1, user_email);
             }
         });
 
@@ -37,7 +42,7 @@ public class Mypage_sub3_Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Mypage_sub3_Question.this, "커뮤니티 문의", Toast.LENGTH_SHORT).show();
-                goto_write(str2);
+                goto_write(str2, user_email);
             }
         });
 
@@ -45,7 +50,7 @@ public class Mypage_sub3_Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Mypage_sub3_Question.this, "신고/접근제한 문의", Toast.LENGTH_SHORT).show();
-                goto_write(str3);
+                goto_write(str3, user_email);
             }
         });
 
@@ -53,7 +58,7 @@ public class Mypage_sub3_Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Mypage_sub3_Question.this, "기타 문의", Toast.LENGTH_SHORT).show();
-                goto_write(str4);
+                goto_write(str4, user_email);
             }
         });
 
@@ -61,14 +66,16 @@ public class Mypage_sub3_Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Mypage_sub3_Question.this, "제휴/광고 문의", Toast.LENGTH_SHORT).show();
-                goto_write(str5);
+                goto_write(str5, user_email);
             }
         });
     }
 
-    private void goto_write(String class_name){
+    // 각 문의 카테고리에 따라 작성 글로 이동
+    private void goto_write(String class_name, String user_email){
         Intent intent = new Intent(Mypage_sub3_Question.this, question_write_activity.class);
         intent.putExtra("class_name", class_name);
+        intent.putExtra("user_email", user_email);
         startActivity(intent);
     }
 }

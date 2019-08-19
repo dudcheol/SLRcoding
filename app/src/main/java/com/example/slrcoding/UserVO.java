@@ -14,6 +14,8 @@ public class UserVO {
     private boolean push_alarm;
     private boolean comment_alarm;
     private boolean event_alarm;
+    private String user_profile_image;
+    private String user_face_profile_image;
 
     public UserVO(){}
 
@@ -120,5 +122,21 @@ public class UserVO {
 
     public void setEvent_alarm(boolean event_alarm) {
         this.event_alarm = event_alarm;
+    }
+
+    public String getUser_profile_image() {
+        return user_profile_image;
+    }
+
+    public String getUser_face_profile_image() {
+        return user_face_profile_image;
+    }
+
+    public void setUser_profile_image(String user_profile_image) {
+        this.user_profile_image = user_profile_image;
+    }
+
+    public void setUser_face_profile_image(String user_face_profile_image) {
+        this.user_face_profile_image = user_face_profile_image;
     }
 }

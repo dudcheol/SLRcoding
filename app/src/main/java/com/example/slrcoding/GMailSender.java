@@ -17,11 +17,11 @@ import javax.mail.internet.MimeMessage;
 
 // additionnal.jar, mail.jar, activation.jar 라이브러리
 // SLRcoding_Minchoel -> app -> lib(생성) -> 위 3개 라이브러리 추가
-// 최민철(수정 : 19.07.30)
+// 최민철(수정 : 19.08.16)
 public class GMailSender extends javax.mail.Authenticator{
     private String mailhost = "smtp.gmail.com";
-    private String user = "gmail계정아이디";
-    private String password = "gmail계정비번";
+    private String user = "slrcoding1234@gmail.com";
+    private String password = "qwer1234@";
     private Session session;
     private String emailCode;
 

@@ -20,6 +20,8 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
+// 박영철
+
 public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Meeting_UserVO> Meeting_UserVO_List;
