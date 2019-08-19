@@ -119,17 +119,6 @@ public class MainFragment extends Fragment {
                             Log.v(TAG, "Error getting documents: ", task.getException());
                         }
 
-                        //Todo -- mainListAdapter를 생성할때 생성자로 리사이클러뷰에 담고싶은 정보들을 한꺼번에 보내는 식으로 해야하나..??
-                        // 내 생각엔 notifyDataSetChanged를 좀 알아봐서 쓰면 될거같다.. 참고:https://alpoxdev.github.io/2018/07/31/Android/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C2/
-                        // 여기 들어가면 리사이클러뷰 아이템의 특정 Position 위치만 바뀌었을 경우 거기만  동작?하게 할 수 있는듯
-                        // mainListAdapter의 생성자 안에 들어가는 모든 데이터들을 담고있는 객체 하나 만들어서 처음띄울땐 전부 다 받아오고
-                        // 실시간 데이터만 getter setter 이용해서 그것만 어댑터에 전달해서 바꾸는식으로 해야하나...?? 고민해봐야할듯..
-                        //MainListAdapter = new MainListAdapter(mainListViewTypeList,boards,null);
-                        /*MainListAdapter.notifyDataSetChanged();
-                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
-
-                        mRecyclerView.setLayoutManager(layoutManager);
-                        mRecyclerView.setAdapter(MainListAdapter);*/
                     }
                 })
                 .addOnFailureListener(task -> {

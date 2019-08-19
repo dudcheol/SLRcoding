@@ -26,12 +26,13 @@ import com.example.slrcoding.BoardDetailActivity;
 import com.example.slrcoding.FeedDetailActivity;
 import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.R;
+import com.example.slrcoding.UserVO;
 import com.example.slrcoding.VO.Main_JunggoVO;
 import com.example.slrcoding.fragment.BoardFragment;
 import com.example.slrcoding.fragment.FeedFragment;
 import com.example.slrcoding.fragment.MainFragment;
 import com.example.slrcoding.util.MainListViewType;
-import com.google.firebase.auth.FirebaseAuth;
+import static com.example.slrcoding.MainActivity.uservo;
 
 import java.util.List;
 
@@ -55,7 +56,6 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private View v_A,v_B,v_C;
     private Context mContext;
     private Activity mActivity;
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     // 받아올 리스트형 객체
     public MainListAdapter(List<MainListViewType> mainListViewTypeList, Context context, Activity activity) {
@@ -143,7 +143,9 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((BHolder) holder).profile.setBackground(new ShapeDrawable(new OvalShape()));
             ((BHolder) holder).profile.setClipToOutline(true);
 
-            Log.i("check auth",firebaseAuth.getCurrentUser().toString());
+            ((BHolder) holder).nickname.setText(uservo.getUser_id());
+            ((BHolder) holder).name_and_ID.setText(uservo.getUser_name()+" / "+uservo.getUser_email());
+            ((BHolder) holder).school.setText("한국산업기술대학교 XX학번");
 
 
         }else if(holder instanceof CHolder){
@@ -185,9 +187,14 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class BHolder extends RecyclerView.ViewHolder{
         ImageView profile;
+        TextView name_and_ID, school, nickname;
+
         public BHolder(@NonNull View itemView) {
             super(itemView);
             profile = itemView.findViewById(R.id.profile);
+            name_and_ID = itemView.findViewById(R.id.name_and_ID);
+            school = itemView.findViewById(R.id.school);
+            nickname = itemView.findViewById(R.id.nickname);
         }
     }
 

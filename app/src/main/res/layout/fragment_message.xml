@@ -90,5 +90,25 @@
             android:layout_marginRight="15dp"
             android:layout_marginLeft="5dp"
             android:layout_below="@+id/meeting_frag_controller"/>
+
+        <RelativeLayout
+            android:id="@+id/warning_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:id="@+id/warning"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_warnning"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/warning"
+                android:layout_marginTop="10dp"
+                android:text="프로필을 설정하지 않으면 이용할 수 없어요."/>
+        </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>

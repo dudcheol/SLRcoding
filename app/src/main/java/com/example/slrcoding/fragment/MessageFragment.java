@@ -1,9 +1,12 @@
 package com.example.slrcoding.fragment;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -15,12 +18,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.bumptech.glide.Glide;
 import com.example.slrcoding.Adapter.MeetingAdapter;
+import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.Meeting_UserVO;
 import com.example.slrcoding.meetingUserJoinActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +40,14 @@ import java.util.List;
  */
 public class MessageFragment extends Fragment {
 
+    private String prof_string = "_profileImage.png";
+
     private RecyclerView mRecyclerView;
     private List<Meeting_UserVO> Meeting_UserVO_List;
     private MeetingAdapter meetingAdapter;
     private int SPANCOUNT = 3;
     private Spinner spinner_sex, spinner_major, spinner_setting;
+    private RelativeLayout warning_message;
 
     public MessageFragment() {
         // Required empty public constructor
@@ -46,15 +59,9 @@ public class MessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_message, container, false);
 
-        // 프로필, 자기소개가 null 이면 설정하는 액티비티로 이동하고, 아니면 바로 미팅탭으로 이동
-        // 하지만 아직 구현단계이므로 바로 가도록 설정
-        Intent intent = new Intent(v.getContext(),meetingUserJoinActivity.class);
-        startActivity(intent);
+        warning_message = v.findViewById(R.id.warning_message);
 
-        setSpinnerItemClick(v);
-
-        showRecyclerViewItem(v);
-
+        downloadFile(v);
 
         return v;
     }
@@ -69,6 +76,20 @@ public class MessageFragment extends Fragment {
         Meeting_UserVO_List = new ArrayList<>();
         meetingAdapter = new MeetingAdapter(Meeting_UserVO_List,v.getContext());
         mRecyclerView.setAdapter(meetingAdapter);
+
+        // 아이템 크기 맞추기
+        mRecyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int width = mRecyclerView.getWidth()  / SPANCOUNT;
+                int height = mRecyclerView.getWidth()  / SPANCOUNT;
+                meetingAdapter.setLength(width, height);
+                mRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                // 리사이클러뷰가 그려진 다음에 setLength가 이루어 지므로
+                meetingAdapter.notifyDataSetChanged();
+            }
+        });
 
         // 임시데이터 추가
         Meeting_UserVO_List.add(new Meeting_UserVO(1,"박보검",false,false));
@@ -86,21 +107,6 @@ public class MessageFragment extends Fragment {
         Meeting_UserVO_List.add(new Meeting_UserVO(2,"박보검",true,false));
         Meeting_UserVO_List.add(new Meeting_UserVO(1,"아이린",true,true));
         Meeting_UserVO_List.add(new Meeting_UserVO(2,"박보검",true,true));
-
-
-        // 아이템 크기 맞추기
-        mRecyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int width = mRecyclerView.getWidth()  / SPANCOUNT;
-                int height = mRecyclerView.getWidth()  / SPANCOUNT;
-                meetingAdapter.setLength(width, height);
-                mRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-                // 리사이클러뷰가 그려진 다음에 setLength가 이루어 지므로
-                meetingAdapter.notifyDataSetChanged();
-            }
-        });
     }
 
     public void setSpinnerItemClick(View v){
@@ -108,5 +114,41 @@ public class MessageFragment extends Fragment {
         spinner_major = v.findViewById(R.id.spinner_major);
         //spinner_setting = v.findViewById(R.id.spinner_setting);
 
+    }
+
+    // FireStorage에 프로필 다운로드
+    public void downloadFile(View v){
+
+        // 업로드 진행 Dialog 보이기
+        final ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
+        progressDialog.setMessage("사용자 정보를 가져오는 중");
+        progressDialog.show();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
+
+        //다운로드할 파일을 가르키는 참조 만들기
+        StorageReference pathReference = storageReference.child("Profile Images/"+((MainActivity) getActivity()).uservo.getUser_id() + prof_string);
+
+        // download url을 가져와
+        // 사진이 존재하면 내용을 보여주고
+        // 없으면 프로필 설정 액티비티로 이동동
+       pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                warning_message.setVisibility(View.GONE);
+                setSpinnerItemClick(v);
+                showRecyclerViewItem(v);
+                progressDialog.dismiss();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                warning_message.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(v.getContext(),meetingUserJoinActivity.class);
+                startActivity(intent);
+                progressDialog.dismiss();
+            }
+        });
     }
 }
