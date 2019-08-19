@@ -2,6 +2,8 @@ package com.example.slrcoding.fragment;
 
 
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,7 +69,6 @@ public class MainFragment extends Fragment {
         MainFragment fragment=new MainFragment();
         RecyclerView.Adapter mainListAdapter = new MainListAdapter(mainListViewTypeList,v.getContext(),getActivity());
         mRecyclerView.setAdapter(mainListAdapter);
-
 
         // mainListViewTypeList를 먼저 만들어준다
         // 뷰 타입 별로 다른 뷰 제공
@@ -171,5 +172,4 @@ public class MainFragment extends Fragment {
 
         return v;
     }
-
 }
