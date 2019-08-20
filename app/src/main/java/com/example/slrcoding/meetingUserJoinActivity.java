@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.protobuf.Any;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.HashMap;
 
@@ -92,8 +94,10 @@ public class meetingUserJoinActivity extends AppCompatActivity {
         if(requestCode == PICK_PROFILE_FROM_ALBUM && resultCode == Activity.RESULT_OK){
             Uri imageUri = data.getData();
 
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("프로필 설정 중 ...");
+            final SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+            progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            progressDialog.setTitleText("Loading");
+            progressDialog.setCancelable(false);
             progressDialog.show();
 
             FirebaseStorage

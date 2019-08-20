@@ -1,6 +1,7 @@
 package com.example.slrcoding;
 
 // 최민철(수정 : 19.08.09)
+// 박영철(수정 : 19.08.20)
 public class UserVO {
 
     private String user_id;
@@ -14,8 +15,9 @@ public class UserVO {
     private boolean push_alarm;
     private boolean comment_alarm;
     private boolean event_alarm;
-    private String user_profile_image;
-    private String user_face_profile_image;
+    private String user_profile_image_uri;
+    private String user_meeting_profile_image_uri;
+    private boolean use_meeting_service;
 
     public UserVO(){}
 
@@ -124,19 +126,27 @@ public class UserVO {
         this.event_alarm = event_alarm;
     }
 
-    public String getUser_profile_image() {
-        return user_profile_image;
+    public boolean isUse_meeting_service() {
+        return use_meeting_service;
     }
 
-    public String getUser_face_profile_image() {
-        return user_face_profile_image;
+    public void setUse_meeting_service(boolean use_meeting_service) {
+        this.use_meeting_service = use_meeting_service;
     }
 
-    public void setUser_profile_image(String user_profile_image) {
-        this.user_profile_image = user_profile_image;
+    public String getUser_profile_image_uri() {
+        return user_profile_image_uri;
     }
 
-    public void setUser_face_profile_image(String user_face_profile_image) {
-        this.user_face_profile_image = user_face_profile_image;
+    public String getUser_meeting_profile_image_uri() {
+        return user_meeting_profile_image_uri;
+    }
+
+    public void setUser_profile_image_uri(String user_profile_image_uri) {
+        this.user_profile_image_uri = user_profile_image_uri;
+    }
+
+    public void setUser_meeting_profile_image_uri(String user_meeting_profile_image_uri) {
+        this.user_meeting_profile_image_uri = user_meeting_profile_image_uri;
     }
 }

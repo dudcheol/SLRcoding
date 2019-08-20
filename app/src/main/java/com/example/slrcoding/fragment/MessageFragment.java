@@ -3,6 +3,8 @@ package com.example.slrcoding.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,15 +15,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.slrcoding.Adapter.MeetingAdapter;
 import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.R;
@@ -32,6 +38,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +56,7 @@ public class MessageFragment extends Fragment {
     private int SPANCOUNT = 3;
     private Spinner spinner_sex, spinner_major, spinner_setting;
     private RelativeLayout warning_message;
+    private ImageView my_profile_imag;
 
     public MessageFragment() {
         // Required empty public constructor
@@ -61,6 +69,7 @@ public class MessageFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_message, container, false);
 
         warning_message = v.findViewById(R.id.warning_message);
+        my_profile_imag = v.findViewById(R.id.my_profile_imag);
 
         downloadFile(v);
 
@@ -121,8 +130,10 @@ public class MessageFragment extends Fragment {
     public void downloadFile(View v){
 
         // 업로드 진행 Dialog 보이기
-        final ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
-        progressDialog.setMessage("사용자 정보를 가져오는 중 ...");
+        SweetAlertDialog progressDialog = new SweetAlertDialog(this.getActivity(),SweetAlertDialog.PROGRESS_TYPE);
+        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        progressDialog.setTitleText("Loading");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -137,10 +148,13 @@ public class MessageFragment extends Fragment {
         // 없으면 프로필 설정 액티비티로 이동동
        pathReference.getDownloadUrl().addOnSuccessListener(uri -> {
            // 프로필 사진이 있으면
+           // 해당 uri 저장해놓는다
+           Uri profile_uri = uri;
            // 얼굴 사진이 있는지 확인
            pathReference_to_face.getDownloadUrl().addOnSuccessListener(Uri -> {
                // 얼굴 사진이 있으면 미팅 탭을 보여준다
                warning_message.setVisibility(View.GONE);
+               setProfileImg(profile_uri);
                setSpinnerItemClick(v);
                showRecyclerViewItem(v);
                progressDialog.dismiss();
@@ -151,6 +165,7 @@ public class MessageFragment extends Fragment {
                Intent intent = new Intent(v.getContext(), meetingUserJoin2Activity.class);
                startActivity(intent);
                progressDialog.dismiss();
+               Log.e("face error",e.toString());
            });
        }).addOnFailureListener(e -> {
            // 프로필 사진이 없으면 프로필 사진을 올리는 액티비티로 이동
@@ -158,6 +173,14 @@ public class MessageFragment extends Fragment {
            Intent intent = new Intent(v.getContext(),meetingUserJoinActivity.class);
            startActivity(intent);
            progressDialog.dismiss();
+           Log.e("profile error",e.toString());
        });
+    }
+
+    void setProfileImg(Uri img){
+        Glide.with(this)
+                .load(img)
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .into(my_profile_imag);
     }
 }
