@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     android:padding="0dp">
 
-
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/bod_toolbar"
         android:layout_width="match_parent"
@@ -16,6 +14,22 @@
         android:background="@color/mainColor_mid">
     </androidx.appcompat.widget.Toolbar>
 
+    <!--이미지 출력-->
+    <ImageView
+        android:id="@+id/file_preview"
+        android:paddingTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_below="@+id/bod_toolbar"/>
+
+    <Button
+        android:id="@+id/board_file"
+        android:layout_marginLeft="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/file_preview"
+        android:text="파일선택"/>
 
     <EditText
         android:id="@+id/board_title_editText"
@@ -24,17 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:drawable/edit_text"
-        android:layout_below="@+id/bod_toolbar"
+        android:layout_below="@+id/board_file"
         android:hint="제목을 입력하세요"/>
-
-    <Button
-        android:id="@+id/board_file"
-        android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/board_title_editText"
-        android:text="파일선택"/>
-
     <EditText
         android:id="@+id/board_memo_edit"
         android:layout_marginLeft="20dp"
@@ -45,7 +50,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/board_file"
+        android:layout_below="@id/board_title_editText"
         android:hint="글을 입력하세요."
         android:gravity="top"
         android:background="@android:drawable/edit_text"/>
