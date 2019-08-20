@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity {
     int flag=0;
@@ -151,13 +152,11 @@ public class MainActivity extends AppCompatActivity {
         // 바로 미팅탭으로 이동시키고 싶으나 프로필사진을 못받아오는 오류가 있음
         if(intent.getBooleanExtra("EXIT",false)){
             //navigation.setSelectedItemId(R.id.navigation_favorite);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("프로필 설정을 완료했습니다.\n이제 Meeting에 참여할 수 있습니다!");
-            builder.setPositiveButton("닫기",(dialogInterface, i) -> {
-                dialogInterface.dismiss();
-            });
-            builder.create();
-            builder.show();
+            SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE);
+            sweetAlertDialog
+                    .setTitleText("프로필 설정을 완료했습니다!")
+                    .setContentText("이제 Meeting에 참여할 수 있습니다.")
+                    .show();
         }
     }
 

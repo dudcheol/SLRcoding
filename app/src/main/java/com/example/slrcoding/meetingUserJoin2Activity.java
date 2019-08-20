@@ -8,9 +8,11 @@ import androidx.core.content.IntentCompat;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,7 +28,13 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
+
+import java.util.HashMap;
 
 import es.dmoral.toasty.Toasty;
 
@@ -55,6 +63,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
         profile_img = findViewById(R.id.profile_img);
         progressBar = findViewById(R.id.progressbar);
 
+        checkSetting();
         initSetting();
 
         add_photo.setOnClickListener(v -> {
@@ -87,8 +96,10 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
         if(requestCode == PICK_FACE_PROFILE_FROM_ALBUM && resultCode == Activity.RESULT_OK){
             Uri imageUri = data.getData();
 
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("사용자 사진 설정 중 ...");
+            final SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+            progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            progressDialog.setTitleText("Loading");
+            progressDialog.setCancelable(false);
             progressDialog.show();
 
             FirebaseStorage
@@ -120,8 +131,15 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                             text_layout.setVisibility(View.INVISIBLE);
                             ok_btn.setVisibility(View.VISIBLE);
 
-                            // uservo에 사용자 얼굴 이미지 uri 저장
-                            uservo.setUser_face_profile_image(Uri.toString());
+                            // uservo에 사용자 얼굴 이미지 uri 저장하고 서버에도 저장함
+                            uservo.setUser_meeting_profile_image_uri(Uri.toString());
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("user_meeting_profile_uri",Uri.toString());
+                            FirebaseFirestore
+                                    .getInstance()
+                                    .collection("사용자 정보")
+                                    .document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                                    .update(map);
                             progressDialog.dismiss();
                         });
                     })
@@ -138,5 +156,35 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
+
+    void checkSetting(){
+        final SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        progressDialog.setTitleText("Loading");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
+        StorageReference pathReference_to_face = storageReference.child("Face Profile Images/"+uservo.getUser_id() + prof_string_to_face);
+        pathReference_to_face.getDownloadUrl().addOnSuccessListener(Uri -> {
+            // 얼굴 사진이 있으면 메인화면으로 이동
+            progressDialog.changeAlertType(SweetAlertDialog.NORMAL_TYPE);
+            progressDialog.setTitleText("미팅용 사진은 이미 있으시군요!");
+            progressDialog.setContentText("사진을 변경하시겠습니까?");
+            progressDialog.setCancelText("아니요");
+            progressDialog.showCancelButton(true);
+            progressDialog.setCancelClickListener(sweetAlertDialog -> {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("EXIT", true);
+                startActivity(intent);
+            });
+            progressDialog.setConfirmText("네");
+        })
+                .addOnFailureListener(e -> {
+                    // 얼굴 사진이 없으면 그대로 진행
+                    progressDialog.dismiss();
+                });
     }
 }

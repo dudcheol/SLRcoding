@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <TextView
             android:id="@+id/meeting"
             android:layout_width="wrap_content"
@@ -20,6 +21,55 @@
             android:textStyle="bold"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"/>
+
+        <ImageView
+            android:id="@+id/my_profile_imag"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_above="@+id/meeting_frag_controller"
+            android:src="@drawable/ic_person"
+            />
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@id/meeting_frag_controller"
+            android:layout_toLeftOf="@+id/my_profile_imag"
+            android:layout_marginRight="5dp">
+            <ImageView
+                android:id="@+id/match_img"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_match"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="매칭"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="2dp"
+                android:textSize="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="랜덤"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="2dp"
+                android:textSize="10dp" />
+        </RelativeLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/meeting_frag_controller"
@@ -97,7 +147,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:visibility="gone">
+            android:visibility="gone"
+            >
             <ImageView
                 android:id="@+id/warning"
                 android:layout_width="80dp"
@@ -109,7 +160,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/warning"
                 android:layout_marginTop="10dp"
-                android:text="프로필을 설정하지 않으면 이용할 수 없어요."/>
+                android:gravity="center"
+                android:text="오류로 인해 이용할 수 없습니다.\n다시 시도해주세요."/>
         </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>
