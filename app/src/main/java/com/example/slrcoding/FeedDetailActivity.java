@@ -337,7 +337,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
    public void onClick(View v) {
         switch (v.getId()){
             case R.id.feed_detail_kakaoLink:
-
+                //AsyncTask 함수 호출.
                 KakaoLinkProgressTask task = new KakaoLinkProgressTask();
                 task.execute();
                 break;
