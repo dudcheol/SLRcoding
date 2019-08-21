@@ -162,18 +162,14 @@ public class MessageFragment extends Fragment {
            .addOnFailureListener(e -> {
                // 얼굴 사진이 없으면 얼굴 사진을 올리는 액티비티로 이동
                warning_message.setVisibility(View.VISIBLE);
-               Intent intent = new Intent(v.getContext(), meetingUserJoin2Activity.class);
+               Intent intent = new Intent(getContext(), meetingUserJoin2Activity.class);
                startActivity(intent);
                progressDialog.dismiss();
                Log.e("face error",e.toString());
            });
        }).addOnFailureListener(e -> {
-           // 프로필 사진이 없으면 프로필 사진을 올리는 액티비티로 이동
-           warning_message.setVisibility(View.VISIBLE);
-           Intent intent = new Intent(v.getContext(),meetingUserJoinActivity.class);
-           startActivity(intent);
            progressDialog.dismiss();
-           Log.e("profile error",e.toString());
+           setWarning_message(v);
        });
     }
 
@@ -182,5 +178,33 @@ public class MessageFragment extends Fragment {
                 .load(img)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .into(my_profile_imag);
+    }
+
+    void setWarning_message(View v){
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(v.getContext(),SweetAlertDialog.WARNING_TYPE);
+        sweetAlertDialog.setTitleText("프로필을 받아오지 못했습니다.")
+                .setContentText("이미 프로필 사진을 설정하셨나요?")
+                .setCancelText("네")
+                .setCancelClickListener(sweetAlertDialog1 -> {
+                    sweetAlertDialog1
+                            .setTitleText("다시 시도해주세요.")
+                            .showContentText(false)
+                            .setConfirmText("OK")
+                            .showCancelButton(false)
+                            .setConfirmClickListener(sweetAlertDialog2 -> {
+                                sweetAlertDialog2.cancel();
+                            })
+                            .changeAlertType(SweetAlertDialog.NORMAL_TYPE);
+                    warning_message.setVisibility(View.VISIBLE);
+                })
+                .setConfirmText("아니요")
+                .setConfirmClickListener(sweetAlertDialog1 -> {
+                    sweetAlertDialog1.cancel();
+                    // 프로필 사진이 없으면 프로필 사진을 올리는 액티비티로 이동
+                    warning_message.setVisibility(View.VISIBLE);
+                    Intent intent = new Intent(v.getContext(),meetingUserJoinActivity.class);
+                    startActivity(intent);
+                })
+                .show();
     }
 }

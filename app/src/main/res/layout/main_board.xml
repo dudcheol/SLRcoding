@@ -36,15 +36,27 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"/>
 
-            <ListView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_below="@+id/subject"
-                android:layout_height="105dp"
-                android:listSelector="@android:color/transparent"
-                android:dividerHeight="2dp"
-                android:divider="#ffffff"
-                android:scrollbars="none"></ListView>
+            <RelativeLayout
+                android:id="@+id/list_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/subject">
+                <ListView
+                    android:id="@+id/list"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:listSelector="@android:color/transparent"
+                    android:dividerHeight="2dp"
+                    android:divider="#ffffff"
+                    android:scrollbars="none"></ListView>
+                <!--<ProgressBar
+                    android:id="@+id/main_board_progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progressTint="@color/progress_color"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"/>-->
+            </RelativeLayout>
 
         </RelativeLayout>
 

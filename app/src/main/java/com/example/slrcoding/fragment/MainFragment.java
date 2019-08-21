@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.slrcoding.Adapter.MainListAdapter;
@@ -26,6 +28,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.zip.Inflater;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +49,7 @@ public class MainFragment extends Fragment {
 
     RecyclerView.Adapter mainListAdapter;
     Board boardDTO;
+    ProgressBar board_progressbar, myinfo_progressbar;
 
     public MainFragment() {
         // Required empty public constructor
@@ -52,11 +59,37 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // 레이아웃 제어를 위한 인플레이터
         View v = (View)inflater.inflate(R.layout.fragment_main, container, false);
 
-        // 파이어베이스 설정작업
-        firestore = FirebaseFirestore.getInstance();
+        // 실행됐을때 가장 스크롤포지션이 가장 위에 있도록 하기 위한 핸들러
+        setScrollPosition_TOP();
 
+        // 파이어베이스를 설정하고
+        // 리사이클러뷰, 아이템 리스트를 생성해놓는다.
+        initSetting(v);
+
+        // 생성하고싶은 카테고리를 추가한다.
+        addCategoryItem();
+
+        // 중고장터 데이터 추가 (임시데이터)
+        addJunggoData();
+
+        // 게시판 데이터 추가
+        addBoardData();
+
+
+        //Todo 1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
+
+        //Todo 2-- 파이어베이스에서 인기글 받아오는 것 구현 (일단 그냥 좋아요 가장 많은 것부터 가져온다)
+
+        //Todo 4-- 타이틀바 활용해서 꾸며보기
+
+        return v;
+    }
+
+    void initSetting(View v){
+        firestore = FirebaseFirestore.getInstance();
 
         mRecyclerView = (RecyclerView)v.findViewById(R.id.main_recyclerView_for_mainFrag);
         mRecyclerView.setHasFixedSize(true);
@@ -67,9 +100,11 @@ public class MainFragment extends Fragment {
         mainListViewTypeList=new ArrayList<>();
 
         MainFragment fragment=new MainFragment();
-        RecyclerView.Adapter mainListAdapter = new MainListAdapter(mainListViewTypeList,v.getContext(),getActivity());
+        mainListAdapter = new MainListAdapter(mainListViewTypeList,v.getContext(),getActivity());
         mRecyclerView.setAdapter(mainListAdapter);
+    }
 
+    void addCategoryItem(){
         // mainListViewTypeList를 먼저 만들어준다
         // 뷰 타입 별로 다른 뷰 제공
         // type : flag : subject
@@ -80,7 +115,9 @@ public class MainFragment extends Fragment {
         mainListViewTypeList.add(new MainListViewType(0,"기숙사와 밥"));
         mainListViewTypeList.add(new MainListViewType(0,"스포츠와 게임"));
         mainListViewTypeList.add(new MainListViewType(2,"중고장터"));
+    }
 
+    void addJunggoData(){
         // 중고장터 이미지 임시데이터
         List<Main_JunggoVO> test = new ArrayList<>();
         test.add(new Main_JunggoVO(1));
@@ -91,14 +128,18 @@ public class MainFragment extends Fragment {
         test.add(new Main_JunggoVO(6));
         mainListViewTypeList.get(3).setJunggos(test);
         mainListAdapter.notifyDataSetChanged();
-        // 실행됐을때 가장 스크롤포지션이 가장 위에 있도록 하기 위한 핸들러
+    }
+
+    void setScrollPosition_TOP(){
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 mRecyclerView.scrollToPosition(0);
             }
-        }, 200);
+        }, 500);
+    }
 
+    void addBoardData(){
         // 기숙사와 밥 데이터 로드
         firestore
                 .collection("기숙사와 밥")
@@ -118,11 +159,10 @@ public class MainFragment extends Fragment {
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
                         }
-
                     }
                 })
                 .addOnFailureListener(task -> {
-                    Toast.makeText(getContext(), "데이터를 받아오는데 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Objects.requireNonNull(getContext()),"데이터를 받아오는데 문제가 발생했습니다.",Toasty.LENGTH_SHORT).show();
                 });
 
         // 스포츠와 게임 데이터 로드
@@ -147,18 +187,11 @@ public class MainFragment extends Fragment {
                     }
                 })
                 .addOnFailureListener(task -> {
-                    Toast.makeText(getContext(), "데이터를 받아오는데 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Objects.requireNonNull(getContext()),"데이터를 받아오는데 문제가 발생했습니다.",Toasty.LENGTH_SHORT).show();
                 });
+    }
 
-
-
-        //1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
-
-        //Todo 2-- 파이어베이스에서 인기글 받아오는 것 구현 (일단 그냥 좋아요 가장 많은 것부터 가져온다)
-
-        //Todo 4-- 타이틀바 활용해서 꾸며보기
-
-
-        return v;
+    void removeProgressBar(ProgressBar progressBar){
+        progressBar.setVisibility(View.GONE);
     }
 }
