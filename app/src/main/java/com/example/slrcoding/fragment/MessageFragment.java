@@ -199,6 +199,7 @@ public class MessageFragment extends Fragment {
                 })
                 .setConfirmText("아니요")
                 .setConfirmClickListener(sweetAlertDialog1 -> {
+                    sweetAlertDialog1.cancel();
                     // 프로필 사진이 없으면 프로필 사진을 올리는 액티비티로 이동
                     warning_message.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(v.getContext(),meetingUserJoinActivity.class);
