@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/container"
-        android:text="본인 사진이 없으시군요! (2/2)"
+        android:text="본인 사진을 설정해주세요! (2/2)"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"/>
 
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt2"
                 android:layout_centerHorizontal="true"
-                android:text="미팅 매칭 시 상대에게 보여질 사진입니다."
+                android:text="미팅 매칭 시 상대에게만 보여질 사진입니다."
                 android:textColor="#EF5350"
                 android:textStyle="bold" />
         </RelativeLayout>

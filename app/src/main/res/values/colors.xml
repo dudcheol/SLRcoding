@@ -16,6 +16,10 @@
 
     <!-- 메인 컬러 -->
     <color name="mainColor_mid">#a8b545</color>
+
     <color name="mainColor_dark">#a8b545</color>
     <color name="mainColor_bright">#ffffa6</color>
+
+    <!-- 사용 컬러 -->
+    <color name="progress_color">#A5DC86</color>
 </resources>

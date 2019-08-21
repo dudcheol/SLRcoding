@@ -18,15 +18,27 @@
         android:textSize="15dp"
         android:textStyle="bold" />-->
 
-    <ImageView
-        android:id="@+id/profile"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <RelativeLayout
+        android:id="@+id/profile_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/subject"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
-        android:layout_alignBottom="@+id/my_info_layout"
-        android:src="@drawable/defaultimage" />
+        android:layout_alignBottom="@+id/my_info_layout">
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/defaultimage" />
+        <!--<ProgressBar
+            android:id="@+id/main_myinfo_progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/progress_color"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>-->
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/my_info_layout"
@@ -34,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/profile">
+        android:layout_toRightOf="@+id/profile_container">
 
         <TextView
             android:id="@+id/nickname"
