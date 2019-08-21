@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.slrcoding.Board;
 import com.example.slrcoding.BoardDetailActivity;
 import com.example.slrcoding.FeedDetailActivity;
@@ -32,6 +36,10 @@ import com.example.slrcoding.fragment.BoardFragment;
 import com.example.slrcoding.fragment.FeedFragment;
 import com.example.slrcoding.fragment.MainFragment;
 import com.example.slrcoding.util.MainListViewType;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import static com.example.slrcoding.MainActivity.uservo;
 
 import java.util.List;
@@ -56,6 +64,8 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private View v_A,v_B,v_C;
     private Context mContext;
     private Activity mActivity;
+
+    private String prof_string = "_profileImage.png";
 
     // 받아올 리스트형 객체
     public MainListAdapter(List<MainListViewType> mainListViewTypeList, Context context, Activity activity) {
@@ -143,6 +153,8 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((BHolder) holder).profile.setBackground(new ShapeDrawable(new OvalShape()));
             ((BHolder) holder).profile.setClipToOutline(true);
 
+            profileSetting(((BHolder)holder).profile);
+
             ((BHolder) holder).nickname.setText(uservo.getUser_id());
             ((BHolder) holder).name_and_ID.setText(uservo.getUser_name()+" / "+uservo.getUser_email());
             ((BHolder) holder).school.setText("한국산업기술대학교 XX학번");
@@ -172,9 +184,11 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return mainListViewTypeList.size();
     }
 
+    // 게시글
     public class AHolder extends RecyclerView.ViewHolder{
         TextView subject,go_to_detail;
         ListView listView;
+        ProgressBar baord_progressbar;
 
         public AHolder(@NonNull View itemView) {
             super(itemView);
@@ -182,12 +196,15 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             subject = (TextView)itemView.findViewById(R.id.subject);
             listView = (ListView)itemView.findViewById(R.id.list);
             go_to_detail = itemView.findViewById(R.id.go_to_detail);
+            //baord_progressbar = itemView.findViewById(R.id.main_board_progressBar);
         }
     }
 
+    // 내정보
     public class BHolder extends RecyclerView.ViewHolder{
         ImageView profile;
         TextView name_and_ID, school, nickname;
+        ProgressBar myinfo_progressbar;
 
         public BHolder(@NonNull View itemView) {
             super(itemView);
@@ -195,9 +212,11 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             name_and_ID = itemView.findViewById(R.id.name_and_ID);
             school = itemView.findViewById(R.id.school);
             nickname = itemView.findViewById(R.id.nickname);
+            //myinfo_progressbar = itemView.findViewById(R.id.main_myinfo_progressBar);
         }
     }
 
+    // 중고장터터
     private class CHolder extends RecyclerView.ViewHolder {
         TextView subject,go_to_detail;
         RecyclerView junggo_image_album;
@@ -209,5 +228,17 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             junggo_card = itemView.findViewById(R.id.junggo_card);
             go_to_detail = itemView.findViewById(R.id.go_to_detail);
         }
+    }
+
+    void profileSetting(ImageView img){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
+        StorageReference pathReference = storageReference.child("Profile Images/"+uservo.getUser_id() + prof_string);
+        pathReference.getDownloadUrl().addOnSuccessListener(uri -> {
+            Glide.with(mContext)
+                    .load(uri)
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(img);
+        });
     }
 }
