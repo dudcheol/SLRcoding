@@ -3,12 +3,14 @@ package com.example.slrcoding;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,10 +43,12 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import org.w3c.dom.Document;
 
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -333,20 +337,65 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
    public void onClick(View v) {
         switch (v.getId()){
             case R.id.feed_detail_kakaoLink:
-                try {
-                    Intent intent = Intent.parseUri(kakaoUrl,Intent.URI_INTENT_SCHEME);
-                    Intent existPackage = getPackageManager().getLaunchIntentForPackage(intent.getPackage());
-                    if(existPackage!=null){
-                        startActivity(intent);
-                    }
-                } catch (URISyntaxException e) {
-                    Toasty.error(FeedDetailActivity.this,"오픈채팅방 연결 에러!!",Toasty.LENGTH_SHORT,true);
-                    e.printStackTrace();
-                }
+                //AsyncTask 함수 호출.
+                KakaoLinkProgressTask task = new KakaoLinkProgressTask();
+                task.execute();
                 break;
         }
 
     }
+
+    //AsyncTask 카카오 링크 프로그레스다이얼로그 띄우기
+    private class KakaoLinkProgressTask extends AsyncTask<Void,Void,Void> {
+
+        ProgressDialog asyncDialog = new ProgressDialog(
+                FeedDetailActivity.this);
+        @Override
+        protected void onPreExecute() {
+            asyncDialog.setTitle("카카오링크");
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            asyncDialog.setMessage("카카오 오픈채팅 연결중...");
+            asyncDialog.setCancelable(false);
+            asyncDialog.show();
+            super.onPreExecute();
+
+        }
+        @Override
+        protected Void doInBackground(Void... strings) {
+            try {
+                for (int i = 0; i < 5; i++) {
+                    asyncDialog.setProgress(i * 40);
+
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            asyncDialog.dismiss();
+
+            Intent intent = null;
+            try {
+                intent = Intent.parseUri(kakaoUrl,Intent.URI_INTENT_SCHEME);
+            } catch (URISyntaxException e1) {
+                Toasty.error(FeedDetailActivity.this,"오픈채팅방 연결 에러!!",Toasty.LENGTH_SHORT,true);
+
+                e1.printStackTrace();
+            }
+            Intent existPackage = getPackageManager().getLaunchIntentForPackage(intent.getPackage());
+            if(existPackage!=null){
+                startActivity(intent);
+            }
+            super.onPostExecute(result);
+
+        }
+
+    }
+
 
     //댓글 등록 시 파베에 넣기
     //댓글 수도 업데이트하기..
@@ -516,8 +565,10 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                 //Todo: 콜백으로 해당 글 작성자를 읽어온 후 delete_flag에 true면 내가 쓴글로 삭제하게 하고 false면 삭제할 때 Toast로 작성자외 삭제할 수 없습니다. 뜨게하기.
                 //Todo: 여기서 if문으로 flag로 가르기.
                 //다이얼로그 추가
-                final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setMessage("글 삭제중..");
+                final SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+                progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                progressDialog.setTitleText("글 삭제중...");
+                progressDialog.setCancelable(false);
                 progressDialog.show();
                 if(delete_flag2){
                     db.collection(category).document(idfrom)

@@ -2,6 +2,7 @@ package com.example.slrcoding;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -127,8 +129,10 @@ public class FeedWriteActivity extends AppCompatActivity {
                 String userEmail = uservo.getUser_email();
                 //TOdo: 카카오톡 URL 링크를 삽입할 예정
                 // 위에서 링크 적합성 여부 파악하기.
-                final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setMessage("글 등록중..");
+                final SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+                progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                progressDialog.setTitleText("글 등록중...");
+                progressDialog.setCancelable(false);
                 progressDialog.show();
                 id = db.collection(category).document().getId();
                 Map<String,Object> post = new HashMap<>();
