@@ -15,7 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.slrcoding.Board2;
 import com.example.slrcoding.BoardAdapter;
-import com.example.slrcoding.MainAdapter;
+import com.example.slrcoding.FeedAdapter;
 import com.example.slrcoding.R;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;

@@ -22,7 +22,7 @@ import java.util.List;
 //이정찬
 //어댑터
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> implements Filterable {
+public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MainViewHolder> implements Filterable {
 
     private static final int RESULT_OK = 3000;
     private List<Board> mBoardList;
@@ -30,7 +30,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     private List<Board> mBoardListFull;
 
 
-    public MainAdapter(List<Board> mBoardList) {
+    public FeedAdapter(List<Board> mBoardList) {
         this.mBoardList = mBoardList;
         mBoardListFull = new ArrayList<>(mBoardList);
 
