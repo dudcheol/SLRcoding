@@ -21,10 +21,17 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.util.HashMap;
+import java.util.Map;
 
 // 최민철(수정 : 19.08.19)
 public class LoginActivity extends AppCompatActivity {
@@ -37,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean auto_login_flag;
     private FirebaseAuth firebaseAuth;  // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;   // 현재 로그인 된 정보를 담은 객체 생성
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,4 +164,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
 }

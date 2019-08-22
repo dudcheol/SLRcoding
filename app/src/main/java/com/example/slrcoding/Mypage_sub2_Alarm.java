@@ -27,14 +27,15 @@ public class Mypage_sub2_Alarm extends AppCompatActivity {
     private Switch sw1, sw2, sw3;
     private FirebaseFirestore firebasestore = FirebaseFirestore.getInstance();    // 파이어베이스 스토어 객체 생성 및 선언
     private String user_email;
-    private NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-    private PendingIntent pendingIntent;
+    //private NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+    //private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage_sub2__alarm);
 
+        /*
         pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
                 new Intent(getApplicationContext(), MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(this)
@@ -46,6 +47,7 @@ public class Mypage_sub2_Alarm extends AppCompatActivity {
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
         notificationManager.notify(0, builder.build());
+        */
 
         sw1 = (Switch) findViewById(R.id.alarm_sw1);
         sw2 = (Switch) findViewById(R.id.alarm_sw2);
