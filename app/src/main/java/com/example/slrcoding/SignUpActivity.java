@@ -1,8 +1,6 @@
 package com.example.slrcoding;
 
 import android.content.Context;
-import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,9 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.StrictMode;
-import android.telecom.Call;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -32,13 +28,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +38,7 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 
-// 최민철(수정 : 19.08.16)
+// 최민철(수정 : 19.08.21)
 public class SignUpActivity extends AppCompatActivity {
 
     RelativeLayout relativeLayout1;
@@ -216,9 +208,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    // 회원가입.(이메일과 비밀번호를 사용하여 파이어베이스에 회원가입 정보 저장)
+    // 회원가입.(이메일과 비밀번호를 사용하여 파이어베이스에 회원가입 정보 저장 + cloud messaging을 위한 token생성)
     private void Create_User(String id, String email, String password, String name, String year, String month, String day, String phoneNum, String sex,
                              boolean push_alarm, boolean comment_alarm, boolean event_alarm){
+
+        String token = FirebaseInstanceId.getInstance().getToken();
         firebaseAuth.createUserWithEmailAndPassword(email, password).
                 addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -239,6 +233,7 @@ public class SignUpActivity extends AppCompatActivity {
                             post.put("user_push_alarm", push_alarm);
                             post.put("user_comment_alarm", comment_alarm);
                             post.put("user_event_alarm", event_alarm);
+                            post.put("user_token", token);
 
                             firebasestore.collection(category)
                                     .document(firebase_id).set(post)
