@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.slrcoding.Board;
+import com.example.slrcoding.FeedAdapter;
 import com.example.slrcoding.FeedDetailActivity;
 import com.example.slrcoding.FeedWriteActivity;
-import com.example.slrcoding.MainAdapter;
 import com.example.slrcoding.R;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -49,7 +49,7 @@ public class Feed_Child_FragmentOne extends Fragment implements SwipeRefreshLayo
     private FirebaseFirestore db =FirebaseFirestore.getInstance();
     private String cate="기숙사와 밥"; // 인텐
     public RecyclerView mMainRecyclerView;
-    private MainAdapter mAdapter;
+    private FeedAdapter mAdapter;
     private List<Board> mBoardList1 =null;
     private Board data1;
     private int i=0;
@@ -159,7 +159,7 @@ public class Feed_Child_FragmentOne extends Fragment implements SwipeRefreshLayo
 
                 // Log.i("for","통과2");
                 Collections.sort(mBoardList1,new CompareRegDateDesc());
-                mAdapter = new MainAdapter(mBoardList1);
+                mAdapter = new FeedAdapter(mBoardList1);
                 //mAdapter.notifyDataSetChanged();
                 mMainRecyclerView.setAdapter(mAdapter);
 

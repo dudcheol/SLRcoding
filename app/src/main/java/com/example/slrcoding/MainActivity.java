@@ -27,7 +27,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
+
+
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 
 public class MainActivity extends AppCompatActivity {
     int flag=0;
@@ -158,6 +171,33 @@ public class MainActivity extends AppCompatActivity {
                     .setContentText("이제 Meeting에 참여할 수 있습니다.")
                     .show();
         }
+
+//        //메시지 가공
+//        JsonObject jsonObj = new JsonObject();
+////token
+//        Gson gson = new Gson();
+//        JsonElement jsonElement = gson.toJsonTree("fEUWEpkns0E:APA91bEhcYTiYX9FVGYGIs4IjK0k4gtwE2xTFgMpDWloOx1-uDzT8BBjCSx-IEUAj7uOdCtqFfOdDEqiGQfRBohoWBVYW5pjxx5LNdaDTSTojYH9MjTAvPPeln_kxXce5MfKdftwkPll");
+//        jsonObj.add("to", jsonElement);
+////Notification
+//        JsonObject notification = new JsonObject();
+//        notification.addProperty("title", "\uD83D\uDE03타이틀HTTP");
+//        notification.addProperty("body", "\uD83D\uDE03바디HTTP");
+//        jsonObj.add("notification", notification);
+//        //Todo: 메시지 전송 테스트
+//        /*발송*/
+//
+//        final MediaType mediaType = MediaType.parse("application/json");
+//        OkHttpClient httpClient = new OkHttpClient();
+//        try {
+//            Request request = new Request.Builder().url("https://fcm.googleapis.com/fcm/send")
+//                    .header("Content-Type", "application/json; UTF-8")
+//                    .addHeader("Authorization", "key=" + "AAAA2DxHK98:APA91bEWD8UHv0MkkzYspQC3iUys8B3WNemkQlLx6mkWbp8Vk8_b9XqTfvJATNCYtisYMBf2kiiHOO1Mq5vJByAJNOAzFqTwgs5U55pN0dJbG203N6_agIAnGWfa0mfvUw22AJc7tZhR")
+//                    .post(RequestBody.create(mediaType, jsonObj.toString())).build();
+//            Response response = httpClient.newCall(request).execute();
+//            String res = response.body().string();
+//            Log.i("res","res: "+res);
+//        } catch (IOException e) {
+//        }
     }
 
     // 다른 프래그먼트나 어댑터에서 프래그먼트 전환이 필요할때 씀

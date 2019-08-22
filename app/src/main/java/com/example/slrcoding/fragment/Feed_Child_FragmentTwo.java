@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.slrcoding.Board;
+import com.example.slrcoding.FeedAdapter;
 import com.example.slrcoding.FeedWriteActivity;
-import com.example.slrcoding.MainAdapter;
 import com.example.slrcoding.R;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -46,7 +46,7 @@ public class Feed_Child_FragmentTwo extends Fragment implements SwipeRefreshLayo
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String cate="스포츠와 게임";
     public RecyclerView mMainRecyclerView;
-    private MainAdapter mAdapter;
+    private FeedAdapter mAdapter;
     private List<Board> mBoardList2 = null;
     private Board data2;
     FeedFragment feedFragment;
@@ -160,7 +160,7 @@ public class Feed_Child_FragmentTwo extends Fragment implements SwipeRefreshLayo
                 }
                 Log.i("boardList: ","boardList2: "+mBoardList2);
                 Collections.sort(mBoardList2,new CompareRegDateDesc());
-                mAdapter = new MainAdapter(mBoardList2);
+                mAdapter = new FeedAdapter(mBoardList2);
 
                 //  mAdapter.notifyDataSetChanged();
                 mMainRecyclerView.setAdapter(mAdapter);
