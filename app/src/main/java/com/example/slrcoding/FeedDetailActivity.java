@@ -411,13 +411,14 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                     Toasty.warning(FeedDetailActivity.this,"댓글 내용은 필수!",Toasty.LENGTH_SHORT,true).show();
                     return;
                 }
-
+                //Todo: 사용자 계정도 넣어주기.
                 replyId = db.collection(category).document(idfrom).collection("reply").document().getId();
                 Map<String,Object> post = new HashMap<>();
                 post.put("id",replyId);
                 post.put("replyDate",time1);
                 post.put("replyContent",replyEditTextView.getText().toString());
                 post.put("replyName","익명");
+                post.put("userEmail",userEmail);
 
 
                 db.collection(category)

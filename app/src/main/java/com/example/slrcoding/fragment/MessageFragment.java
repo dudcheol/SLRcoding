@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.slrcoding.Activity.ChatListActivity;
 import com.example.slrcoding.Adapter.MeetingAdapter;
 import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.R;
@@ -57,7 +58,7 @@ public class MessageFragment extends Fragment {
     private Spinner spinner_sex, spinner_major, spinner_setting;
     private RelativeLayout warning_message;
     private ImageView my_profile_imag;
-
+    private ImageView chatList_img;
     public MessageFragment() {
         // Required empty public constructor
     }
@@ -70,7 +71,15 @@ public class MessageFragment extends Fragment {
 
         warning_message = v.findViewById(R.id.warning_message);
         my_profile_imag = v.findViewById(R.id.my_profile_imag);
+        chatList_img = v.findViewById(R.id.chatList_img);
 
+        chatList_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChatListActivity.class);
+                startActivity(intent);
+            }
+        });
         downloadFile(v);
 
         return v;
