@@ -31,7 +31,43 @@
             android:layout_above="@+id/meeting_frag_controller"
             android:src="@drawable/ic_person"
             />
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@id/meeting_frag_controller"
+            android:layout_toLeftOf="@id/my_profile_imag"
+            android:layout_marginRight="50dp">
+            <ImageView
+                android:id="@+id/chatList_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/baseline_assignment_black_18dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="6dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="목록"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="9dp"
+                android:textSize="10dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="채팅"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="4dp"
+                android:textSize="10dp" />
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="50dp"
             android:layout_height="50dp"

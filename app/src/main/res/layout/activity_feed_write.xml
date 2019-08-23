@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="오픈채팅 URL"
-            android:text="https://open.kakao.com/"
+            android:text="https://open.kakao.com/o/"
             android:textColor="#333"
             android:textSize="15sp" />
     </com.github.florent37.materialtextfield.MaterialTextField>
