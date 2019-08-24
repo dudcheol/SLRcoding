@@ -29,6 +29,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -51,7 +52,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
     private RelativeLayout text_layout;
     private ImageView profile_img;
     private ProgressBar progressBar;
-
+    FirebaseDatabase realtimedatabase = FirebaseDatabase.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
         });
 
         ok_btn.setOnClickListener(v -> {
+
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("EXIT", true);
@@ -130,7 +132,6 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                             progressBar.setVisibility(View.VISIBLE);
                             text_layout.setVisibility(View.INVISIBLE);
                             ok_btn.setVisibility(View.VISIBLE);
-
                             // uservo에 사용자 얼굴 이미지 uri 저장하고 서버에도 저장함
                             uservo.setUser_meeting_profile_image_uri(Uri.toString());
                             HashMap<String, Object> map = new HashMap<>();
@@ -140,6 +141,8 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                                     .collection("사용자 정보")
                                     .document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
                                     .update(map);
+                            //Todo: 여기에 미팅을 등록하는 사람 즉 현재 userVO에 담긴 사람을 리얼타임 데이터베이스에 users컬렉션으로 넣어주기. by 이정찬
+                            realtimedatabase.getReference().child("users").child(uservo.getUser_id()).setValue(uservo);
                             progressDialog.dismiss();
                         });
                     })
@@ -148,7 +151,9 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                         ok_btn.setVisibility(View.INVISIBLE);
                         Toasty.error(this,"오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT,true).show();
                     });
+
         }
+
     }
 
     @Override
@@ -175,6 +180,9 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
             progressDialog.setCancelText("아니요");
             progressDialog.showCancelButton(true);
             progressDialog.setCancelClickListener(sweetAlertDialog -> {
+                //Todo: 여기에 미팅을 등록하는 사람 즉 현재 userVO에 담긴 사람을 리얼타임 데이터베이스에 users컬렉션으로 넣어주기. by 이정찬
+                uservo.setUser_meeting_profile_image_uri(Uri.toString());
+                realtimedatabase.getReference().child("users").child(uservo.getUser_id()).setValue(uservo);
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("EXIT", true);
