@@ -39,6 +39,12 @@ import com.example.slrcoding.VO.ParentListData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
@@ -54,6 +60,7 @@ import java.util.ArrayList;
 import io.grpc.Context;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.slrcoding.MainActivity.uservo;
 
 // 최민철(수정 : 19.08.19)
 public class MypageFragment extends Fragment {
@@ -282,6 +289,10 @@ public class MypageFragment extends Fragment {
                         pathReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
+                                //Todo: 리얼타임데이터베이스 users 컬렉션도 삭제해주기. by 이정찬
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                ref.child("users").child(uservo.getUser_id()).removeValue();
+
                                 Toast.makeText(getContext(),"이미지 삭제완료", Toast.LENGTH_SHORT).show();
                             }
                         });
