@@ -1,6 +1,7 @@
 package com.example.slrcoding.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.slrcoding.Activity.ChatRoomActivity;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.Meeting_UserVO;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
@@ -72,6 +74,15 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     .setCancelText("닫기")
                    .showCancelButton(true)
                     .setConfirmText("채팅하기")
+                    //Todo: 이정찬 채팅방 이동시키기 추가
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            //Todo: 여기서 상대방 아이디destinationId를 intent로 ChatRoomActivity로 보내주기.
+                            Intent intent = new Intent(v.getContext(), ChatRoomActivity.class);
+                            mContext.startActivity(intent);
+                        }
+                    })
                     .show();
         });
 

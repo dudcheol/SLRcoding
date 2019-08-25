@@ -14,6 +14,9 @@ import com.example.slrcoding.VO.ChatVO;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 이정찬
+ */
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatViewHolder> {
 
     private List<ChatVO> chatVOList = new ArrayList<>();

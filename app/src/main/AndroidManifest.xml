@@ -16,10 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <activity android:name=".Activity.ChatRoomActivity"></activity>
         <activity
             android:name=".Activity.ChatListActivity"
             android:label="@string/title_activity_chat_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".meetingUserJoin2Activity" />
         <activity android:name=".meetingUserJoinActivity" />
         <activity android:name=".question_write_activity" />
