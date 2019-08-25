@@ -348,15 +348,20 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
     //AsyncTask 카카오 링크 프로그레스다이얼로그 띄우기
     private class KakaoLinkProgressTask extends AsyncTask<Void,Void,Void> {
 
-        ProgressDialog asyncDialog = new ProgressDialog(
-                FeedDetailActivity.this);
+//        ProgressDialog asyncDialog = new ProgressDialog(
+//                FeedDetailActivity.this);
+        final SweetAlertDialog progressDialog = new SweetAlertDialog(FeedDetailActivity.this,SweetAlertDialog.PROGRESS_TYPE);
         @Override
         protected void onPreExecute() {
-            asyncDialog.setTitle("카카오링크");
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            asyncDialog.setMessage("카카오 오픈채팅 연결중...");
-            asyncDialog.setCancelable(false);
-            asyncDialog.show();
+//            asyncDialog.setTitle("카카오링크");
+//            asyncDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//            asyncDialog.setMessage("카카오 오픈채팅 연결중...");
+//            asyncDialog.setCancelable(false);
+//            asyncDialog.show();
+            progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            progressDialog.setTitleText("오픈채팅방 링크 연결중....");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
             super.onPreExecute();
 
         }
@@ -364,7 +369,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
         protected Void doInBackground(Void... strings) {
             try {
                 for (int i = 0; i < 5; i++) {
-                    asyncDialog.setProgress(i * 40);
+//                    asyncDialog.setProgress(i * 40);
 
                     Thread.sleep(500);
                 }
@@ -376,8 +381,8 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
         }
         @Override
         protected void onPostExecute(Void result) {
-            asyncDialog.dismiss();
-
+//            asyncDialog.dismiss();
+            progressDialog.dismiss();
             Intent intent = null;
             try {
                 intent = Intent.parseUri(kakaoUrl,Intent.URI_INTENT_SCHEME);

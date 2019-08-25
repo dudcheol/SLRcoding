@@ -115,10 +115,10 @@
                         android:layout_marginRight="3dp"
                         android:background="@android:color/transparent"
                         app:anim_scale_factor="3"
-                        app:icon_size="13dp"
+                        app:icon_size="10dp"
                         app:icon_type="heart"
-                        app:like_drawable="@drawable/btn_star1_on"
-                        app:unlike_drawable="@drawable/btn_star1_off" />
+                        app:like_drawable="@drawable/hearton"
+                        app:unlike_drawable="@drawable/heartoff" />
                     <TextView
                         android:id="@+id/like_cnt2"
                         android:layout_width="wrap_content"
