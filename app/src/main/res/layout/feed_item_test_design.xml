@@ -168,7 +168,7 @@
                         android:layout_toRightOf="@id/reply_cnt"
                         android:background="@android:color/transparent"
                         android:layout_alignBottom="@id/reply_button"
-                        android:src="@drawable/btn_star1_off"
+                        android:src="@drawable/heart_off"
 
                         />
                     <!--<com.like.LikeButton
