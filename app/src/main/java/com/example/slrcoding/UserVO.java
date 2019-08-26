@@ -2,6 +2,7 @@ package com.example.slrcoding;
 
 // 최민철(수정 : 19.08.09)
 // 박영철(수정 : 19.08.20)
+// 이정찬(수정 : 19.08.26)
 public class UserVO {
 
     private String user_id;
@@ -18,12 +19,13 @@ public class UserVO {
     private String user_profile_image_uri;
     private String user_meeting_profile_image_uri;
     private boolean use_meeting_service;
-
+    //이정찬 unique_id 추가
+    private String unique_id;
     public UserVO(){}
 
     public void UserVO(String user_id, String user_email, String user_name, String user_year,
                        String user_month, String user_day, String user_phone_num, String user_sex, boolean push_alarm,
-                       boolean comment_alarm, boolean event_alarm){
+                       boolean comment_alarm, boolean event_alarm,String unique_id){
         this.user_id=user_id;
         this.user_email=user_email;
         this.user_name=user_name;
@@ -36,6 +38,7 @@ public class UserVO {
         this.push_alarm=push_alarm;
         this.comment_alarm=comment_alarm;
         this.event_alarm=event_alarm;
+        this.unique_id = unique_id;
     }
 
     public String getUser_id() {
@@ -148,5 +151,13 @@ public class UserVO {
 
     public void setUser_meeting_profile_image_uri(String user_meeting_profile_image_uri) {
         this.user_meeting_profile_image_uri = user_meeting_profile_image_uri;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 }

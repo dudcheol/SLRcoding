@@ -53,6 +53,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
     private ImageView profile_img;
     private ProgressBar progressBar;
     FirebaseDatabase realtimedatabase = FirebaseDatabase.getInstance();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,7 +143,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                                     .document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
                                     .update(map);
                             //Todo: 여기에 미팅을 등록하는 사람 즉 현재 userVO에 담긴 사람을 리얼타임 데이터베이스에 users컬렉션으로 넣어주기. by 이정찬
-                            realtimedatabase.getReference().child("users").child(uservo.getUser_id()).setValue(uservo);
+                            realtimedatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).setValue(uservo);
                             progressDialog.dismiss();
                         });
                     })
@@ -182,7 +183,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
             progressDialog.setCancelClickListener(sweetAlertDialog -> {
                 //Todo: 여기에 미팅을 등록하는 사람 즉 현재 userVO에 담긴 사람을 리얼타임 데이터베이스에 users컬렉션으로 넣어주기. by 이정찬
                 uservo.setUser_meeting_profile_image_uri(Uri.toString());
-                realtimedatabase.getReference().child("users").child(uservo.getUser_id()).setValue(uservo);
+                realtimedatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).setValue(uservo);
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("EXIT", true);

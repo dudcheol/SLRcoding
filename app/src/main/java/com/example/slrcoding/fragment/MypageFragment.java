@@ -56,6 +56,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.grpc.Context;
 
@@ -291,7 +293,7 @@ public class MypageFragment extends Fragment {
                             public void onSuccess(Void aVoid) {
                                 //Todo: 리얼타임데이터베이스 users 컬렉션도 삭제해주기. by 이정찬
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                ref.child("users").child(uservo.getUser_id()).removeValue();
+                                ref.child("users").child(firebaseAuth.getCurrentUser().getUid()).removeValue();
 
                                 Toast.makeText(getContext(),"이미지 삭제완료", Toast.LENGTH_SHORT).show();
                             }
@@ -403,6 +405,13 @@ public class MypageFragment extends Fragment {
                     tv_username.setText(et.getText().toString());
                     firebasestore.collection("사용자 정보").document((((MainActivity) getActivity()).uservo.getUser_email())).update("user_id", et.getText().toString());
                     ((MainActivity)getActivity()).uservo.setUser_id(et.getText().toString()); // uservo 객체에 아이디 변경
+                    //Todo: 여기서 리얼타임 데이터베이스 users의 아이디도 변경시켜주기 by 이정찬
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                    DatabaseReference usersRef = ref.child("users");
+                    DatabaseReference userskeyrRef = usersRef.child(firebaseAuth.getCurrentUser().getUid());
+                    Map<String,Object> map = new HashMap<>();
+                    map.put("user_id",et.getText().toString());
+                    userskeyrRef.updateChildren(map);
                 }
                 else{
                     dialogInterface.dismiss();

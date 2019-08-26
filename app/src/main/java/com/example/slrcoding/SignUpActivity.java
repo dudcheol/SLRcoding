@@ -234,6 +234,8 @@ public class SignUpActivity extends AppCompatActivity {
                             post.put("user_comment_alarm", comment_alarm);
                             post.put("user_event_alarm", event_alarm);
                             post.put("user_token", token);
+                            //이정찬 Uid 넣어주기 추가 2019.08.26
+                            post.put("unique_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                             firebasestore.collection(category)
                                     .document(firebase_id).set(post)

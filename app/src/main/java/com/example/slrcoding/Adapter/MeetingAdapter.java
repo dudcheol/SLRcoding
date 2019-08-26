@@ -30,7 +30,8 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 // 박영철
-
+// 이정찬
+// Todo: 영철이가 Meeting_UserVO 안쓰고 UserVO를 쓴다고 함.
 public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Meeting_UserVO> Meeting_UserVO_List;
@@ -78,7 +79,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            //Todo: 여기서 상대방 아이디destinationId를 intent로 ChatRoomActivity로 보내주기.
+                            //Todo: 여기서 상대방 유니크 아이디 uservo.getUnique_Id(); 을 통해 destinationId를 intent로 ChatRoomActivity로 보내주기.
                             Intent intent = new Intent(v.getContext(), ChatRoomActivity.class);
                             mContext.startActivity(intent);
                         }

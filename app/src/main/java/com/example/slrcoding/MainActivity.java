@@ -125,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
                             uservo.setPush_alarm((boolean)documentSnapshot.getData().get("user_push_alarm"));
                             uservo.setComment_alarm((boolean)documentSnapshot.getData().get("user_comment_alarm"));
                             uservo.setEvent_alarm((boolean)documentSnapshot.getData().get("user_event_alarm"));
+                            //이정찬 unique_id 추가 2019.08.26
+                            uservo.setUnique_id((String)documentSnapshot.getData().get("unique_id"));
                         }
                     }
                 });
