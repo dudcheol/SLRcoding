@@ -5,6 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.ChatRoomActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRoomActivity_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="606dp">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
     <EditText
         android:layout_toLeftOf="@id/chatroomActivity_button"
         android:layout_alignParentBottom="true"
