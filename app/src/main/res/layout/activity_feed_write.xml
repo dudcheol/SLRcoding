@@ -20,25 +20,34 @@
 
     <EditText
         android:id="@+id/feed_title_editText"
-        android:layout_margin="20dp"
-        android:layout_width="wrap_content"
+        android:layout_width="367dp"
         android:layout_height="wrap_content"
-        android:background="@android:drawable/edit_text"
         android:layout_below="@+id/toolbar2"
-        android:hint="제목을 입력하세요"/>
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="제목" />
+
     <com.github.florent37.materialtextfield.MaterialTextField
-        android:layout_width="190dp"
+        android:layout_width="376dp"
         android:layout_height="wrap_content"
-        app:mtf_labelColor="#666"
-        app:mtf_image="@drawable/ic_insert_link_black_24dp"
         android:layout_alignBottom="@id/feed_title_editText"
+        android:layout_marginLeft="-394dp"
+        android:layout_marginBottom="-478dp"
         android:layout_toRightOf="@id/feed_title_editText"
-        >
+        app:mtf_image="@drawable/ic_insert_link_black_24dp"
+        app:mtf_labelColor="#666">
+
         <EditText
             android:id="@+id/kakaolinkedit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="오픈채팅 URL"
+            android:hint="카카오톡 오픈채팅 URL"
+            android:textColorHint="#00BCD4"
             android:text="https://open.kakao.com/o/"
             android:textColor="#333"
             android:textSize="15sp" />
@@ -46,16 +55,17 @@
 
     <EditText
         android:id="@+id/feed_memo_edit"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="253dp"
+        android:layout_below="@id/feed_title_editText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/feed_title_editText"
-        android:hint="글을 입력하세요."
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="262dp"
+        android:background="@android:drawable/edit_text"
         android:gravity="top"
-        android:background="@android:drawable/edit_text"/>
+        android:hint="글은 익명으로 작성됩니다. 부담가지지 말고 작성해주세요. 타인을 비난, 근거없는 악성비방글, 게시판의 성격에 맞지 않는 글은 삭제가 될 수 있으니 양해부탁드립니다."
+        android:textColorHint="#F18B8B" />
 </RelativeLayout>
