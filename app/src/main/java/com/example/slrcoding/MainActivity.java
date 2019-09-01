@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.slrcoding.fragment.BoardFragment;
 import com.example.slrcoding.fragment.FeedFragment;
@@ -35,6 +36,7 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.io.IOException;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     int flag=0;
     // (최민철 수정 19.08.06)
     public static UserVO uservo;
-
+    // (이정찬 수정 19.09.01)
+    private long lastTimeBackPressed;
     // (최민철 수정 19.07.28)
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();          // 파이어베이스 인증 객체 선언;  // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;   // 현재 로그인 된 정보를 담은 객체 생성
@@ -227,5 +230,18 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }
+    }
+
+    // 뒤로가기 종료 두번 눌러서 종료시키기 (이정찬 수정 19.09.01)
+    @Override
+    public void onBackPressed(){
+        if(System.currentTimeMillis() - lastTimeBackPressed < 1500){
+            finish();
+            return;
+        }
+//        Toast.makeText(this, "뒤로가기를 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        Toasty.warning(this,"뒤로가기를 한번 더 누르시면 종료됩니다.",Toasty.LENGTH_SHORT,true).show();
+        lastTimeBackPressed = System.currentTimeMillis();
+
     }
 }
