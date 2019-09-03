@@ -109,7 +109,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                     .getInstance()
                     .getReference()
                     .child("Face Profile Images")
-                    .child(uservo.getUser_id() + prof_string_to_face)
+                    .child(uservo.getUnique_id() + prof_string_to_face)
                     .putFile(imageUri)
                     .addOnSuccessListener(Task -> {
                         Task.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(Uri -> {
@@ -172,7 +172,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
         progressDialog.show();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
-        StorageReference pathReference_to_face = storageReference.child("Face Profile Images/"+uservo.getUser_id() + prof_string_to_face);
+        StorageReference pathReference_to_face = storageReference.child("Face Profile Images/"+uservo.getUnique_id() + prof_string_to_face);
         pathReference_to_face.getDownloadUrl().addOnSuccessListener(Uri -> {
             // 얼굴 사진이 있으면 메인화면으로 이동
             progressDialog.changeAlertType(SweetAlertDialog.NORMAL_TYPE);

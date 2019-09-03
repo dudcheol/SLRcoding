@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -75,7 +77,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
     private TextView nameTextView;
     private TextView dateTextView;
     private LikeButton likelyButton;
-    private TextView kakaoLinkTextView;
+    private CardView kakaoLinkTextView;
     private String kakaoUrl;
 
     private RecyclerView mReplyRecyclerView;

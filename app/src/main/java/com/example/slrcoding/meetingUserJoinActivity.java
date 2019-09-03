@@ -35,6 +35,7 @@ import com.google.protobuf.Any;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
@@ -92,7 +93,7 @@ public class meetingUserJoinActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == PICK_PROFILE_FROM_ALBUM && resultCode == Activity.RESULT_OK){
-            Uri imageUri = data.getData();
+            Uri imageUri = Objects.requireNonNull(data).getData();
 
             final SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
             progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -104,10 +105,10 @@ public class meetingUserJoinActivity extends AppCompatActivity {
                     .getInstance()
                     .getReference()
                     .child("Profile Images")
-                    .child(uservo.getUser_id() + prof_string)
-                    .putFile(imageUri)
+                    .child(uservo.getUnique_id() + prof_string)
+                    .putFile(Objects.requireNonNull(imageUri))
                     .addOnSuccessListener(Task -> {
-                        Task.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(Uri -> {
+                        Objects.requireNonNull(Objects.requireNonNull(Task.getMetadata()).getReference()).getDownloadUrl().addOnSuccessListener(Uri -> {
                             Glide.with(this)
                                     .load(Uri)
                                     .listener(new RequestListener<Drawable>() {
