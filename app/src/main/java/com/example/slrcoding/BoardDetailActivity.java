@@ -1,7 +1,9 @@
 package com.example.slrcoding;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,6 +38,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
@@ -54,6 +61,10 @@ import javax.annotation.Nullable;
 import static com.example.slrcoding.MainActivity.uservo;
 
 public class BoardDetailActivity extends AppCompatActivity {
+    private Context context;
+
+    private ImageView board_image;
+
     //좋아요 댓글 수 데이터 교환 가능해야함
     private TextView titleTextView;
     private TextView contentTextView;
@@ -72,6 +83,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     private String idfrom;
     //private String id ;
     private String title;
+
     private String contents;
     private String name;
     private String regDate;
@@ -113,6 +125,12 @@ public class BoardDetailActivity extends AppCompatActivity {
         Log.i("userEmail: ", "메인에서받아온 userEmail: " + userEmail);
 
         titleTextView = findViewById(R.id.bard_title);
+
+        // 중고나라 이미지 파베에 가져오기
+        downloadFile();
+
+
+
         contentTextView = findViewById(R.id.board_context);
         categoryTextView = findViewById(R.id.board_detail_category);
 
@@ -170,8 +188,8 @@ public class BoardDetailActivity extends AppCompatActivity {
                                 regDateModify = regDate.substring(0, 17);
                             }
                             replyCnt = (Long) documentSnapshot.getData().get("replyCnt");
-                            likeCnt = (Long)documentSnapshot.getData().get("likeCnt");
-                            
+                            likeCnt = (Long) documentSnapshot.getData().get("likeCnt");
+
                             Log.i("title", "title: " + title);
                             Log.i("title", "contents: " + contents);
                             Log.i("title", "category2: " + category2);
@@ -489,30 +507,32 @@ public class BoardDetailActivity extends AppCompatActivity {
             return b2.getReplyDate().compareTo(b1.getReplyDate());
         }
     }
+
     //Todo: 콜백을 통한 likeusers 컬렉션에서 아이디가 존재하는지 확인 구현 중
     // 중복되는 아이디 존재 확인.(파이어베이스의 비동기 처리문제로 인해 외부에서 데이터 접근하기 위해 콜백함수 사용)
-    public void confirmLikeUser(String userEmail, BoardDetailActivity.BoardCallback mycallback){
+    public void confirmLikeUser(String userEmail, BoardDetailActivity.BoardCallback mycallback) {
         db.collection(category).document(idfrom).collection("LikeUsers").whereEqualTo("userEmail", userEmail).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            likeuserconfirm=task.getResult().isEmpty();
+                        if (task.isSuccessful()) {
+                            likeuserconfirm = task.getResult().isEmpty();
                             mycallback.onCallback(likeuserconfirm);       // flag값이 수신됐을때 시스템에서 콜백함수 호출
                         }
                     }
                 });
     }
+
     //Todo: 삭제 시 해당 유저가 쓴글인지 확인하여 flag를 콜백하는 함수.
-    public void confirmdelete(String userEmail, BoardDetailActivity.BoardCallback mycallback2){
+    public void confirmdelete(String userEmail, BoardDetailActivity.BoardCallback mycallback2) {
         db.collection(category).document(idfrom).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if(userEmail.equals(document.get("userEmail"))){
+                    if (userEmail.equals(document.get("userEmail"))) {
                         delete_flag = true;
-                    }else{
+                    } else {
                         delete_flag = false;
                     }
                     mycallback2.onCallback(delete_flag);
@@ -522,10 +542,53 @@ public class BoardDetailActivity extends AppCompatActivity {
     }
 
     // 비동기 처리 해결하기 위해 생성한 콜백함수
-    public interface BoardCallback{
+    public interface BoardCallback {
         void onCallback(boolean value);
     }
 
-    //Todo: xml에서 카카오톡 모양의 이미지 버튼을 만들어주고 onClick으로 메소드 생성해준다.
-    // 그 다음 파베에서 해당 글의 카카오톡 링크를 받아와서 누르면 링크로 이동하게 끔 구현한다.
+    // FireStorage에 프로필 다운로드
+    public void downloadFile(){
+        board_image = (ImageView) findViewById(R.id.board_image);
+
+
+        //String board_image_url = Board2.getId();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
+
+        //다운로드할 파일을 가르키는 참조 만들기
+        StorageReference pathReference = storageReference.child("Profile Images/kimyj7756_profileImage.png");
+
+        Glide.with(this /* context */)
+                .load(pathReference)
+                .into(board_image);
+        /*
+        pathReference.getDownloadUrl().addOnSuccessListener(url -> {
+        Glide.with(context)
+                .load(url)
+                .into(board_image);
+        });
+        */
+
+        // Glide Library 사용하여 화면에 바로 보여줄 수 있다
+        /*
+        // download url을 가져와 사진이 존재하면 세팅 없으면 디폴트 이미지
+        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext())
+                        .load(uri.toString())
+                        .into(board_image);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                board_image.setImageResource(R.drawable.defaultimage);
+            }
+        });
+        */
+
+        //
+
+    }
 }

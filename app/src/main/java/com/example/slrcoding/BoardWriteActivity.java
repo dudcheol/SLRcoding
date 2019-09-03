@@ -58,6 +58,8 @@ public class BoardWriteActivity extends AppCompatActivity {
     private String category = null;
     private int code = 0;
     private String id;
+    private String image_id;
+
     private String time1;
     private Long replyCnt;
     private Long likeCnt;
@@ -204,6 +206,8 @@ public class BoardWriteActivity extends AppCompatActivity {
 
     //upload the file
     private void uploadFile() {
+        // image_id = db.collection(category).document().getId();
+
         //업로드할 파일이 있으면 수행
         if (filePath != null) {
             //업로드 진행 Dialog 보이기
@@ -217,7 +221,8 @@ public class BoardWriteActivity extends AppCompatActivity {
             //Unique한 파일명을 만들자.
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
             Date now = new Date();
-            String filename = formatter.format(now) + ".png";
+            // String filename = formatter.format(now) + ".png";
+            String filename = id + ".png";
 
             //storage 주소와 폴더 파일명을 지정해 준다.
             StorageReference storageRef = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/").child("Board images/" + filename);
@@ -244,7 +249,7 @@ public class BoardWriteActivity extends AppCompatActivity {
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
+                            @SuppressWarnings("VisibleForTests")
                                     double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
                             //dialog에 진행률을 퍼센트로 출력해 준다
                             progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
