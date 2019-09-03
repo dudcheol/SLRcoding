@@ -149,8 +149,8 @@ public class MessageFragment extends Fragment {
         StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
 
         //다운로드할 파일을 가르키는 참조 만들기
-        StorageReference pathReference = storageReference.child("Profile Images/"+((MainActivity) getActivity()).uservo.getUser_id() + prof_string);
-        StorageReference pathReference_to_face = storageReference.child("Face Profile Images/"+((MainActivity) getActivity()).uservo.getUser_id() + prof_string_to_face);
+        StorageReference pathReference = storageReference.child("Profile Images/"+((MainActivity) getActivity()).uservo.getUnique_id() + prof_string);
+        StorageReference pathReference_to_face = storageReference.child("Face Profile Images/"+((MainActivity) getActivity()).uservo.getUnique_id() + prof_string_to_face);
 
         // download url을 가져와
         // 사진이 존재하면 내용을 보여주고
@@ -177,6 +177,7 @@ public class MessageFragment extends Fragment {
                Log.e("face error",e.toString());
            });
        }).addOnFailureListener(e -> {
+           // 프로필 사진이 없으면 경고창를 띄운다
            progressDialog.dismiss();
            setWarning_message(v);
        });
