@@ -3,6 +3,7 @@ package com.example.slrcoding;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +43,7 @@ import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,6 +58,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+
+import es.dmoral.toasty.Toasty;
 
 import static com.example.slrcoding.MainActivity.uservo;
 
@@ -127,9 +130,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         titleTextView = findViewById(R.id.bard_title);
 
         // 중고나라 이미지 파베에 가져오기
-        downloadFile();
-
-
+        //downloadFile();
 
         contentTextView = findViewById(R.id.board_context);
         categoryTextView = findViewById(R.id.board_detail_category);
@@ -151,14 +152,6 @@ public class BoardDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //넘어온 인텐트!!
-        //피드에서 넘어온 데이터(카테고리 명,제목,내용,날짜,좋아요수,댓글수 등)
-       /* Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        String content = intent.getStringExtra("content");
-        String category = intent.getStringExtra("category");
-        String date = intent.getStringExtra("date");*/
 
         category = getIntent().getStringExtra("category");
         idfrom = getIntent().getStringExtra("id");
@@ -202,16 +195,14 @@ public class BoardDetailActivity extends AppCompatActivity {
                         titleTextView.setText(title);
                         contentTextView.setText(contents);
                         categoryTextView.setText(category2);
-                        nameTextView.setText(name);
                         // 작성자 등록
+                        nameTextView.setText(name);
 
                         dateTextView.setText(regDateModify);
                         replyCntView.setText(String.valueOf(replyCnt));
                         likeCntView.setText(String.valueOf(likeCnt));
                     }
-
                 });
-
 
         //댓글 등록시 실시간 불러오기로 받아올 곳
         mReplyRecyclerView = findViewById(R.id.board_reply_recycler);
@@ -249,7 +240,6 @@ public class BoardDetailActivity extends AppCompatActivity {
                     boardReplyVOList.add(replyVO);
                 }
 
-                // Log.i("for","통과2");
                 Collections.sort(boardReplyVOList, new CompareRegDateDesc());
                 replyAdapter = new BoardReplyAdapter(boardReplyVOList);
                 replyAdapter.notifyDataSetChanged();
@@ -270,20 +260,42 @@ public class BoardDetailActivity extends AppCompatActivity {
                 }
                 if (snapshot != null && snapshot.exists()) {
                     //Log.d(TAG, "Current data: " + snapshot.getData());
-                    Long replyCnt = (Long) snapshot.getData().get("replyCnt");
+                    replyCnt = (Long) snapshot.getData().get("replyCnt");
                     replyCntView.setText(String.valueOf(replyCnt));
                 } else {
                     //Log.d(TAG, "Current data: null");
                 }
             }
         });
-        //mReplyRecyclerView.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
+
+        //좋아요 버튼 클릭 시 좋아요 수 실시간으로 보여주기
+        final DocumentReference docRef2 = db.collection(category).document(idfrom);
+        docRef2.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    //Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.i("idfrom","idfrom : "+idfrom);
+
+                    likeCnt = (Long)snapshot.getData().get("likeCnt");
+                    likeCntView.setText(String.valueOf(likeCnt));
+
+                } else {
+                    //Log.d(TAG, "Current data: null");
+                }
+            }
+
+        });
+
         setClickEvent();
         setReplySubmit();
 
-        //TOdo:좋아요 누른 사용자 (LikeUsers 컬렉션의 문서(usreID)를 모두 가져와서 if문으로 비교후 좋아요를 누른 사용자라면 하트 켜고 좋아요 누른 적이 없다며 하트 끄기
-        //Todo: confrimLike 메서드 사용하기.
-        // 좋아요누른 사용자 있는지 확인 후 setLiked
+        //즐겨찾기 누른 사용자 있는지 확인 후 setLiked
         confirmLikeUser(userEmail, new BoardDetailActivity.BoardCallback() {
             @Override
             public void onCallback(boolean value) {
@@ -295,7 +307,7 @@ public class BoardDetailActivity extends AppCompatActivity {
             }
         });
 
-        confirmdelete(userEmail, new BoardDetailActivity.BoardCallback() {
+        confirmdelete(userEmail, new BoardCallback() {
             @Override
             public void onCallback(boolean value) {
                 delete_flag2 = value;
@@ -315,7 +327,7 @@ public class BoardDetailActivity extends AppCompatActivity {
 
                 //예외처리
                 if (replyEditTextView.getText().toString().equals("")) {
-                    Toast.makeText(BoardDetailActivity.this, "댓글 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(BoardDetailActivity.this, "댓글 내용을 입력해주세요.", Toasty.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -326,7 +338,7 @@ public class BoardDetailActivity extends AppCompatActivity {
                 post.put("replyContent", replyEditTextView.getText().toString());
 
                 String userName = uservo.getUser_name();
-                //post.put("replyName", "노익명");
+                // 사용자 이름
                 post.put("replyName", userName);
 
                 db.collection(category)
@@ -334,7 +346,7 @@ public class BoardDetailActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(BoardDetailActivity.this, "업로드 성공!!", Toast.LENGTH_SHORT).show();
+                                Toasty.success(BoardDetailActivity.this, "댓글이 등록되었습니다.", Toasty.LENGTH_SHORT).show();
                                 // finish();
                             }
 
@@ -343,7 +355,7 @@ public class BoardDetailActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // Log.w(TAG, "Error adding document", e);
-                                Toast.makeText(BoardDetailActivity.this, "업로드 실패!!", Toast.LENGTH_SHORT).show();
+                                Toasty.error(BoardDetailActivity.this, "업로드 실패!!", Toasty.LENGTH_SHORT).show();
                             }
                         });
 
@@ -351,12 +363,12 @@ public class BoardDetailActivity extends AppCompatActivity {
                         .update("replyCnt", replyCnt + 1L).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(BoardDetailActivity.this, "댓글 수 증가!!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(BoardDetailActivity.this, "댓글 수 증가!!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(BoardDetailActivity.this, "댓글 수 증가 실패!!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(BoardDetailActivity.this, "댓글 수 증가 실패!!", Toast.LENGTH_SHORT).show();
                     }
                 });
                 replyEditTextView.setText(""); //댓글 쓰면 내용 비어줘기
@@ -370,42 +382,37 @@ public class BoardDetailActivity extends AppCompatActivity {
             public void liked(LikeButton likeButton) {
                 Context context = likeButton.getContext();
 
-                Toast.makeText(context, "좋아요 버튼 클릭!!", Toast.LENGTH_SHORT).show();
-
+                // Toast.makeText(context, "좋아요 버튼 클릭!!", Toast.LENGTH_SHORT).show();
 
                 //Firebase에 좋아요 수 1증가 update 실행
                 db.collection(category).document(idfrom)
                         .update("likeCnt", likeCnt + 1L).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(BoardDetailActivity.this, "좋아요 수 증가!!", Toast.LENGTH_SHORT).show();
+                        Toasty.success(BoardDetailActivity.this, "즐겨찾기 완료", Toasty.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(BoardDetailActivity.this, "좋아요 수 증가 실패!!", Toast.LENGTH_SHORT).show();
+                        Toasty.error(BoardDetailActivity.this, "즐겨찾기 실패", Toasty.LENGTH_SHORT).show();
                     }
                 });
 
-                //Todo:로그인 한 유저 정보를 가져와서 댓글을 좋아요 누르면 LikeUsers라는 컬렉션을 내부에서 생성해서
-                //Todo: UserId를 문서로 넣는다. (좋아요 누른 사용자들을 넣어줌 )
-                //likeid = db.collection(category).document(idfrom).collection("LikeUsers").document().getId();
                 Map<String, Object> post = new HashMap<>();
                 post.put("userEmail", userEmail);
-                //post.put("likeid",likeid);
+
                 db.collection(category)
                         .document(idfrom).collection("LikeUsers").document(userEmail).set(post)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(BoardDetailActivity.this, "좋아요 댓글 유저 등록 완료", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(BoardDetailActivity.this, "즐겨찾기 유저 등록 완료", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                // Log.w(TAG, "Error adding document", e);
-                                Toast.makeText(BoardDetailActivity.this, "좋아요 댓글 유저 등록 실패", Toast.LENGTH_SHORT).show();
+                                Toasty.error(BoardDetailActivity.this, "즐겨찾기 유저 등록 실패", Toasty.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -414,7 +421,7 @@ public class BoardDetailActivity extends AppCompatActivity {
             public void unLiked(LikeButton likeButton) {
                 Context context = likeButton.getContext();
 
-                Toast.makeText(context, "좋아요 버튼 취소!!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "좋아요 버튼 취소!!", Toast.LENGTH_SHORT).show();
 
                 //Firebase에 좋아요 수 1감소 update 실행
                 db.collection(category).document(idfrom)
@@ -422,12 +429,12 @@ public class BoardDetailActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         likeflag = 0;
-                        Toast.makeText(BoardDetailActivity.this, "좋아요 수 감소!!", Toast.LENGTH_SHORT).show();
+                        Toasty.success(BoardDetailActivity.this, "즐겨찾기 취소", Toasty.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(BoardDetailActivity.this, "좋아요 수 감소 실패!!", Toast.LENGTH_SHORT).show();
+                        Toasty.error(BoardDetailActivity.this, "즐겨찾기 취소 실패", Toasty.LENGTH_SHORT).show();
 
                     }
                 });
@@ -438,15 +445,14 @@ public class BoardDetailActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(BoardDetailActivity.this, "좋아요 댓글 유저 삭제 완료", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(BoardDetailActivity.this, "즐겨찾기 유저 삭제 완료", Toast.LENGTH_SHORT).show();
                             }
 
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                // Log.w(TAG, "Error adding document", e);
-                                Toast.makeText(BoardDetailActivity.this, "좋아요 댓글 유저 삭제 실패", Toast.LENGTH_SHORT).show();
+                                Toasty.error(BoardDetailActivity.this, "즐겨찾기 유저 삭제 실패", Toasty.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -469,32 +475,35 @@ public class BoardDetailActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.board_delete:
-                //Todo: 콜백으로 해당 글 작성자를 읽어온 후 delete_flag에 true면 내가 쓴글로 삭제하게 하고 false면 삭제할 때 Toast로 작성자외 삭제할 수 없습니다. 뜨게하기.
-                //Todo: 여기서 if문으로 flag로 가르기.
+                final SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+                progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                progressDialog.setTitleText("글 삭제중...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 if (delete_flag2) {
                     db.collection(category).document(idfrom)
                             .delete()
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    //Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                    Toast.makeText(getApplicationContext(), "게시글 삭제성공", Toast.LENGTH_SHORT).show();
+                                    Toasty.success(BoardDetailActivity.this, "게시글 삭제 완료", Toasty.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     intent.putExtra("flag", 2);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
-
+                                    progressDialog.dismiss();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    //Log.w(TAG, "Error deleting document", e);
+                                    Toasty.error(BoardDetailActivity.this,"게시글 삭제 실패",Toasty.LENGTH_SHORT,true).show();
                                 }
                             });
                 } else {
-                    Toast.makeText(this, "작성자 외에는 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(this, "작성자 외에는 삭제할 수 없습니다.", Toasty.LENGTH_SHORT).show();
                 }
         }
         return super.onOptionsItemSelected(item);
@@ -546,7 +555,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         void onCallback(boolean value);
     }
 
-    // FireStorage에 프로필 다운로드
+    // FireStorage에 사진 다운로드
     public void downloadFile(){
         board_image = (ImageView) findViewById(R.id.board_image);
 
@@ -557,8 +566,8 @@ public class BoardDetailActivity extends AppCompatActivity {
         StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
 
         //다운로드할 파일을 가르키는 참조 만들기
-        StorageReference pathReference = storageReference.child("Profile Images/kimyj7756_profileImage.png");
-
+        StorageReference pathReference = storageReference.child("Board images/yiU0ugohcNWi7nOx0Cex.png");
+        // gs://slrcoding.appspot.com/Board images/yiU0ugohcNWi7nOx0Cex.png
         Glide.with(this /* context */)
                 .load(pathReference)
                 .into(board_image);

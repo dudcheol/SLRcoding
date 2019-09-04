@@ -3,6 +3,7 @@ package com.example.slrcoding;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -29,12 +30,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 import static com.example.slrcoding.MainActivity.uservo;
 
@@ -76,9 +80,9 @@ public class BoardWriteActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // activity_board_write.xml에서 가져옴
         mWriteContentsText = (EditText) findViewById(R.id.board_memo_edit);
         mWriteTitleText = (EditText) findViewById(R.id.board_title_editText);
+
         // 사진 업로더
         board_file = (Button) findViewById(R.id.board_file);
         file_preview = (ImageView) findViewById(R.id.file_preview);
@@ -121,19 +125,28 @@ public class BoardWriteActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.board_done:
-                Toast.makeText(getApplicationContext(), "등록 버튼 클릭됨", Toast.LENGTH_LONG).show();
-                //예외처리
                 if (mWriteTitleText.getText().toString().equals("")) {
-                    Toast.makeText(this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(this, "제목을 입력해주세요.", Toasty.LENGTH_SHORT, true).show();
                     return false;
                 }
                 if (mWriteContentsText.getText().toString().equals("")) {
-                    Toast.makeText(this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(this, "내용을 입력해주세요.", Toasty.LENGTH_SHORT, true).show();
                     return false;
                 }
 
+                //
+
+                //업로드할 파일이 있으면 수행
+                if (filePath == null) {
+                    Toasty.warning(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT, true).show();
+                    return false;
+                }
+
+                // 파일 업로드
+                uploadFile();
+
                 //여기서 파이어베이서 데이터에 저장 각 입력 정보들을 넣는다..
-                //대신 카테고리 별로 if문을 이용해서 따로 저장을 한다.??
+                //대신 카테고리 별로 if문을 이용해서 따로 저장을 한다.
                 //현재 년도를 비교하고 올해이면 MM/dd HH:mm 까지
                 //년도를 비교해서
 
@@ -148,6 +161,12 @@ public class BoardWriteActivity extends AppCompatActivity {
                 userEmail = uservo.getUser_email();
                 userName = uservo.getUser_name();
 
+                final SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+                progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                progressDialog.setTitleText("글 등록중...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 id = db.collection(category).document().getId();
                 Map<String, Object> post = new HashMap<>();
                 post.put("id", id);
@@ -161,23 +180,22 @@ public class BoardWriteActivity extends AppCompatActivity {
                 // user의 이름 추가
                 post.put("name", userName);
 
-                // 파일 업로드
-                uploadFile();
 
                 db.collection(category)
                         .document(id).set(post)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(BoardWriteActivity.this, "업로드 성공!!", Toast.LENGTH_SHORT).show();
+                                Toasty.success(BoardWriteActivity.this, "게시글이 등록 성공", Toasty.LENGTH_SHORT, true).show();
                                 finish();
+                                progressDialog.dismiss();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // Log.w(TAG, "Error adding document", e);
-                                Toast.makeText(BoardWriteActivity.this, "업로드 실패!!", Toast.LENGTH_SHORT).show();
+                                Toasty.error(BoardWriteActivity.this, "게시글이 등록 실패", Toasty.LENGTH_SHORT, true).show();
                             }
                         });
 
@@ -185,15 +203,16 @@ public class BoardWriteActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     //
     //결과 처리
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //request코드가 0이고 OK를 선택했고 data에 뭔가가 들어 있다면
-        if(requestCode == 0 && resultCode == RESULT_OK){
+
+        if (requestCode == 0 && resultCode == RESULT_OK) {
             filePath = data.getData();
-            //Log.d(MainActivity, "uri:" + String.valueOf(filePath));
+
             try {
                 //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
@@ -206,58 +225,41 @@ public class BoardWriteActivity extends AppCompatActivity {
 
     //upload the file
     private void uploadFile() {
-        // image_id = db.collection(category).document().getId();
+        //storage
+        FirebaseStorage storage = FirebaseStorage.getInstance();
 
-        //업로드할 파일이 있으면 수행
-        if (filePath != null) {
-            //업로드 진행 Dialog 보이기
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("업로드중...");
-            progressDialog.show();
+        //Unique한 파일명을 만들자.
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
+        Date now = new Date();
+        // String filename = formatter.format(now) + ".png";
+        String filename = id + ".png";
 
-            //storage
-            FirebaseStorage storage = FirebaseStorage.getInstance();
+        //storage 주소와 폴더 파일명을 지정해 준다.
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/").child("Board images/" + filename);
 
-            //Unique한 파일명을 만들자.
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
-            Date now = new Date();
-            // String filename = formatter.format(now) + ".png";
-            String filename = id + ".png";
-
-            //storage 주소와 폴더 파일명을 지정해 준다.
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/").child("Board images/" + filename);
-
-            //올라가거라...
-            storageRef.putFile(filePath)
-                    //성공시
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                            Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    //실패시
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    //진행중
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests")
-                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
-                            //dialog에 진행률을 퍼센트로 출력해 준다
-                            progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
-                        }
-                    });
-        } else {
-            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
-        }
+        storageRef.putFile(filePath)
+                //성공시
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                //실패시
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                //진행중
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        @SuppressWarnings("VisibleForTests")
+                        double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    }
+                });
     }
     //
 }
