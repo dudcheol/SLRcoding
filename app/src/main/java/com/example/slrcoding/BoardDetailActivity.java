@@ -569,7 +569,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         StorageReference pathReference = storageReference.child("Board images/yiU0ugohcNWi7nOx0Cex.png");
         // gs://slrcoding.appspot.com/Board images/yiU0ugohcNWi7nOx0Cex.png
         Glide.with(this /* context */)
-                .load(pathReference)
+                .load(pathReference.getDownloadUrl().toString())
                 .into(board_image);
         /*
         pathReference.getDownloadUrl().addOnSuccessListener(url -> {
