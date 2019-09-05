@@ -35,6 +35,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -130,7 +131,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         titleTextView = findViewById(R.id.bard_title);
 
         // 중고나라 이미지 파베에 가져오기
-        //downloadFile();
+        downloadFile();
 
         contentTextView = findViewById(R.id.board_context);
         categoryTextView = findViewById(R.id.board_detail_category);
@@ -564,40 +565,29 @@ public class BoardDetailActivity extends AppCompatActivity {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
-
+        //Log.i("메시지:", "파베 접속 성공");
         //다운로드할 파일을 가르키는 참조 만들기
         StorageReference pathReference = storageReference.child("Board images/yiU0ugohcNWi7nOx0Cex.png");
-        // gs://slrcoding.appspot.com/Board images/yiU0ugohcNWi7nOx0Cex.png
-        Glide.with(this /* context */)
-                .load(pathReference)
-                .into(board_image);
-        /*
-        pathReference.getDownloadUrl().addOnSuccessListener(url -> {
-        Glide.with(context)
-                .load(url)
-                .into(board_image);
-        });
-        */
+        //Log.i("메시지:", "파베 이미지 받기");
 
-        // Glide Library 사용하여 화면에 바로 보여줄 수 있다
         /*
-        // download url을 가져와 사진이 존재하면 세팅 없으면 디폴트 이미지
+        Glide.with(this)
+                .load(pathReference.toString())
+                .into(board_image);
+        */
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(getContext())
+                Glide.with(getApplicationContext())
                         .load(uri.toString())
                         .into(board_image);
+                //Log.i("메시지:", "파베 이미지 적용"+uri.toString());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                board_image.setImageResource(R.drawable.defaultimage);
+                board_image.setImageResource(R.drawable.board_example);
             }
         });
-        */
-
-        //
-
     }
 }

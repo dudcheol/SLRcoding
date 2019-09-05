@@ -13,6 +13,8 @@ import android.text.InputFilter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -374,6 +376,7 @@ public class MypageFragment extends Fragment {
                 Glide.with(getContext())
                         .load(uri.toString())
                         .into(iv_profile);
+                //Log.i("메시지:", "파베 이미지 적용"+uri.toString());
                 progressDialog.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
