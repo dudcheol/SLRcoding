@@ -142,19 +142,16 @@ public class BoardWriteActivity extends AppCompatActivity {
                     return false;
                 }
 
-                // 파일 업로드
-                // uploadFile();
 
                 // 파일 업로드
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
-                //Unique한 파일명을 만들자.
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
                 Date now = new Date();
-                //filename = category+"_"+userEmail+"_"+formatter.format(now) + ".png";
+
                 filename = category+"_"+userEmail+"_"+formatter.format(now);
 
-                //storage 주소와 폴더 파일명을 지정해 준다.
+                //storage 주소와 폴더 파일명을 지정
                 StorageReference storageRef = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/").child("Board images/" + filename);
 
                 storageRef.putFile(filePath)
@@ -261,44 +258,4 @@ public class BoardWriteActivity extends AppCompatActivity {
             }
         }
     }
-
-    //upload the file
-    private void uploadFile() {
-        //storage
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        //Unique한 파일명을 만들자.
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
-        Date now = new Date();
-        // String filename = formatter.format(now) + ".png";
-        String filename = id + ".png";
-
-        //storage 주소와 폴더 파일명을 지정해 준다.
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/").child("Board images/" + filename);
-
-        storageRef.putFile(filePath)
-                //성공시
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        //Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                //실패시
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                //진행중
-                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        @SuppressWarnings("VisibleForTests")
-                        double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                    }
-                });
-    }
-    //
 }
