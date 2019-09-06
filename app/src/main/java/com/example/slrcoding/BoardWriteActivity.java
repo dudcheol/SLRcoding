@@ -51,7 +51,6 @@ public class BoardWriteActivity extends AppCompatActivity {
     private Button board_file;
     private ImageView file_preview;
     private Uri filePath;
-
     private Button bt;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -59,10 +58,11 @@ public class BoardWriteActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;           // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;
 
+
     private String category = null;
     private int code = 0;
     private String id;
-    private String image_id;
+    private String filename;
 
     private String time1;
     private Long replyCnt;
@@ -153,8 +153,10 @@ public class BoardWriteActivity extends AppCompatActivity {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
                 //Unique한 파일명을 만들자.
-                SimpleDateFormat filename = new SimpleDateFormat(category+"_"+userEmail+"_"+"yyyyMMHH_mmss");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
                 Date now = new Date();
+                //filename = category+"_"+userEmail+"_"+formatter.format(now) + ".png";
+                filename = category+"_"+userEmail+"_"+formatter.format(now);
 
                 //storage 주소와 폴더 파일명을 지정해 준다.
                 StorageReference storageRef = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/").child("Board images/" + filename);
@@ -206,6 +208,7 @@ public class BoardWriteActivity extends AppCompatActivity {
                 id = db.collection(category).document().getId();
                 Map<String, Object> post = new HashMap<>();
 
+                post.put("image", filename);
                 post.put("id", id);
                 post.put("title", mWriteTitleText.getText().toString());
                 post.put("contents", mWriteContentsText.getText().toString());
