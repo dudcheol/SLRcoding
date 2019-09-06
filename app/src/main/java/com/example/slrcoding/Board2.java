@@ -88,13 +88,19 @@ public class Board2 {
         return replyCnt;
     }
 
-    public void setReplyCnt(Long replyCnt) { this.replyCnt = replyCnt;}
+    public void setReplyCnt(Long replyCnt) {
+        this.replyCnt = replyCnt;
+
+    }
 
     public String getRegModifyDate() {
         return regModifyDate;
     }
 
-    public void setRegModifyDate(String regModifyDate) {this.regModifyDate = regModifyDate;}
+    public void setRegModifyDate(String regModifyDate) {
+        this.regModifyDate = regModifyDate;
+
+    }
 
     public Long getLikeCnt() {
         return likeCnt;
@@ -103,11 +109,12 @@ public class Board2 {
     public void setLikeCnt(Long likeCnt) {
         this.likeCnt = likeCnt;
     }
-
-    public String getImage() {return image;}
-
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     @Override

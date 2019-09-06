@@ -88,8 +88,10 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                             }
                             Long replyCnt = (Long)dc.getDocument().getData().get("replyCnt");
                             Long likeCnt = (Long)dc.getDocument().getData().get("likeCnt");
+                            String image = (String) dc.getDocument().getData().get("image");
 
-                            data2 = new Board2(id, category, title, contents, name, userEmail, regDate, replyCnt,regDateModify,likeCnt);
+
+                            data2 = new Board2(id, category, title, contents, name, userEmail, regDate, replyCnt,regDateModify,likeCnt, image);
                             board_mBoardList2.add(data2);
                             Log.i("dd","ADDED");
 
@@ -105,6 +107,9 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                             String userEmail1 = (String)dc.getDocument().getData().get("userEmail");
                             String category1 = (String)dc.getDocument().getData().get("category");
                             String regDate1 = (String)dc.getDocument().getData().get("regDate");
+
+                            String image1 = (String) dc.getDocument().getData().get("image1");
+
                             Calendar calendar1 = new GregorianCalendar(Locale.KOREA);
                             //현재 년도일 경우 없애서 보여주고 작년 일 경우 년도 표시하기
                             int nYear1 = calendar1.get(Calendar.YEAR);
@@ -118,7 +123,7 @@ public class Board_Child_FragmentTwo extends Fragment implements SwipeRefreshLay
                                 regDateModify1 = regDate1.substring(0,17);
                             }
                             //수정 된 게시글에 대한 정보를 담은 Board를 백업하여 이를 가지고 리스트에 set으로 수정함
-                            Board2 datacopy = new Board2(id1,category1,title1,contents1, name1, userEmail1,regDate1,replyCnt1,regDateModify1,likeCnt1);
+                            Board2 datacopy = new Board2(id1,category1,title1,contents1, name1, userEmail1,regDate1,replyCnt1,regDateModify1,likeCnt1, image1);
 
                             //리스트에서 해당 수정된 객체를 찾아서 그 리스트에서 수정
                             Board2 temp = new Board2();

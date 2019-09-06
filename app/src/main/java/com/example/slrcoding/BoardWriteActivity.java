@@ -51,7 +51,6 @@ public class BoardWriteActivity extends AppCompatActivity {
     private Button board_file;
     private ImageView file_preview;
     private Uri filePath;
-
     private Button bt;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -59,10 +58,11 @@ public class BoardWriteActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;           // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;
 
+
     private String category = null;
     private int code = 0;
     private String id;
-    private String image_id;
+    private String filename;
 
     private String time1;
     private Long replyCnt;
@@ -142,21 +142,16 @@ public class BoardWriteActivity extends AppCompatActivity {
                     return false;
                 }
 
-                // 이메일과 이름 받아오기
-                userEmail = uservo.getUser_email();
-                userName = uservo.getUser_name();
-
-                // 파일 업로드
-                // uploadFile();
 
                 // 파일 업로드
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
-                //Unique한 파일명을 만들자.
-                SimpleDateFormat filename = new SimpleDateFormat(category+"_"+userEmail+"_"+"yyyyMMHH_mmss");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
                 Date now = new Date();
 
-                //storage 주소와 폴더 파일명을 지정해 준다.
+                filename = category+"_"+userEmail+"_"+formatter.format(now);
+
+                //storage 주소와 폴더 파일명을 지정
                 StorageReference storageRef = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/").child("Board images/" + filename);
 
                 storageRef.putFile(filePath)
@@ -196,6 +191,9 @@ public class BoardWriteActivity extends AppCompatActivity {
                 replyCnt = 0L;
                 likeCnt = 0L;
 
+                // 이메일과 이름 받아오기
+                userEmail = uservo.getUser_email();
+                userName = uservo.getUser_name();
 
                 final SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
                 progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -206,6 +204,7 @@ public class BoardWriteActivity extends AppCompatActivity {
                 id = db.collection(category).document().getId();
                 Map<String, Object> post = new HashMap<>();
 
+                post.put("image", filename);
                 post.put("id", id);
                 post.put("title", mWriteTitleText.getText().toString());
                 post.put("contents", mWriteContentsText.getText().toString());
@@ -213,7 +212,6 @@ public class BoardWriteActivity extends AppCompatActivity {
                 post.put("regDate", time1);
                 post.put("replyCnt", replyCnt);
                 post.put("likeCnt", likeCnt);
-                post.put("userEmail", userEmail);
                 post.put("userEmail", userEmail);
                 // user의 이름 추가
                 post.put("name", userName);
@@ -260,44 +258,4 @@ public class BoardWriteActivity extends AppCompatActivity {
             }
         }
     }
-
-    //upload the file
-    private void uploadFile() {
-        //storage
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        //Unique한 파일명을 만들자.
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
-        Date now = new Date();
-        // String filename = formatter.format(now) + ".png";
-        String filename = id + ".png";
-
-        //storage 주소와 폴더 파일명을 지정해 준다.
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/").child("Board images/" + filename);
-
-        storageRef.putFile(filePath)
-                //성공시
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        //Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                //실패시
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                //진행중
-                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        @SuppressWarnings("VisibleForTests")
-                        double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                    }
-                });
-    }
-    //
 }

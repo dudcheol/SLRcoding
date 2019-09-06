@@ -85,7 +85,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     private String category;
     private String category2;
     private String idfrom;
-    private String id;
+    //private String id ;
     private String title;
 
     private String contents;
@@ -94,6 +94,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     String regDateModify = null; //수정된 날짜
     private Long replyCnt;
     private Long likeCnt;
+    private String image;
 
     private TextView replyName;//닉네임
     private TextView replyContent;//댓글 내용
@@ -130,9 +131,6 @@ public class BoardDetailActivity extends AppCompatActivity {
 
         titleTextView = findViewById(R.id.bard_title);
 
-        // 중고나라 이미지 파베에 가져오기
-        downloadFile();
-
         contentTextView = findViewById(R.id.board_context);
         categoryTextView = findViewById(R.id.board_detail_category);
 
@@ -164,12 +162,14 @@ public class BoardDetailActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot documentSnapshot = task.getResult();
-                            id = (String) documentSnapshot.getData().get("id");
                             title = (String) documentSnapshot.getData().get("title");
                             contents = (String) documentSnapshot.getData().get("contents");
                             category2 = (String) documentSnapshot.getData().get("category");
                             name = (String) documentSnapshot.getData().get("name");
                             regDate = (String) documentSnapshot.getData().get("regDate");
+
+
+
                             Calendar calendar = new GregorianCalendar(Locale.KOREA);
                             // 현재 년도일 경우 없애서 보여주고 작년 일 경우 년도 표시하기
                             int nYear = calendar.get(Calendar.YEAR);
@@ -184,13 +184,15 @@ public class BoardDetailActivity extends AppCompatActivity {
                             }
                             replyCnt = (Long) documentSnapshot.getData().get("replyCnt");
                             likeCnt = (Long) documentSnapshot.getData().get("likeCnt");
+                            image =(String) documentSnapshot.getData().get("image");
 
-                            Log.i("title", "id: " + id);
                             Log.i("title", "title: " + title);
                             Log.i("title", "contents: " + contents);
                             Log.i("title", "category2: " + category2);
                             Log.i("title", "name: " + name);
                             Log.i("title", "replyCnt: " + replyCnt);
+                            Log.i("title", "image: " + image);
+
                         } else {
                             Log.i("error", "get Failed: " + task.getException());
                         }
@@ -204,6 +206,9 @@ public class BoardDetailActivity extends AppCompatActivity {
                         dateTextView.setText(regDateModify);
                         replyCntView.setText(String.valueOf(replyCnt));
                         likeCntView.setText(String.valueOf(likeCnt));
+                        // 중고나라 이미지 파베에 가져오기
+                        downloadFile();
+
                     }
                 });
 
@@ -567,9 +572,9 @@ public class BoardDetailActivity extends AppCompatActivity {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
-        //Log.i("메시지:", id);
+        //Log.i("메시지:", image);
         //다운로드할 파일을 가르키는 참조 만들기
-        StorageReference pathReference = storageReference.child("Board images/" + id + ".png");
+        StorageReference pathReference = storageReference.child("Board images/" + image );
         //Log.i("메시지:", "파베 이미지 받기");
 
         /*
@@ -583,11 +588,13 @@ public class BoardDetailActivity extends AppCompatActivity {
                 Glide.with(getApplicationContext())
                         .load(uri.toString())
                         .into(board_image);
-                //Log.i("메시지:", "파베 이미지 적용"+uri.toString());
+                Log.i("메시지:", "파베 이미지 적용"+uri.toString());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Log.i("메시지:", "실패");
+
                 board_image.setImageResource(R.drawable.board_example);
             }
         });
