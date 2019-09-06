@@ -85,7 +85,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     private String category;
     private String category2;
     private String idfrom;
-    private String id;
+    //private String id ;
     private String title;
 
     private String contents;
@@ -164,7 +164,6 @@ public class BoardDetailActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot documentSnapshot = task.getResult();
-                            id = (String) documentSnapshot.getData().get("id");
                             title = (String) documentSnapshot.getData().get("title");
                             contents = (String) documentSnapshot.getData().get("contents");
                             category2 = (String) documentSnapshot.getData().get("category");
@@ -185,7 +184,6 @@ public class BoardDetailActivity extends AppCompatActivity {
                             replyCnt = (Long) documentSnapshot.getData().get("replyCnt");
                             likeCnt = (Long) documentSnapshot.getData().get("likeCnt");
 
-                            Log.i("title", "id: " + id);
                             Log.i("title", "title: " + title);
                             Log.i("title", "contents: " + contents);
                             Log.i("title", "category2: " + category2);
@@ -567,9 +565,9 @@ public class BoardDetailActivity extends AppCompatActivity {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
-        //Log.i("메시지:", id);
+        //Log.i("메시지:", "파베 접속 성공");
         //다운로드할 파일을 가르키는 참조 만들기
-        StorageReference pathReference = storageReference.child("Board images/" + id + ".png");
+        StorageReference pathReference = storageReference.child("Board images/yiU0ugohcNWi7nOx0Cex.png");
         //Log.i("메시지:", "파베 이미지 받기");
 
         /*

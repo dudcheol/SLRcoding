@@ -142,47 +142,8 @@ public class BoardWriteActivity extends AppCompatActivity {
                     return false;
                 }
 
-                // 이메일과 이름 받아오기
-                userEmail = uservo.getUser_email();
-                userName = uservo.getUser_name();
-
                 // 파일 업로드
-                // uploadFile();
-
-                // 파일 업로드
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-
-                //Unique한 파일명을 만들자.
-                SimpleDateFormat filename = new SimpleDateFormat(category+"_"+userEmail+"_"+"yyyyMMHH_mmss");
-                Date now = new Date();
-
-                //storage 주소와 폴더 파일명을 지정해 준다.
-                StorageReference storageRef = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/").child("Board images/" + filename);
-
-                storageRef.putFile(filePath)
-                        //성공시
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                //Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        //실패시
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                //Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        //진행중
-                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                @SuppressWarnings("VisibleForTests")
-                                double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                            }
-                        });
-
+                uploadFile();
 
                 //여기서 파이어베이서 데이터에 저장 각 입력 정보들을 넣는다..
                 //대신 카테고리 별로 if문을 이용해서 따로 저장을 한다.
@@ -196,6 +157,9 @@ public class BoardWriteActivity extends AppCompatActivity {
                 replyCnt = 0L;
                 likeCnt = 0L;
 
+                // 이메일과 이름 받아오기
+                userEmail = uservo.getUser_email();
+                userName = uservo.getUser_name();
 
                 final SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
                 progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -205,7 +169,6 @@ public class BoardWriteActivity extends AppCompatActivity {
 
                 id = db.collection(category).document().getId();
                 Map<String, Object> post = new HashMap<>();
-
                 post.put("id", id);
                 post.put("title", mWriteTitleText.getText().toString());
                 post.put("contents", mWriteContentsText.getText().toString());
@@ -213,7 +176,6 @@ public class BoardWriteActivity extends AppCompatActivity {
                 post.put("regDate", time1);
                 post.put("replyCnt", replyCnt);
                 post.put("likeCnt", likeCnt);
-                post.put("userEmail", userEmail);
                 post.put("userEmail", userEmail);
                 // user의 이름 추가
                 post.put("name", userName);
