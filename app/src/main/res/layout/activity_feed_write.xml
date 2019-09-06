@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:text="※카카오 오픈채팅방을 개설하여 링크를 입력해주세요!"
+            android:text="※카카오 오픈채팅방을 개설하여 링크를 입력해주세요!                         필수는 아닙니다."
             android:textColor="#F70303" />
     </com.github.florent37.materialtextfield.MaterialTextField>
 
