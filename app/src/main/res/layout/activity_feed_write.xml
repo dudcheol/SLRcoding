@@ -8,7 +8,6 @@
     android:padding="0dp">
 
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
@@ -16,7 +15,6 @@
         android:background="@color/mainColor_mid">
 
     </androidx.appcompat.widget.Toolbar>
-
 
     <EditText
         android:id="@+id/feed_title_editText"
@@ -32,7 +30,16 @@
         android:background="@android:drawable/edit_text"
         android:hint="제목" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/florentTextField"
+        android:layout_marginLeft="10dp"
+        android:textColor="#F70303"
+        android:text="※카카오 오픈채팅방을 개설하여 링크를 입력해주세요!" />
+
     <com.github.florent37.materialtextfield.MaterialTextField
+        android:id="@+id/florentTextField"
         android:layout_width="376dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/feed_title_editText"
