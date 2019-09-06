@@ -13,11 +13,12 @@ public class Board2 {
     private String regModifyDate;
     private Long likeCnt;
     private String userEmail;
+    private String image;
 
     public Board2(){
     }
 
-    public Board2(String id, String category, String title, String contents, String name, String userEmail, String regDate, Long replyCnt,String regModifyDate,Long likeCnt) {
+    public Board2(String id, String category, String title, String contents, String name, String userEmail, String regDate, Long replyCnt,String regModifyDate,Long likeCnt, String image) {
         this.id = id;
         this.category= category;
         this.title = title;
@@ -28,6 +29,7 @@ public class Board2 {
         this.replyCnt = replyCnt;
         this.regModifyDate = regModifyDate;
         this.likeCnt = likeCnt;
+        this.image = image;
     }
 
     public String getId() {
@@ -107,6 +109,13 @@ public class Board2 {
     public void setLikeCnt(Long likeCnt) {
         this.likeCnt = likeCnt;
     }
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
 
     @Override
     public String toString() {
@@ -120,6 +129,7 @@ public class Board2 {
                 ", regModifyDate='" + regModifyDate + '\'' +
                 ", replyCnt=" + replyCnt +
                 ", likeCnt=" + likeCnt +
+                ", image=" + image +
                 '}';
     }
 }
