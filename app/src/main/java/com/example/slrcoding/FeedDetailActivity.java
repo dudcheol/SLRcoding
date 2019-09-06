@@ -187,6 +187,11 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                             replyCnt =(Long)documentSnapshot.getData().get("replyCnt");
                             likeCnt = (Long)documentSnapshot.getData().get("likeCnt");
                             kakaoUrl = (String)documentSnapshot.getData().get("kakaolink");
+                            if(kakaoUrl.equals("") || kakaoUrl.equals("https://open.kakao.com/o/")){
+                                kakaoLinkTextView.setVisibility(View.INVISIBLE);
+                            }
+                            Log.i("order","order:"+1);
+
                             Log.i("title","title: "+title);
                             Log.i("title","contents: "+contents);
                             Log.i("title","category2: "+category2);
@@ -332,6 +337,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
         });
         //카카오 링크 클릭 이벤트
         kakaoLinkTextView.setOnClickListener(this);
+
 
     }
     //카카오 링크 클릭 이벤트트
