@@ -142,10 +142,6 @@ public class BoardWriteActivity extends AppCompatActivity {
                     return false;
                 }
 
-                // 이메일과 이름 받아오기
-                userEmail = uservo.getUser_email();
-                userName = uservo.getUser_name();
-
                 // 파일 업로드
                 // uploadFile();
 
@@ -198,6 +194,9 @@ public class BoardWriteActivity extends AppCompatActivity {
                 replyCnt = 0L;
                 likeCnt = 0L;
 
+                // 이메일과 이름 받아오기
+                userEmail = uservo.getUser_email();
+                userName = uservo.getUser_name();
 
                 final SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
                 progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -216,7 +215,6 @@ public class BoardWriteActivity extends AppCompatActivity {
                 post.put("regDate", time1);
                 post.put("replyCnt", replyCnt);
                 post.put("likeCnt", likeCnt);
-                post.put("userEmail", userEmail);
                 post.put("userEmail", userEmail);
                 // user의 이름 추가
                 post.put("name", userName);

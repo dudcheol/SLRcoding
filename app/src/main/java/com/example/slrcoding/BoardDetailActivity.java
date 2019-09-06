@@ -85,7 +85,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     private String category;
     private String category2;
     private String idfrom;
-    private String id;
+    //private String id ;
     private String title;
 
     private String contents;
@@ -162,7 +162,6 @@ public class BoardDetailActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot documentSnapshot = task.getResult();
-                            id = (String) documentSnapshot.getData().get("id");
                             title = (String) documentSnapshot.getData().get("title");
                             contents = (String) documentSnapshot.getData().get("contents");
                             category2 = (String) documentSnapshot.getData().get("category");
@@ -187,7 +186,6 @@ public class BoardDetailActivity extends AppCompatActivity {
                             likeCnt = (Long) documentSnapshot.getData().get("likeCnt");
                             image =(String) documentSnapshot.getData().get("image");
 
-                            Log.i("title", "id: " + id);
                             Log.i("title", "title: " + title);
                             Log.i("title", "contents: " + contents);
                             Log.i("title", "category2: " + category2);
