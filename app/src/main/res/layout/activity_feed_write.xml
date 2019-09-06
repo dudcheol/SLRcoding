@@ -30,14 +30,6 @@
         android:background="@android:drawable/edit_text"
         android:hint="제목" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/florentTextField"
-        android:layout_marginLeft="10dp"
-        android:textColor="#F70303"
-        android:text="※카카오 오픈채팅방을 개설하여 링크를 입력해주세요!" />
-
     <com.github.florent37.materialtextfield.MaterialTextField
         android:id="@+id/florentTextField"
         android:layout_width="376dp"
@@ -58,6 +50,13 @@
             android:text="https://open.kakao.com/o/"
             android:textColor="#333"
             android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="※카카오 오픈채팅방을 개설하여 링크를 입력해주세요!"
+            android:textColor="#F70303" />
     </com.github.florent37.materialtextfield.MaterialTextField>
 
     <EditText
