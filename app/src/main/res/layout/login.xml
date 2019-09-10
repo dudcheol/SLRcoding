@@ -5,20 +5,23 @@
     android:layout_height="match_parent"
     android:id="@+id/loginLayout">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/app_icon"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Funny Campus"
+        android:textSize="30dp"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="100dp"/>
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:textStyle="bold"
         android:id="@+id/emailInput"
         android:layout_centerHorizontal="true"
         android:inputType="text"
         android:singleLine="true"
-        android:hint="ID"
+        android:hint="Email(kpu.ac.kr)"
         android:layout_marginTop="151dp" />
 
     <EditText
