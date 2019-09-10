@@ -51,7 +51,7 @@ public class FeedWriteActivity extends AppCompatActivity {
     private Long replyCnt;
     private Long likeCnt;
     //유효성 검사
-    private String kakaoValid="https://open.kakao.com";
+    private String kakaoValid="https://open.kakao.com/o/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,17 +104,21 @@ public class FeedWriteActivity extends AppCompatActivity {
                     Toasty.warning(this,"내용을 입력하세요.",Toasty.LENGTH_SHORT,true).show();
                     return false;
                 }
-                if(mWriteKakaoLinkText.getText().toString().equals("")){
-                    Toasty.warning(this,"링크를 입력하세요.",Toasty.LENGTH_SHORT,true).show();
-                    return false;
-                }
-                //Todo: 카카오링크 유효성 판단
-                if(mWriteKakaoLinkText.getText().toString().contains(kakaoValid)==false){
-                    Toasty.error(this,"유효한 카카오링크가 아닙니다. 다시 입력해주세요.",Toasty.LENGTH_SHORT,true).show();
+//                if(mWriteKakaoLinkText.getText().toString().equals("")){
+//                    Toasty.warning(this,"링크를 입력하세요.",Toasty.LENGTH_SHORT,true).show();
+//                    return false;
+//                }
+                //링크가 존재한다면 유효성 판단
+                if(!mWriteKakaoLinkText.getText().toString().equals("")){
+                    //Todo: 카카오링크 유효성 판단
+                    if(mWriteKakaoLinkText.getText().toString().contains(kakaoValid)==false){
+                        Toasty.error(this,"유효한 카카오링크가 아닙니다. 다시 입력해주세요.",Toasty.LENGTH_SHORT,true).show();
 
-                    mWriteKakaoLinkText.setText("");
-                    return false;
+                        mWriteKakaoLinkText.setText("");
+                        return false;
+                    }
                 }
+
                 //여기서 파이어베이서 데이터에 저장 각 입력 정보들을 넣는다..
                 //대신 카테고리 별로 if문을 이용해서 따로 저장을 한다.??
                 //현재 년도를 비교하고 올해이면 MM/dd HH:mm 까지
