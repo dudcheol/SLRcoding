@@ -5,11 +5,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.SharingActivity">
+
     <TextView
-        android:text="자전거 쉐어링 엑티비티"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginLeft="140sp"
+        android:textSize="24sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-
+        android:layout_height="wrap_content"
+        android:text="자전거 쉐어링">
     </TextView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/lendava"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="30dp"
+        >
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="대여 가능 수"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+        <TextView
+            android:layout_marginLeft="75dp"
+            android:textStyle="bold"
+            android:text="15/20"
+            android:textColor="#F70606"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="280dp"
+        >
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="현재 상태"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+        <TextView
+            android:layout_marginLeft="60dp"
+            android:text="이용중"
+            android:textStyle="bold"
+            android:textColor="#FA0505"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_below="@id/lendava"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="@color/colorPrimaryDark">
+    </androidx.cardview.widget.CardView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/lendava"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>
