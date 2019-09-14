@@ -39,10 +39,10 @@ public class SharingAdapter extends RecyclerView.Adapter<SharingAdapter.SharingV
         holder.type.setText(share.getType());
         if(share.isUse_avail()){
             holder.useavail.setText("미사용");
-            holder.avail_cardview.setBackgroundColor(Color.BLUE);
+            holder.avail_cardview.setBackgroundColor(Color.GREEN);
         }else{
             holder.useavail.setText("사용중");
-            holder.avail_cardview.setBackgroundColor(Color.DKGRAY);
+            holder.avail_cardview.setBackgroundColor(Color.RED);
         }
         holder.user.setText(share.getUser_name());
         holder.start_date.setText(share.getStart_date());
