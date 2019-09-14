@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.slrcoding.Activity.SharingActivity;
 import com.example.slrcoding.Board;
 import com.example.slrcoding.BoardDetailActivity;
 import com.example.slrcoding.FeedDetailActivity;
@@ -159,6 +160,20 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((BHolder) holder).name_and_ID.setText(uservo.getUser_name()+" / "+uservo.getUser_email());
             ((BHolder) holder).school.setText("한국산업기술대학교 XX학번");
 
+            //이정찬 수정 (2019-09-12)
+            //카 쉐어링 액티비티 이동시키기
+            ((BHolder) holder).cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+
+                    Intent intent = new Intent(context,SharingActivity.class);
+                    if (context instanceof Activity) {
+                        ((Activity) context).startActivity(intent);
+                    }
+                }
+            });
+
 
         }else if(holder instanceof CHolder){
             // C : 중고장터
@@ -204,6 +219,8 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class BHolder extends RecyclerView.ViewHolder{
         ImageView profile;
         TextView name_and_ID, school, nickname;
+        //이정찬 수정
+        CardView cardView;
         ProgressBar myinfo_progressbar;
 
         public BHolder(@NonNull View itemView) {
@@ -212,6 +229,8 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             name_and_ID = itemView.findViewById(R.id.name_and_ID);
             school = itemView.findViewById(R.id.school);
             nickname = itemView.findViewById(R.id.nickname);
+            //이정찬 수정
+            cardView = itemView.findViewById(R.id.sharing);
             //myinfo_progressbar = itemView.findViewById(R.id.main_myinfo_progressBar);
         }
     }
