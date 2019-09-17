@@ -24,7 +24,7 @@ import java.util.List;
  * @Writer Lee Jeong Chan
  * @Date 2019.08.23
  * MeetingAdapter(강의에선 PeopleFragment)에서 채팅하기 버튼 클릭시 ChatRoomActivity(강의에선 MessageActivity)로 이동하고 채팅방이 파베에
- * 올라가고 파베에서 해당 채팅방을 ChatListActivity에서 정보가져와서 리시트 만들어서 뿌려줄 것.
+ * 올라가고 파베에서 해당 채팅방을 ChatListActivity에서 정보가져와서 리시트 만들어서 뿌려줄 것. ==> 이때 faceagree 여부에 따라 리스트에 얼굴 보일지 안보일지 결정., ==> 사용자 정보마다 faceagree 필드 넣어주기.
  * 그리고 ChatListAdapter에서 아이템(채팅방)클릭시 마찬가지로 ChatRoomActivity로 이동시키기.
  */
 public class ChatListActivity extends AppCompatActivity {
