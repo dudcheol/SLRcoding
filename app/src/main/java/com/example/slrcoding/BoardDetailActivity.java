@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +48,7 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,7 +67,7 @@ import es.dmoral.toasty.Toasty;
 
 import static com.example.slrcoding.MainActivity.uservo;
 
-public class BoardDetailActivity extends AppCompatActivity {
+public class BoardDetailActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
 
     private ImageView board_image;
@@ -76,6 +79,8 @@ public class BoardDetailActivity extends AppCompatActivity {
     private TextView nameTextView;
     private TextView dateTextView;
     private LikeButton likelyButton;
+    private CardView kakaoLinkTextView;
+    private String kakaoUrl;
 
     private RecyclerView mReplyRecyclerView;
     private List<BoardReplyVO> boardReplyVOList;
@@ -168,8 +173,6 @@ public class BoardDetailActivity extends AppCompatActivity {
                             name = (String) documentSnapshot.getData().get("name");
                             regDate = (String) documentSnapshot.getData().get("regDate");
 
-
-
                             Calendar calendar = new GregorianCalendar(Locale.KOREA);
                             // 현재 년도일 경우 없애서 보여주고 작년 일 경우 년도 표시하기
                             int nYear = calendar.get(Calendar.YEAR);
@@ -185,6 +188,11 @@ public class BoardDetailActivity extends AppCompatActivity {
                             replyCnt = (Long) documentSnapshot.getData().get("replyCnt");
                             likeCnt = (Long) documentSnapshot.getData().get("likeCnt");
                             image =(String) documentSnapshot.getData().get("image");
+
+                            kakaoUrl = (String)documentSnapshot.getData().get("kakaolink");
+                            if(kakaoUrl.equals("") || kakaoUrl.equals("https://open.kakao.com/o/")){
+                                kakaoLinkTextView.setVisibility(View.INVISIBLE);
+                            }
 
                             Log.i("title", "title: " + title);
                             Log.i("title", "contents: " + contents);
@@ -235,7 +243,8 @@ public class BoardDetailActivity extends AppCompatActivity {
                     //현재 년도에 등록했을 때는 월/일 시간 만 보여주기
                     if (year.equals(regYear)) {
                         replyDateModify = replyDate.substring(6, 17);
-                    } else { //현재 년도가 아닐 경우 즉 작년에 쓴글이라면 년도까지 표현하기!!
+                    } else {
+                        //현재 년도가 아닐 경우 즉 작년에 쓴글이라면 년도까지 보여주기
                         replyDateModify = replyDate.substring(0, 17);
                     }
                     Log.i("Reply:", "replyId: " + replyId);
@@ -321,8 +330,77 @@ public class BoardDetailActivity extends AppCompatActivity {
                 delete_flag2 = value;
             }
         });
+        //카카오 링크 클릭 이벤트
+        kakaoLinkTextView.setOnClickListener(this);
+    }
+    //카카오 링크 클릭 이벤트트
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.feed_detail_kakaoLink:
+                //AsyncTask 함수 호출.
+                BoardDetailActivity.KakaoLinkProgressTask task = new BoardDetailActivity.KakaoLinkProgressTask();
+                task.execute();
+                break;
+        }
+
     }
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        
+    }
+
+    //AsyncTask 카카오 링크 프로그레스다이얼로그 띄우기
+    private class KakaoLinkProgressTask extends AsyncTask<Void,Void,Void> {
+
+        //        ProgressDialog asyncDialog = new ProgressDialog(
+//                FeedDetailActivity.this);
+        final SweetAlertDialog progressDialog = new SweetAlertDialog(BoardDetailActivity.this,SweetAlertDialog.PROGRESS_TYPE);
+        @Override
+        protected void onPreExecute() {
+            progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            progressDialog.setTitleText("오픈채팅방 링크 연결중....");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            super.onPreExecute();
+
+        }
+        @Override
+        protected Void doInBackground(Void... strings) {
+            try {
+                for (int i = 0; i < 5; i++) {
+//                    asyncDialog.setProgress(i * 40);
+
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+//            asyncDialog.dismiss();
+            progressDialog.dismiss();
+            Intent intent = null;
+            try {
+                intent = Intent.parseUri(kakaoUrl,Intent.URI_INTENT_SCHEME);
+            } catch (URISyntaxException e1) {
+                Toasty.error(BoardDetailActivity.this,"오픈채팅방 연결 에러!!",Toasty.LENGTH_SHORT,true);
+
+                e1.printStackTrace();
+            }
+            Intent existPackage = getPackageManager().getLaunchIntentForPackage(intent.getPackage());
+            if(existPackage!=null){
+                startActivity(intent);
+            }
+            super.onPostExecute(result);
+
+        }
+
+    }
     //댓글 등록 시 파베에 넣기
     //댓글 수도 업데이트하기..
     private void setReplySubmit() {
