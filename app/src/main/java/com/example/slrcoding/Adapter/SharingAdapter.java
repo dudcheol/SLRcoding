@@ -1,5 +1,8 @@
 package com.example.slrcoding.Adapter;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.slrcoding.Activity.SharingActivity;
+import com.example.slrcoding.Activity.SharingDetailActivity;
+import com.example.slrcoding.FeedDetailActivity;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.SharingVO;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  * @Author 이정찬
@@ -39,14 +47,32 @@ public class SharingAdapter extends RecyclerView.Adapter<SharingAdapter.SharingV
         holder.type.setText(share.getType());
         if(share.isUse_avail()){
             holder.useavail.setText("미사용");
-            holder.avail_cardview.setBackgroundColor(Color.BLUE);
+            holder.avail_cardview.setBackgroundColor(Color.GREEN);
+            holder.shareview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, SharingDetailActivity.class);
+                    if (context instanceof Activity) {
+                        ((Activity) context).startActivity(intent);
+                    }
+                }
+            });
         }else{
             holder.useavail.setText("사용중");
-            holder.avail_cardview.setBackgroundColor(Color.DKGRAY);
+            holder.avail_cardview.setBackgroundColor(Color.RED);
+            holder.shareview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toasty.warning(v.getContext(),"사용중입니다.",Toasty.LENGTH_SHORT,true).show();
+                }
+            });
         }
         holder.user.setText(share.getUser_name());
         holder.start_date.setText(share.getStart_date());
         holder.end_date.setText(share.getEnd_date());
+
+
     }
 
     @Override

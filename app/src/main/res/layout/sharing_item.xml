@@ -11,7 +11,7 @@
         android:orientation="vertical">
         <androidx.cardview.widget.CardView
             android:layout_width="100dp"
-            android:backgroundTint="@color/gray_btn_bg_color"
+            android:backgroundTint="#8BC34A"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_height="30dp">
@@ -46,7 +46,7 @@
                 android:layout_gravity="center"
                 android:text="사용중"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="#FFFFFF"
                 android:textSize="12dp" />
         </androidx.cardview.widget.CardView>
         <!--<androidx.cardview.widget.CardView
