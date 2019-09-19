@@ -577,11 +577,6 @@ public class BoardDetailActivity extends AppCompatActivity {
         StorageReference pathReference = storageReference.child("Board images/" + image );
         //Log.i("메시지:", "파베 이미지 받기");
 
-        /*
-        Glide.with(this)
-                .load(pathReference.toString())
-                .into(board_image);
-        */
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
