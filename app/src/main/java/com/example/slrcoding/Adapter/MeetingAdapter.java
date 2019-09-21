@@ -84,7 +84,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             //Todo: 다이얼로그를 띄어서 자신의 얼굴 공개 여부를 선택하게 하고 공개를 할 경우 상대방의 얼굴도 볼 수 있는 기능 추가.
                             //Todo: 만약에 얼굴 공개를 안한다면 상대방 얼굴과 내 얼굴은 공개되지 않을 것이다. 즉 신중히 생각하여 공개를 할지 안할지 고민하는 기능 추가 예정.
                             sweetAlertDialog.setTitleText("얼굴공개")
-                                    .setContentText("얼굴 공개를 하시겠습니까? \n공개하지 않는다면 상대방의 얼굴을 보지못합니다.\n 신중하게 선택해주세요.")
+                                    .setContentText("얼굴 공개를 하시겠습니까? \n공개하지 않는다면 상대방의 얼굴을 보지못합니다.\n신중하게 선택해주세요.")
                                     .setCancelText("아니요")
                                     .showCancelButton(true)
                                     .setConfirmText("예")
