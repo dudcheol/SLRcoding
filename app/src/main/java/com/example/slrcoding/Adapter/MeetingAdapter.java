@@ -37,7 +37,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<Meeting_UserVO> Meeting_UserVO_List;
     private Context mContext;
     private int width = 0, height = 0;
-    public static boolean faceagree;
+    //public static boolean faceagree;
     // 생성자
     public MeetingAdapter(List<Meeting_UserVO> list, Context context) {
         this.Meeting_UserVO_List = list;
@@ -84,15 +84,15 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             //Todo: 다이얼로그를 띄어서 자신의 얼굴 공개 여부를 선택하게 하고 공개를 할 경우 상대방의 얼굴도 볼 수 있는 기능 추가.
                             //Todo: 만약에 얼굴 공개를 안한다면 상대방 얼굴과 내 얼굴은 공개되지 않을 것이다. 즉 신중히 생각하여 공개를 할지 안할지 고민하는 기능 추가 예정.
                             sweetAlertDialog.setTitleText("얼굴공개")
-                                    .setContentText("얼굴 공개를 하시겠습니까?")
+                                    .setContentText("얼굴 공개를 하시겠습니까? \n공개하지 않는다면 상대방의 얼굴을 보지못합니다.\n 신중하게 선택해주세요.")
                                     .setCancelText("아니요")
                                     .showCancelButton(true)
                                     .setConfirmText("예")
                                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                         @Override
                                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            //Todo: 여기서 상대방의 동의여부를 플래그 형태로 넘길 예정(true) 여기서 파베 사용자 정보에 facegree필드에 넣어주기.
-                                            faceagree = true;
+                                            //Todo: 여기서 상대방의 동의여부를 플래그 형태로 넘길 예정(true) 여기서 파베 채팅방 정보에 facegree필드에 넣어주기.
+                                            boolean faceagree = true;
                                             Intent intent = new Intent(v.getContext(), ChatRoomActivity.class);
                                             intent.putExtra("faceagree",faceagree);
                                             mContext.startActivity(intent);
@@ -100,8 +100,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                     }).setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    //Todo: 여기서 상대방의 동의여부를 플래그 형태로 넘길 예정(false)  여기서 파베 사용자 정보에 facegree필드에 넣어주기.
-                                    faceagree = false;
+                                    //Todo: 여기서 상대방의 동의여부를 플래그 형태로 넘길 예정(false)  여기서 파베 채팅방 정보에 facegree필드에 넣어주기.
+                                    boolean faceagree = false;
                                     Intent intent = new Intent(v.getContext(), ChatRoomActivity.class);
                                     intent.putExtra("faceagree",faceagree);
                                     mContext.startActivity(intent);
