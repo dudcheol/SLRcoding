@@ -40,6 +40,31 @@
         android:background="@android:drawable/edit_text"
         android:layout_below="@+id/board_file"
         android:hint="제목을 입력하세요"/>
+
+    <EditText
+        android:id="@+id/board_kakaolinkedit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="카카오톡 오픈채팅 URL"
+        android:textColorHint="#00BCD4"
+        android:text="https://open.kakao.com/o/"
+        android:layout_below="@+id/board_title_editText"
+        android:textColor="#333"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/board_kakao_text"
+        android:textSize="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/board_kakaolinkedit"
+        android:text="※카카오 오픈채팅방을 개설하여 링크를 입력해주세요.(필수는 아닙니다)"
+        android:textColor="#F70303" />
+
     <EditText
         android:id="@+id/board_memo_edit"
         android:layout_marginLeft="20dp"
@@ -50,8 +75,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/board_title_editText"
-        android:hint="글을 입력하세요."
+        android:layout_below="@id/board_kakao_text"
+        android:hint="상품명: \n착용 횟수: \n가격:"
         android:gravity="top"
+        android:textColorHint="#F18B8B"
         android:background="@android:drawable/edit_text"/>
 </RelativeLayout>

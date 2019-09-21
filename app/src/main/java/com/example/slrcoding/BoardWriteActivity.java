@@ -48,6 +48,7 @@ public class BoardWriteActivity extends AppCompatActivity {
     Toolbar toolbar;
     private EditText mWriteTitleText;
     private EditText mWriteContentsText;
+    private EditText mWriteKakaoLinkText;
     private Button board_file;
     private ImageView file_preview;
     private Uri filePath;
@@ -58,7 +59,6 @@ public class BoardWriteActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;           // 파이어베이스 인증 객체 생성
     private FirebaseUser currentUser;
 
-
     private String category = null;
     private int code = 0;
     private String id;
@@ -67,6 +67,9 @@ public class BoardWriteActivity extends AppCompatActivity {
     private String time1;
     private Long replyCnt;
     private Long likeCnt;
+
+    //유효성 검사
+    private String kakaoValid="https://open.kakao.com/o/";
 
     String userEmail;
     String userName;
@@ -86,6 +89,9 @@ public class BoardWriteActivity extends AppCompatActivity {
         // 사진 업로더
         board_file = (Button) findViewById(R.id.board_file);
         file_preview = (ImageView) findViewById(R.id.file_preview);
+
+        //카카오 링크 받아올 곳
+        mWriteKakaoLinkText = (EditText)findViewById(R.id.board_kakaolinkedit);
 
         Intent intent = getIntent();
         code = intent.getExtras().getInt("code");
@@ -141,7 +147,16 @@ public class BoardWriteActivity extends AppCompatActivity {
                     Toasty.warning(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT, true).show();
                     return false;
                 }
+                //링크가 존재한다면 유효성 판단
+                if(!mWriteKakaoLinkText.getText().toString().equals("")){
+                    //Todo: 카카오링크 유효성 판단
+                    if(mWriteKakaoLinkText.getText().toString().contains(kakaoValid)==false){
+                        Toasty.error(this,"유효한 카카오링크가 아닙니다. 다시 입력해주세요.",Toasty.LENGTH_SHORT,true).show();
 
+                        mWriteKakaoLinkText.setText("");
+                        return false;
+                    }
+                }
 
                 // 파일 업로드
                 FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -215,7 +230,7 @@ public class BoardWriteActivity extends AppCompatActivity {
                 post.put("userEmail", userEmail);
                 // user의 이름 추가
                 post.put("name", userName);
-
+                post.put("kakaolink",mWriteKakaoLinkText.getText().toString());
 
                 db.collection(category)
                         .document(id).set(post)

@@ -79,27 +79,10 @@
 
                 <ImageView
                     android:id="@+id/board_image"
-                    android:paddingTop="3dp"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
+                    android:paddingTop="3dp"
                     android:src="@drawable/board_example" />
-
-                <TextView
-                    android:id="@+id/bard_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:paddingTop="1dp"
-                    android:paddingVertical="5dp"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:paddingTop="1dp"
-                    android:layout_centerInParent="true"
-                    android:background="#000000"/>
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -114,13 +97,55 @@
 
                 </ScrollView>
 
+                <TextView
+                    android:id="@+id/bard_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="5dp"
+                    android:paddingTop="1dp"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true"
+                    android:background="#000000"
+                    android:paddingTop="1dp" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right|bottom"
-                android:layout_weight="0.2">
+                android:layout_weight="0.2"
+                android:gravity="right|bottom">
+
+                <ImageButton
+                    android:id="@+id/board_reply_button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/chat" />
+
+                <TextView
+                    android:id="@+id/board_like_cnt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:text="0"
+                    android:textColor="#FF2C0E"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/board_reply_cnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="8sp" />
 
                 <com.like.LikeButton
                     android:id="@+id/board_like_button"
@@ -133,37 +158,44 @@
                     app:icon_type="heart"
                     app:like_drawable="@drawable/btn_star1_on"
                     app:unlike_drawable="@drawable/btn_star1_off" />
-
-                <TextView
-                    android:id="@+id/board_like_cnt2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:text="0"
-                    android:textColor="#FF2C0E"
-                    android:textSize="8sp" />
-
-                <ImageButton
-                    android:id="@+id/board_reply_button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/chat" />
-
-                <TextView
-                    android:id="@+id/board_reply_cnt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="8sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#bababa" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/board_detail_kakaoLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                app:cardBackgroundColor="#ffffff"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp"
+                app:contentPaddingRight="10dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/kakaoimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/kakaolink_btn_small" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/kakaoimg"
+                        android:text="카카오톡 오픈채팅 URL LINK"
+                        android:textAlignment="center" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
