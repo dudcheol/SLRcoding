@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/container"
-        android:text="프로필 사진을 설정해주세요! (1/2)"
+        android:text="프로필 사진을 설정해주세요! (1/3)"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"/>
 
