@@ -73,7 +73,6 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
         });
 
         ok_btn.setOnClickListener(v -> {
-
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("EXIT", true);
