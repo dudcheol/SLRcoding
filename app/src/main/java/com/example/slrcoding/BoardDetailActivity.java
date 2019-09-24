@@ -69,7 +69,6 @@ import static com.example.slrcoding.MainActivity.uservo;
 
 public class BoardDetailActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
-
     private ImageView board_image;
 
     //좋아요 댓글 수 데이터 교환 가능해야함
@@ -145,6 +144,7 @@ public class BoardDetailActivity extends AppCompatActivity implements View.OnCli
         replyButton = findViewById(R.id.board_reply_submit);
         replyCntView = findViewById(R.id.board_reply_cnt);  // 게시판 게시글 댓글 수
         likeCntView = findViewById(R.id.board_like_cnt2);
+        kakaoLinkTextView = findViewById(R.id.board_detail_kakaoLink);
 
         replyName = findViewById(R.id.board_reply_name);
         replyContent = findViewById(R.id.board_reply_content);
