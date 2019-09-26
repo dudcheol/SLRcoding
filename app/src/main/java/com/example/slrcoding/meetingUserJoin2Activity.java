@@ -44,6 +44,8 @@ import static com.example.slrcoding.MainActivity.uservo;
 // 박영철
 
 public class meetingUserJoin2Activity extends AppCompatActivity {
+    private FirebaseFirestore firebaseFirestore;
+
     final int PICK_FACE_PROFILE_FROM_ALBUM = 20;
     private String prof_string_to_face = "_faceImage.png";
 
@@ -73,16 +75,21 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
         });
 
         ok_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("EXIT", true);
-            startActivity(intent);
+            if(checkUserIntroStringExist()){
+                goToMain();
+            } else {
+                Intent intent = new Intent(this, meetingUserJoin3Activity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+            }
         });
     }
 
     void initSetting(){
         text_layout.setVisibility(View.VISIBLE);
         ok_btn.setVisibility(View.GONE);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     void photoPicker(){
@@ -181,12 +188,15 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
             progressDialog.showCancelButton(true);
             progressDialog.setCancelClickListener(sweetAlertDialog -> {
                 //Todo: 여기에 미팅을 등록하는 사람 즉 현재 userVO에 담긴 사람을 리얼타임 데이터베이스에 users컬렉션으로 넣어주기. by 이정찬
-                uservo.setUser_meeting_profile_image_uri(Uri.toString());
-                realtimedatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).setValue(uservo);
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("EXIT", true);
-                startActivity(intent);
+                if(checkUserIntroStringExist()){
+                    uservo.setUser_meeting_profile_image_uri(Uri.toString());
+                    realtimedatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).setValue(uservo);
+                    goToMain();
+                } else {
+                    Intent intent = new Intent(this, meetingUserJoin3Activity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                }
             });
             progressDialog.setConfirmText("네");
         })
@@ -194,5 +204,33 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                     // 얼굴 사진이 없으면 그대로 진행
                     progressDialog.dismiss();
                 });
+    }
+
+    private boolean checkUserIntroStringExist() {
+        firebaseFirestore.collection("사용자 정보")
+                .document(uservo.getUser_email())
+                .get();
+
+        // Todo 2019 09 27 : 서버에있는 사용자정보에서 자기소개한마디가 존재하는지 체크해야함
+
+        /*if (uservo.getUser_intro_string()!=null){
+            if (uservo.getUser_intro_string().isEmpty()){
+                return false;
+            }else{
+                return true;
+            }
+        } else {
+            return false;
+        }*/
+
+        // 에러 없애려고 만든 부분임
+        return true;
+    }
+
+    private void goToMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
     }
 }
