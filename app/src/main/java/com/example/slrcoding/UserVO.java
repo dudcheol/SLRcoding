@@ -21,6 +21,8 @@ public class UserVO {
     private boolean use_meeting_service;
     //이정찬 unique_id 추가
     private String unique_id;
+    private String user_intro_string;
+
     public UserVO(){}
 
     public void UserVO(String user_id, String user_email, String user_name, String user_year,
@@ -159,5 +161,13 @@ public class UserVO {
 
     public void setUnique_id(String unique_id) {
         this.unique_id = unique_id;
+    }
+
+    public String getUser_intro_string() {
+        return user_intro_string;
+    }
+
+    public void setUser_intro_string(String user_intro_string) {
+        this.user_intro_string = user_intro_string;
     }
 }

@@ -74,10 +74,6 @@ public class MessageFragment extends Fragment {
         my_profile_imag = v.findViewById(R.id.my_profile_imag);
         chatList_img = v.findViewById(R.id.chatList_img);
 
-        // test code
-        Intent intent = new Intent(getActivity(), meetingUserJoin3Activity.class);
-        startActivity(intent);
-
         chatList_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
