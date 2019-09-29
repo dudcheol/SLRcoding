@@ -30,7 +30,7 @@ import static com.example.slrcoding.MainActivity.uservo;
 
 public class meetingUserJoin3Activity extends AppCompatActivity {
 
-    private FirebaseFirestore firebasestore;
+    private FirebaseFirestore firebaseFirestore;
 
     private Button ok_btn;
     private TextView textCnt;
@@ -44,18 +44,15 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
         init();
         textCounter();
         btnClick();
-
-        // todo : 한마디 글자 수 제한, 글자쓸때마다 쓸수있는 글자수 1씩 줄이는식으로~
-        //  그리고 여기서 메인으로가면 유저에 미팅유저flag true로 변경하던지하기
-        //  여기말고 다른 경로도 고려해야함
     }
 
     private void init() {
         ok_btn = (Button) findViewById(R.id.ok_btn);
         textCnt = (TextView) findViewById(R.id.textCnt);
         EditTextMySelf = (EditText) findViewById(R.id.EditTextMySelf);
+        EditTextMySelf.setText(uservo.getUser_intro_string());
 
-        firebasestore = FirebaseFirestore.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     private void btnClick() {
@@ -111,7 +108,7 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
                     Map<String,Object> item = new HashMap<>();
                     item.put("user_intro_string",EditTextMySelf.getText().toString());
 
-                    firebasestore.collection("사용자 정보")
+                    firebaseFirestore.collection("사용자 정보")
                             .document(uservo.getUser_email())
                             .update(item)
                             .addOnSuccessListener(aVoid -> {
@@ -120,6 +117,7 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.putExtra("EXIT", true);
                                 startActivity(intent);
+                                uservo.setUser_intro_string(EditTextMySelf.getText().toString());
                                 progressDialog.dismiss();
                             })
                             .addOnFailureListener(runnable -> {
@@ -140,4 +138,38 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
+
+    /*private void checkUserIntroStringExist() {
+        final SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        progressDialog.setTitleText("Loading");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        firebaseFirestore.collection("사용자 정보")
+                .document(uservo.getUser_email())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    // 한마디 소개가 없다면 생성하는 곳으로 이동/ 있다면 메인으로 이동
+                    if (documentSnapshot.getData().get("user_intro_string") != null) {
+                        goToMain();
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), meetingUserJoin3Activity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    progressDialog.dismiss();
+                })
+                .addOnFailureListener(runnable -> {
+                    Toasty.error(getApplicationContext(),"에러가 발생했습니다. 다시 시도해주세요.",Toasty.LENGTH_SHORT,true).show();
+                    progressDialog.dismiss();
+                });
+    }
+
+    private void goToMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
+    }*/
 }

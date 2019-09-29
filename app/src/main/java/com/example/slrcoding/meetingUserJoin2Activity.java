@@ -46,8 +46,6 @@ import static com.example.slrcoding.MainActivity.uservo;
 // 박영철
 
 public class meetingUserJoin2Activity extends AppCompatActivity {
-    private FirebaseFirestore firebaseFirestore;
-
     final int PICK_FACE_PROFILE_FROM_ALBUM = 20;
     private String prof_string_to_face = "_faceImage.png";
 
@@ -78,15 +76,16 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
         });
 
         ok_btn.setOnClickListener(v -> {
-            checkUserIntroStringExist();
+//            checkUserIntroStringExist();
+            Intent intent = new Intent(getApplicationContext(), meetingUserJoin3Activity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
     }
 
     void initSetting() {
         text_layout.setVisibility(View.VISIBLE);
         ok_btn.setVisibility(View.GONE);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     void photoPicker() {
@@ -188,7 +187,9 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                         // 여기에 미팅을 등록하는 사람 즉 현재 userVO에 담긴 사람을 리얼타임 데이터베이스에 users컬렉션으로 넣어주기. by 이정찬
                         uservo.setUser_meeting_profile_image_uri(Uri.toString());
                         realtimedatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).setValue(uservo);
-                        checkUserIntroStringExist();
+                        Intent intent = new Intent(getApplicationContext(), meetingUserJoin3Activity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     });
                     progressDialog.setConfirmText("네");
                 })
@@ -198,7 +199,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                 });
     }
 
-    private void checkUserIntroStringExist() {
+    /*private void checkUserIntroStringExist() {
         final SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         progressDialog.setTitleText("Loading");
@@ -230,5 +231,5 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("EXIT", true);
         startActivity(intent);
-    }
+    }*/
 }
