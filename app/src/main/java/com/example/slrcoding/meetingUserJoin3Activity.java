@@ -68,7 +68,7 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
         if (EditTextMySelf.getText().toString().length() == 0) {
             Toasty.error(getApplicationContext(), "한마디 소개를 작성해야 합니다.", Toasty.LENGTH_SHORT, true).show();
         } else {
-            fillUserIntroString();
+            uploadUserIntroString();
         }
     }
 
@@ -95,26 +95,43 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
         });
     }
 
-    private void fillUserIntroString() {
-        SweetAlertDialog sweetAlertDialog = createLoadingDialog();
+    private void uploadUserIntroString() {
+        SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.NORMAL_TYPE);
+        progressDialog
+                .setTitleText("입력한 내용이 맞나요?")
+                .setContentText(EditTextMySelf.getText().toString())
+                .setConfirmText("맞아요")
+                .setConfirmClickListener(sweetAlertDialog -> {
+                    sweetAlertDialog.changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
+                    sweetAlertDialog
+                            .setTitleText("Loading")
+                            .showContentText(false)
+                            .showCancelButton(false);
 
-        Map<String,Object> item = new HashMap<>();
-        item.put("user_intro_string",EditTextMySelf.getText().toString());
+                    Map<String,Object> item = new HashMap<>();
+                    item.put("user_intro_string",EditTextMySelf.getText().toString());
 
-        firebasestore.collection("사용자 정보")
-                .document(uservo.getUser_email())
-                .update(item)
-                .addOnSuccessListener(aVoid -> {
-                    sweetAlertDialog.dismiss();
-                    // 서버에 올리는 것 성공했으므로 메인액티비티로 이동함
-                    Intent intent = new Intent(this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("EXIT", true);
-                    startActivity(intent);
+                    firebasestore.collection("사용자 정보")
+                            .document(uservo.getUser_email())
+                            .update(item)
+                            .addOnSuccessListener(aVoid -> {
+                                // 서버에 올리는 것 성공했으므로 메인액티비티로 이동함
+                                Intent intent = new Intent(this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.putExtra("EXIT", true);
+                                startActivity(intent);
+                                progressDialog.dismiss();
+                            })
+                            .addOnFailureListener(runnable -> {
+                                Toasty.error(getApplicationContext(),"에러가 발생했습니다. 다시 시도해주세요.",Toasty.LENGTH_SHORT,true).show();
+                                progressDialog.dismiss();
+                            });
                 })
-                .addOnFailureListener(runnable -> {
-                    Toasty.error(getApplicationContext(),"에러가 발생했습니다. 다시 시도해주세요.",Toasty.LENGTH_SHORT,true).show();
-                });
+                .setCancelText("다시 쓸래요")
+                .setCancelClickListener(sweetAlertDialog -> {
+                    progressDialog.dismiss();
+                })
+        .show();
     }
 
     @Override
@@ -123,19 +140,4 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
-
-    private SweetAlertDialog createLoadingDialog(){
-        SweetAlertDialog progressDialog = new SweetAlertDialog(getApplicationContext(),SweetAlertDialog.PROGRESS_TYPE);
-        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        progressDialog.setTitleText("Loading");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        return progressDialog;
-    }
-
-    private void dismissLoadingDialog(SweetAlertDialog sweetAlertDialog){
-        sweetAlertDialog.dismiss();
-    }
-
 }

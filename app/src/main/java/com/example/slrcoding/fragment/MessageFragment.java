@@ -74,6 +74,8 @@ public class MessageFragment extends Fragment {
         my_profile_imag = v.findViewById(R.id.my_profile_imag);
         chatList_img = v.findViewById(R.id.chatList_img);
 
+        downloadFile(v);
+
         chatList_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +83,13 @@ public class MessageFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        downloadFile(v);
+        my_profile_imag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), meetingUserJoin3Activity.class);
+                startActivity(intent);
+            }
+        });
 
         return v;
     }

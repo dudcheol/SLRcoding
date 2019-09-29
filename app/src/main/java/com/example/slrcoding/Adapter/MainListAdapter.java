@@ -158,7 +158,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             ((BHolder) holder).nickname.setText(uservo.getUser_id());
             ((BHolder) holder).name_and_ID.setText(uservo.getUser_name()+" / "+uservo.getUser_email());
-            ((BHolder) holder).school.setText("한국산업기술대학교 XX학번");
+            ((BHolder) holder).school.setText("한국산업기술대학교");
 
             //이정찬 수정 (2019-09-12)
             //카 쉐어링 액티비티 이동시키기

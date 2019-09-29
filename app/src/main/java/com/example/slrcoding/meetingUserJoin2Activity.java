@@ -28,8 +28,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -56,6 +58,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
     private ProgressBar progressBar;
     FirebaseDatabase realtimedatabase = FirebaseDatabase.getInstance();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,37 +78,31 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
         });
 
         ok_btn.setOnClickListener(v -> {
-            if(checkUserIntroStringExist()){
-                goToMain();
-            } else {
-                Intent intent = new Intent(this, meetingUserJoin3Activity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-            }
+            checkUserIntroStringExist();
         });
     }
 
-    void initSetting(){
+    void initSetting() {
         text_layout.setVisibility(View.VISIBLE);
         ok_btn.setVisibility(View.GONE);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
-    void photoPicker(){
+    void photoPicker() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent,PICK_FACE_PROFILE_FROM_ALBUM);
+        startActivityForResult(photoPickerIntent, PICK_FACE_PROFILE_FROM_ALBUM);
     }
 
     // startActivityForResult로 받은 결과
     // 여기서 프로필 이미지를 서버에 저장시킨다!
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == PICK_FACE_PROFILE_FROM_ALBUM && resultCode == Activity.RESULT_OK){
+        if (requestCode == PICK_FACE_PROFILE_FROM_ALBUM && resultCode == Activity.RESULT_OK) {
             Uri imageUri = data.getData();
 
-            final SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+            final SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
             progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
             progressDialog.setTitleText("Loading");
             progressDialog.setCancelable(false);
@@ -142,7 +139,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                             // uservo에 사용자 얼굴 이미지 uri 저장하고 서버에도 저장함
                             uservo.setUser_meeting_profile_image_uri(Uri.toString());
                             HashMap<String, Object> map = new HashMap<>();
-                            map.put("user_meeting_profile_uri",Uri.toString());
+                            map.put("user_meeting_profile_uri", Uri.toString());
                             FirebaseFirestore
                                     .getInstance()
                                     .collection("사용자 정보")
@@ -156,7 +153,7 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
                     .addOnFailureListener(Uri -> {
                         text_layout.setVisibility(View.VISIBLE);
                         ok_btn.setVisibility(View.INVISIBLE);
-                        Toasty.error(this,"오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT,true).show();
+                        Toasty.error(this, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT, true).show();
                     });
 
         }
@@ -167,67 +164,68 @@ public class meetingUserJoin2Activity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
-    void checkSetting(){
-        final SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+    void checkSetting() {
+        final SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         progressDialog.setTitleText("Loading");
         progressDialog.setCancelable(false);
         progressDialog.show();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://slrcoding.appspot.com/");
-        StorageReference pathReference_to_face = storageReference.child("Face Profile Images/"+uservo.getUnique_id() + prof_string_to_face);
-        pathReference_to_face.getDownloadUrl().addOnSuccessListener(Uri -> {
-            // 얼굴 사진이 있으면 메인화면으로 이동
-            progressDialog.changeAlertType(SweetAlertDialog.NORMAL_TYPE);
-            progressDialog.setTitleText("미팅용 사진은 이미 있으시군요!");
-            progressDialog.setContentText("사진을 변경하시겠습니까?");
-            progressDialog.setCancelText("아니요");
-            progressDialog.showCancelButton(true);
-            progressDialog.setCancelClickListener(sweetAlertDialog -> {
-                //Todo: 여기에 미팅을 등록하는 사람 즉 현재 userVO에 담긴 사람을 리얼타임 데이터베이스에 users컬렉션으로 넣어주기. by 이정찬
-                if(checkUserIntroStringExist()){
-                    uservo.setUser_meeting_profile_image_uri(Uri.toString());
-                    realtimedatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).setValue(uservo);
-                    goToMain();
-                } else {
-                    Intent intent = new Intent(this, meetingUserJoin3Activity.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-                }
-            });
-            progressDialog.setConfirmText("네");
-        })
+        StorageReference pathReference_to_face = storageReference.child("Face Profile Images/" + uservo.getUnique_id() + prof_string_to_face);
+        pathReference_to_face.getDownloadUrl()
+                .addOnSuccessListener(Uri -> {
+                    // 얼굴 사진이 있으면 한마디 소개 있는지 확인
+                    progressDialog.changeAlertType(SweetAlertDialog.NORMAL_TYPE);
+                    progressDialog.setTitleText("미팅용 사진은 이미 있으시군요!");
+                    progressDialog.setContentText("사진을 변경하시겠습니까?");
+                    progressDialog.setCancelText("아니요");
+                    progressDialog.showCancelButton(true);
+                    progressDialog.setCancelClickListener(sweetAlertDialog -> {
+                        // 여기에 미팅을 등록하는 사람 즉 현재 userVO에 담긴 사람을 리얼타임 데이터베이스에 users컬렉션으로 넣어주기. by 이정찬
+                        uservo.setUser_meeting_profile_image_uri(Uri.toString());
+                        realtimedatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).setValue(uservo);
+                        checkUserIntroStringExist();
+                    });
+                    progressDialog.setConfirmText("네");
+                })
                 .addOnFailureListener(e -> {
                     // 얼굴 사진이 없으면 그대로 진행
                     progressDialog.dismiss();
                 });
     }
 
-    private boolean checkUserIntroStringExist() {
+    private void checkUserIntroStringExist() {
+        final SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        progressDialog.setTitleText("Loading");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         firebaseFirestore.collection("사용자 정보")
                 .document(uservo.getUser_email())
-                .get();
-
-        // Todo 2019 09 27 : 서버에있는 사용자정보에서 자기소개한마디가 존재하는지 체크해야함
-
-        /*if (uservo.getUser_intro_string()!=null){
-            if (uservo.getUser_intro_string().isEmpty()){
-                return false;
-            }else{
-                return true;
-            }
-        } else {
-            return false;
-        }*/
-
-        // 에러 없애려고 만든 부분임
-        return true;
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    // 한마디 소개가 없다면 생성하는 곳으로 이동/ 있다면 메인으로 이동
+                    if (documentSnapshot.getData().get("user_intro_string") != null) {
+                        goToMain();
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), meetingUserJoin3Activity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    progressDialog.dismiss();
+                })
+                .addOnFailureListener(runnable -> {
+                    Toasty.error(getApplicationContext(),"에러가 발생했습니다. 다시 시도해주세요.",Toasty.LENGTH_SHORT,true).show();
+                    progressDialog.dismiss();
+                });
     }
 
-    private void goToMain(){
+    private void goToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("EXIT", true);
