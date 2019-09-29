@@ -103,7 +103,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:background="@drawable/rectangle_btn"
-            android:text="확인"
+            android:text="다음"
             android:textColor="#ffffff"
             android:textSize="15sp"
             android:textStyle="bold" />

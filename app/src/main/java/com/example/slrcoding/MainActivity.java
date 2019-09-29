@@ -175,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
             //navigation.setSelectedItemId(R.id.navigation_favorite);
             SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE);
             sweetAlertDialog
-                    .setTitleText("프로필 설정을 완료했습니다!")
-                    .setContentText("이제 Meeting에 참여할 수 있습니다.")
+                    .setTitleText("미팅 프로필 설정 완료!")
+                    .setContentText("Meeting에 참여해보세요.")
                     .show();
         }
 
