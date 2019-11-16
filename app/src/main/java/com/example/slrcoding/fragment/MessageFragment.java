@@ -34,7 +34,6 @@ import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.Meeting_UserVO;
 import com.example.slrcoding.meetingUserJoin2Activity;
-import com.example.slrcoding.meetingUserJoin3Activity;
 import com.example.slrcoding.meetingUserJoinActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // 박영철
-// Todo 본인 프로필 사진 누르면 다이알로그로 자기 프로필 뜨고 수정하기 버튼 누르면 수정 페이지로 이동
+
 public class MessageFragment extends Fragment {
 
     private String prof_string = "_profileImage.png";
@@ -73,10 +72,6 @@ public class MessageFragment extends Fragment {
         warning_message = v.findViewById(R.id.warning_message);
         my_profile_imag = v.findViewById(R.id.my_profile_imag);
         chatList_img = v.findViewById(R.id.chatList_img);
-
-        // test code
-        Intent intent = new Intent(getActivity(), meetingUserJoin3Activity.class);
-        startActivity(intent);
 
         chatList_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +137,7 @@ public class MessageFragment extends Fragment {
 
     // FireStorage에 프로필 다운로드
     public void downloadFile(View v){
+
         // 업로드 진행 Dialog 보이기
         SweetAlertDialog progressDialog = new SweetAlertDialog(this.getActivity(),SweetAlertDialog.PROGRESS_TYPE);
         progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
