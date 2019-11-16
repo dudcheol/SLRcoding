@@ -117,19 +117,22 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if(task.isSuccessful()){
                             DocumentSnapshot documentSnapshot = task.getResult();
-                            uservo.setUser_id((String)documentSnapshot.getData().get("user_id"));
-                            uservo.setUser_email((String)documentSnapshot.getData().get("user_email"));
-                            uservo.setUser_name((String)documentSnapshot.getData().get("user_name"));
-                            uservo.setUser_year((String)documentSnapshot.getData().get("user_year"));
-                            uservo.setUser_month((String)documentSnapshot.getData().get("user_month"));
-                            uservo.setUser_day((String)documentSnapshot.getData().get("user_day"));
-                            uservo.setUser_phone_num((String)documentSnapshot.getData().get("user_phoneNum"));
-                            uservo.setUser_sex((String)documentSnapshot.getData().get("user_sex"));
-                            uservo.setPush_alarm((boolean)documentSnapshot.getData().get("user_push_alarm"));
-                            uservo.setComment_alarm((boolean)documentSnapshot.getData().get("user_comment_alarm"));
-                            uservo.setEvent_alarm((boolean)documentSnapshot.getData().get("user_event_alarm"));
-                            //이정찬 unique_id 추가 2019.08.26
-                            uservo.setUnique_id((String)documentSnapshot.getData().get("unique_id"));
+
+                            uservo = documentSnapshot.toObject(UserVO.class);
+
+//                            uservo.setUser_id((String)documentSnapshot.getData().get("user_id"));
+//                            uservo.setUser_email((String)documentSnapshot.getData().get("user_email"));
+//                            uservo.setUser_name((String)documentSnapshot.getData().get("user_name"));
+//                            uservo.setUser_year((String)documentSnapshot.getData().get("user_year"));
+//                            uservo.setUser_month((String)documentSnapshot.getData().get("user_month"));
+//                            uservo.setUser_day((String)documentSnapshot.getData().get("user_day"));
+//                            uservo.setUser_phone_num((String)documentSnapshot.getData().get("user_phoneNum"));
+//                            uservo.setUser_sex((String)documentSnapshot.getData().get("user_sex"));
+//                            uservo.setPush_alarm((boolean)documentSnapshot.getData().get("user_push_alarm"));
+//                            uservo.setComment_alarm((boolean)documentSnapshot.getData().get("user_comment_alarm"));
+//                            uservo.setEvent_alarm((boolean)documentSnapshot.getData().get("user_event_alarm"));
+//                            //이정찬 unique_id 추가 2019.08.26
+//                            uservo.setUnique_id((String)documentSnapshot.getData().get("unique_id"));
                         }
                     }
                 });
@@ -172,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
             //navigation.setSelectedItemId(R.id.navigation_favorite);
             SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE);
             sweetAlertDialog
-                    .setTitleText("프로필 설정을 완료했습니다!")
-                    .setContentText("이제 Meeting에 참여할 수 있습니다.")
+                    .setTitleText("미팅 프로필 설정 완료!")
+                    .setContentText("Meeting에 참여해보세요.")
                     .show();
         }
 

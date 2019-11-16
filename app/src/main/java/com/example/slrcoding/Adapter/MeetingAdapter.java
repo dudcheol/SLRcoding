@@ -96,6 +96,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                             Intent intent = new Intent(v.getContext(), ChatRoomActivity.class);
                                             intent.putExtra("faceagree",faceagree);
                                             mContext.startActivity(intent);
+                                            sweetAlertDialog.dismiss();
                                         }
                                     }).setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
@@ -105,6 +106,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                     Intent intent = new Intent(v.getContext(), ChatRoomActivity.class);
                                     intent.putExtra("faceagree",faceagree);
                                     mContext.startActivity(intent);
+                                    sweetAlertDialog.dismiss();
                                 }
                             });
 

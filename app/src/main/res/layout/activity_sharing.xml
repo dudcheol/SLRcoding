@@ -75,6 +75,7 @@
 
         android:backgroundTint="#FFFDFD">
         <ImageView
+            android:id="@+id/shareinformation"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@drawable/lock">
@@ -101,4 +102,32 @@
         android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_sub2_sharing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fab_main_sharing"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#ffffff"
+        android:src="@drawable/ic_lock_open_black_24dp"
+        android:visibility="invisible"
+        app:borderWidth="0dp"
+        app:fabSize="normal" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+        android:id="@+id/fab_main_sharing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#00BCD4"
+        android:src="@drawable/ic_bluetooth_connected_black_24dp"
+        app:borderWidth="0dp"
+        app:fabSize="normal" />
 </RelativeLayout>
