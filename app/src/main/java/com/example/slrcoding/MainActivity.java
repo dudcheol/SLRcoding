@@ -1,5 +1,7 @@
 package com.example.slrcoding;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -46,6 +48,9 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     int flag=0;
+
+    public static MainActivity getInstance;
+
     // (최민철 수정 19.08.06)
     public static UserVO uservo;
     // (이정찬 수정 19.09.01)
@@ -103,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getInstance = this;
+
         setTitle("홈");
         Intent intent = getIntent();
         navigation = (BottomNavigationView) findViewById(R.id.navigation);

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.slrcoding.Activity.ChatListActivity;
 import com.example.slrcoding.Activity.ChatRoomActivity;
 import com.example.slrcoding.Adapter.MeetingAdapter;
+import com.example.slrcoding.BoardDetailActivity;
 import com.example.slrcoding.MainActivity;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.Meeting_UserVO;
@@ -42,8 +44,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+
+
+import es.dmoral.toasty.Toasty;
 
 import static com.example.slrcoding.MainActivity.uservo;
 
@@ -61,10 +67,10 @@ public class MessageFragment extends Fragment {
     private List<Meeting_UserVO> Meeting_UserVO_List;
     private MeetingAdapter meetingAdapter;
     private int SPANCOUNT = 3;
-    private Spinner spinner_sex, spinner_major, spinner_setting;
+//    private Spinner spinner_sex, spinner_major, spinner_setting;
     private RelativeLayout warning_message;
     private ImageView my_profile_imag;
-    private ImageView chatList_img;
+//    private ImageView chatList_img;
 
     public MessageFragment() {
         // Required empty public constructor
@@ -78,17 +84,17 @@ public class MessageFragment extends Fragment {
 
         warning_message = v.findViewById(R.id.warning_message);
         my_profile_imag = v.findViewById(R.id.my_profile_imag);
-        chatList_img = v.findViewById(R.id.chatList_img);
+//        chatList_img = v.findViewById(R.id.chatList_img);
 
         downloadFile(v);
 
-        chatList_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ChatListActivity.class);
-                startActivity(intent);
-            }
-        });
+//        chatList_img.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), ChatListActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         my_profile_imag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,12 +148,12 @@ public class MessageFragment extends Fragment {
         Meeting_UserVO_List.add(new Meeting_UserVO(2, "박보검", true, true));
     }
 
-    public void setSpinnerItemClick(View v) {
-        spinner_sex = v.findViewById(R.id.spinner_sex);
-        spinner_major = v.findViewById(R.id.spinner_major);
-        //spinner_setting = v.findViewById(R.id.spinner_setting);
-
-    }
+//    public void setSpinnerItemClick(View v) {
+//        spinner_sex = v.findViewById(R.id.spinner_sex);
+//        spinner_major = v.findViewById(R.id.spinner_major);
+//        //spinner_setting = v.findViewById(R.id.spinner_setting);
+//
+//    }
 
     // FireStorage에 프로필 다운로드
     public void downloadFile(View v) {
@@ -177,7 +183,7 @@ public class MessageFragment extends Fragment {
                 // 얼굴 사진이 있으면 미팅 탭을 보여준다
                 warning_message.setVisibility(View.GONE);
                 setProfileImg(Uri);
-                setSpinnerItemClick(v);
+//                setSpinnerItemClick(v);
                 showRecyclerViewItem(v);
                 progressDialog.dismiss();
             })

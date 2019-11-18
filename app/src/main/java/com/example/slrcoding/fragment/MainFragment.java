@@ -73,17 +73,10 @@ public class MainFragment extends Fragment {
         addCategoryItem();
 
         // 중고장터 데이터 추가 (임시데이터)
-        addJunggoData();
+//        addJunggoData();
 
         // 게시판 데이터 추가
         addBoardData();
-
-
-        //Todo 1-- 파이어베이스에서 모든 컬렉션에서 가장 최신글 받아오는것 구현
-
-        //Todo 2-- 파이어베이스에서 인기글 받아오는 것 구현 (일단 그냥 좋아요 가장 많은 것부터 가져온다)
-
-        //Todo 4-- 타이틀바 활용해서 꾸며보기
 
         return v;
     }
@@ -114,21 +107,21 @@ public class MainFragment extends Fragment {
         mainListViewTypeList.add(new MainListViewType(1,"내정보"));
         mainListViewTypeList.add(new MainListViewType(0,"기숙사와 밥"));
         mainListViewTypeList.add(new MainListViewType(0,"스포츠와 게임"));
-        mainListViewTypeList.add(new MainListViewType(2,"중고장터"));
+//        mainListViewTypeList.add(new MainListViewType(2,"중고장터"));
     }
 
-    void addJunggoData(){
-        // 중고장터 이미지 임시데이터
-        List<Main_JunggoVO> test = new ArrayList<>();
-        test.add(new Main_JunggoVO(1));
-        test.add(new Main_JunggoVO(2));
-        test.add(new Main_JunggoVO(3));
-        test.add(new Main_JunggoVO(4));
-        test.add(new Main_JunggoVO(5));
-        test.add(new Main_JunggoVO(6));
-        mainListViewTypeList.get(3).setJunggos(test);
-        mainListAdapter.notifyDataSetChanged();
-    }
+//    void addJunggoData(){
+//        // 중고장터 이미지 임시데이터
+//        List<Main_JunggoVO> test = new ArrayList<>();
+//        test.add(new Main_JunggoVO(1));
+//        test.add(new Main_JunggoVO(2));
+//        test.add(new Main_JunggoVO(3));
+//        test.add(new Main_JunggoVO(4));
+//        test.add(new Main_JunggoVO(5));
+//        test.add(new Main_JunggoVO(6));
+//        mainListViewTypeList.get(3).setJunggos(test);
+//        mainListAdapter.notifyDataSetChanged();
+//    }
 
     void setScrollPosition_TOP(){
         new Handler().postDelayed(new Runnable() {
