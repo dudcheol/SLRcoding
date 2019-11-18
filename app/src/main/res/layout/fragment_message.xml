@@ -20,7 +20,8 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"/>
 
         <ImageView
             android:id="@+id/my_profile_imag"
@@ -28,146 +29,146 @@
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:layout_above="@+id/meeting_frag_controller"
+            android:layout_alignBottom="@+id/meeting"
             android:src="@drawable/ic_person"
             />
-        <RelativeLayout
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_above="@id/meeting_frag_controller"
-            android:layout_toLeftOf="@id/my_profile_imag"
-            android:layout_marginRight="50dp">
-            <ImageView
-                android:id="@+id/chatList_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/baseline_assignment_black_18dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginLeft="6dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="목록"
-                android:textStyle="bold"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/black"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="9dp"
-                android:textSize="10dp" />
+<!--        <RelativeLayout-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_above="@id/meeting_frag_controller"-->
+<!--            android:layout_toLeftOf="@id/my_profile_imag"-->
+<!--            android:layout_marginRight="50dp">-->
+<!--            <ImageView-->
+<!--                android:id="@+id/chatList_img"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:src="@drawable/baseline_assignment_black_18dp"-->
+<!--                android:layout_marginTop="7dp"-->
+<!--                android:layout_marginLeft="6dp"/>-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="목록"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginRight="9dp"-->
+<!--                android:textSize="10dp" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="채팅"
-                android:textStyle="bold"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/black"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="4dp"
-                android:textSize="10dp" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_above="@id/meeting_frag_controller"
-            android:layout_toLeftOf="@+id/my_profile_imag"
-            android:layout_marginRight="5dp">
-            <ImageView
-                android:id="@+id/match_img"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/ic_match"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="2dp"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="채팅"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_marginLeft="4dp"-->
+<!--                android:textSize="10dp" />-->
+<!--        </RelativeLayout>-->
+<!--        <RelativeLayout-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_above="@id/meeting_frag_controller"-->
+<!--            android:layout_toLeftOf="@+id/my_profile_imag"-->
+<!--            android:layout_marginRight="5dp">-->
+<!--            <ImageView-->
+<!--                android:id="@+id/match_img"-->
+<!--                android:layout_width="45dp"-->
+<!--                android:layout_height="45dp"-->
+<!--                android:src="@drawable/ic_match"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginTop="2dp"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="매칭"
-                android:textStyle="bold"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/black"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="2dp"
-                android:textSize="10dp" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="매칭"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginRight="2dp"-->
+<!--                android:textSize="10dp" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="랜덤"
-                android:textStyle="bold"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/black"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="2dp"
-                android:textSize="10dp" />
-        </RelativeLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="랜덤"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_marginLeft="2dp"-->
+<!--                android:textSize="10dp" />-->
+<!--        </RelativeLayout>-->
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/meeting_frag_controller"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            app:cardBackgroundColor="@color/mainBg"
-            app:cardCornerRadius="20dp"
-            android:layout_below="@+id/meeting"
-            >
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/meeting_frag_controller"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            app:cardBackgroundColor="@color/mainBg"-->
+<!--            app:cardCornerRadius="20dp"-->
+<!--            android:layout_below="@+id/meeting"-->
+<!--            >-->
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp">
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_margin="5dp">-->
 
-                <TextView
-                    android:id="@+id/text_sex"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="성별"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="10dp"
-                    />
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spinner_sex"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/성별"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/text_sex"/>
-                <TextView
-                    android:id="@+id/text_major"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="전공"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_toRightOf="@+id/spinner_sex"
-                    />
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spinner_major"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/text_major"
-                    android:entries="@array/전공"
-                    android:layout_centerVertical="true"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/text_sex"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:text="성별"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:layout_marginLeft="10dp"-->
+<!--                    />-->
+<!--                <androidx.appcompat.widget.AppCompatSpinner-->
+<!--                    android:id="@+id/spinner_sex"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:entries="@array/성별"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_toRightOf="@+id/text_sex"/>-->
+<!--                <TextView-->
+<!--                    android:id="@+id/text_major"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:text="전공"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:layout_toRightOf="@+id/spinner_sex"-->
+<!--                    />-->
+<!--                <androidx.appcompat.widget.AppCompatSpinner-->
+<!--                    android:id="@+id/spinner_major"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_toRightOf="@+id/text_major"-->
+<!--                    android:entries="@array/전공"-->
+<!--                    android:layout_centerVertical="true"/>-->
 
-                <!--<androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spinner_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/spinner_major"
-                    android:entries="설정"/>-->
+<!--                &lt;!&ndash;<androidx.appcompat.widget.AppCompatSpinner-->
+<!--                    android:id="@+id/spinner_setting"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_toRightOf="@+id/spinner_major"-->
+<!--                    android:entries="설정"/>&ndash;&gt;-->
 
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+<!--            </RelativeLayout>-->
+<!--        </androidx.cardview.widget.CardView>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/meeting_frag_recyclerview"
@@ -175,7 +176,7 @@
             android:layout_height="match_parent"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="5dp"
-            android:layout_below="@+id/meeting_frag_controller"/>
+            android:layout_below="@+id/meeting"/>
 
         <RelativeLayout
             android:id="@+id/warning_message"

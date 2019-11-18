@@ -1,25 +1,17 @@
 package com.example.slrcoding;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.core.FirestoreClient;
-import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Document;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,7 +85,7 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
     }
 
     private void uploadUserIntroString() {
-        SweetAlertDialog progressDialog = new SweetAlertDialog(this,SweetAlertDialog.NORMAL_TYPE);
+        SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);
         progressDialog
                 .setTitleText("입력한 내용이 맞나요?")
                 .setContentText(EditTextMySelf.getText().toString())
@@ -105,8 +97,8 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
                             .showContentText(false)
                             .showCancelButton(false);
 
-                    Map<String,Object> item = new HashMap<>();
-                    item.put("user_intro_string",EditTextMySelf.getText().toString());
+                    Map<String, Object> item = new HashMap<>();
+                    item.put("user_intro_string", EditTextMySelf.getText().toString());
 
                     firebaseFirestore.collection("사용자 정보")
                             .document(uservo.getUser_email())
@@ -121,7 +113,7 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
                                 progressDialog.dismiss();
                             })
                             .addOnFailureListener(runnable -> {
-                                Toasty.error(getApplicationContext(),"에러가 발생했습니다. 다시 시도해주세요.",Toasty.LENGTH_SHORT,true).show();
+                                Toasty.error(getApplicationContext(), "에러가 발생했습니다. 다시 시도해주세요.", Toasty.LENGTH_SHORT, true).show();
                                 progressDialog.dismiss();
                             });
                 })
@@ -129,7 +121,7 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
                 .setCancelClickListener(sweetAlertDialog -> {
                     progressDialog.dismiss();
                 })
-        .show();
+                .show();
     }
 
     @Override
@@ -138,38 +130,4 @@ public class meetingUserJoin3Activity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
-
-    /*private void checkUserIntroStringExist() {
-        final SweetAlertDialog progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        progressDialog.setTitleText("Loading");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        firebaseFirestore.collection("사용자 정보")
-                .document(uservo.getUser_email())
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    // 한마디 소개가 없다면 생성하는 곳으로 이동/ 있다면 메인으로 이동
-                    if (documentSnapshot.getData().get("user_intro_string") != null) {
-                        goToMain();
-                    } else {
-                        Intent intent = new Intent(getApplicationContext(), meetingUserJoin3Activity.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                    progressDialog.dismiss();
-                })
-                .addOnFailureListener(runnable -> {
-                    Toasty.error(getApplicationContext(),"에러가 발생했습니다. 다시 시도해주세요.",Toasty.LENGTH_SHORT,true).show();
-                    progressDialog.dismiss();
-                });
-    }
-
-    private void goToMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("EXIT", true);
-        startActivity(intent);
-    }*/
 }

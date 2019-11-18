@@ -2,8 +2,10 @@ package com.example.slrcoding.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +23,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.slrcoding.Activity.ChatRoomActivity;
+import com.example.slrcoding.BoardDetailActivity;
 import com.example.slrcoding.R;
 import com.example.slrcoding.VO.Meeting_UserVO;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import org.w3c.dom.Text;
 
+import java.net.URISyntaxException;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
+
+import static com.example.slrcoding.MainActivity.getInstance;
 
 // 박영철
 // 이정찬
@@ -79,37 +87,38 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            //Todo: 이정찬 ( 2019.09.18)
-                            //Todo: 여기서 상대방 유니크 아이디 uservo.getUnique_Id(); 을 통해 destinationId를 intent로 ChatRoomActivity로 보내주기.
-                            //Todo: 다이얼로그를 띄어서 자신의 얼굴 공개 여부를 선택하게 하고 공개를 할 경우 상대방의 얼굴도 볼 수 있는 기능 추가.
-                            //Todo: 만약에 얼굴 공개를 안한다면 상대방 얼굴과 내 얼굴은 공개되지 않을 것이다. 즉 신중히 생각하여 공개를 할지 안할지 고민하는 기능 추가 예정.
-                            sweetAlertDialog.setTitleText("얼굴공개")
-                                    .setContentText("얼굴 공개를 하시겠습니까?")
-                                    .setCancelText("아니요")
-                                    .showCancelButton(true)
-                                    .setConfirmText("예")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            //Todo: 여기서 상대방의 동의여부를 플래그 형태로 넘길 예정(true) 여기서 파베 사용자 정보에 facegree필드에 넣어주기.
-                                            faceagree = true;
-                                            Intent intent = new Intent(v.getContext(), ChatRoomActivity.class);
-                                            intent.putExtra("faceagree",faceagree);
-                                            mContext.startActivity(intent);
-                                            sweetAlertDialog.dismiss();
-                                        }
-                                    }).setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    //Todo: 여기서 상대방의 동의여부를 플래그 형태로 넘길 예정(false)  여기서 파베 사용자 정보에 facegree필드에 넣어주기.
-                                    faceagree = false;
-                                    Intent intent = new Intent(v.getContext(), ChatRoomActivity.class);
-                                    intent.putExtra("faceagree",faceagree);
-                                    mContext.startActivity(intent);
-                                    sweetAlertDialog.dismiss();
-                                }
-                            });
-
+//                            //Todo: 이정찬 ( 2019.09.18)
+//                            //Todo: 여기서 상대방 유니크 아이디 uservo.getUnique_Id(); 을 통해 destinationId를 intent로 ChatRoomActivity로 보내주기.
+//                            //Todo: 다이얼로그를 띄어서 자신의 얼굴 공개 여부를 선택하게 하고 공개를 할 경우 상대방의 얼굴도 볼 수 있는 기능 추가.
+//                            //Todo: 만약에 얼굴 공개를 안한다면 상대방 얼굴과 내 얼굴은 공개되지 않을 것이다. 즉 신중히 생각하여 공개를 할지 안할지 고민하는 기능 추가 예정.
+//                            sweetAlertDialog.setTitleText("얼굴공개")
+//                                    .setContentText("얼굴 공개를 하시겠습니까?")
+//                                    .setCancelText("아니요")
+//                                    .showCancelButton(true)
+//                                    .setConfirmText("예")
+//                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                        @Override
+//                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                            //Todo: 여기서 상대방의 동의여부를 플래그 형태로 넘길 예정(true) 여기서 파베 사용자 정보에 facegree필드에 넣어주기.
+//                                            faceagree = true;
+//                                            Intent intent = new Intent(v.getContext(), ChatRoomActivity.class);
+//                                            intent.putExtra("faceagree",faceagree);
+//                                            mContext.startActivity(intent);
+//                                            sweetAlertDialog.dismiss();
+//                                        }
+//                                    }).setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                @Override
+//                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                    //Todo: 여기서 상대방의 동의여부를 플래그 형태로 넘길 예정(false)  여기서 파베 사용자 정보에 facegree필드에 넣어주기.
+//                                    faceagree = false;
+//                                    Intent intent = new Intent(v.getContext(), ChatRoomActivity.class);
+//                                    intent.putExtra("faceagree",faceagree);
+//                                    mContext.startActivity(intent);
+//                                    sweetAlertDialog.dismiss();
+//                                }
+//                            });
+                            KakaoLinkProgressTask task = new KakaoLinkProgressTask();
+                            task.execute();
                         }
                     })
                     .show();
@@ -179,4 +188,54 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ((ItemViewHolder)holder).name.setText(Meeting_UserVO_List.get(position).getName());
     }
 
+
+    private class KakaoLinkProgressTask extends AsyncTask<Void,Void,Void> {
+
+        //        ProgressDialog asyncDialog = new ProgressDialog(
+//                FeedDetailActivity.this);
+        final SweetAlertDialog progressDialog = new SweetAlertDialog(getInstance,SweetAlertDialog.PROGRESS_TYPE);
+        @Override
+        protected void onPreExecute() {
+            progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            progressDialog.setTitleText("오픈채팅방 링크 연결중...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            super.onPreExecute();
+
+        }
+        @Override
+        protected Void doInBackground(Void... strings) {
+            try {
+                for (int i = 0; i < 5; i++) {
+//                    asyncDialog.setProgress(i * 40);
+
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+//            asyncDialog.dismiss();
+            progressDialog.dismiss();
+            Intent intent = null;
+            try {
+                intent = Intent.parseUri("https://open.kakao.com/o/sL6AxYG",Intent.URI_INTENT_SCHEME);
+            } catch (URISyntaxException e1) {
+                Toasty.error(getInstance,"오픈채팅방 연결 에러!!",Toasty.LENGTH_SHORT,true);
+
+                e1.printStackTrace();
+            }
+            Intent existPackage = getInstance.getPackageManager().getLaunchIntentForPackage(intent.getPackage());
+            if(existPackage!=null){
+                getInstance.startActivity(intent);
+            }
+            super.onPostExecute(result);
+
+        }
+
+    }
 }

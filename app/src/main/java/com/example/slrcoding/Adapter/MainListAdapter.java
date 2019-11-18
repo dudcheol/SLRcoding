@@ -88,11 +88,11 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .inflate(R.layout.main_myinfo,parent,false);
             return new BHolder(v_B);
         }
-        else if(viewType == VIEW_TYPE_C){
-            v_C = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.main_junggo,parent,false);
-            return new CHolder(v_C);
-        }
+//        else if(viewType == VIEW_TYPE_C){
+//            v_C = LayoutInflater.from(parent.getContext())
+//                    .inflate(R.layout.main_junggo,parent,false);
+//            return new CHolder(v_C);
+//        }
         else{
             // Todo : 정보를 받아오는데 에러가 발생했다는 것을 알리는 레이아웃 생성해도 괜찮을듯
             return null;
@@ -109,8 +109,8 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 return VIEW_TYPE_A;
             case VIEW_TYPE_B:
                 return VIEW_TYPE_B;
-            case VIEW_TYPE_C:
-                return VIEW_TYPE_C;
+//            case VIEW_TYPE_C:
+//                return VIEW_TYPE_C;
             default:
                 return -1;
         }
@@ -162,35 +162,35 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             //이정찬 수정 (2019-09-12)
             //카 쉐어링 액티비티 이동시키기
-            ((BHolder) holder).cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
+//            ((BHolder) holder).cardView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Context context = v.getContext();
+//
+//                    Intent intent = new Intent(context,SharingActivity.class);
+//                    if (context instanceof Activity) {
+//                        ((Activity) context).startActivity(intent);
+//                    }
+//                }
+//            });
 
-                    Intent intent = new Intent(context,SharingActivity.class);
-                    if (context instanceof Activity) {
-                        ((Activity) context).startActivity(intent);
-                    }
-                }
-            });
 
-
-        }else if(holder instanceof CHolder){
+//        }else if(holder instanceof CHolder){
             // C : 중고장터
-            ((CHolder)holder).subject.setText(mainListViewTypeList.get(position).getName());
-            if(mainListViewTypeList.get(position).getJunggos()!=null){
-                Main_JunggoListAdapter main_junggoListAdapter = new Main_JunggoListAdapter((Activity)v_C.getContext(),mainListViewTypeList.get(position).getJunggos());
-                ((CHolder) holder).junggo_image_album.setHasFixedSize(true);
-                ((CHolder) holder).junggo_image_album.setLayoutManager(new LinearLayoutManager(v_C.getContext()
-                        , LinearLayoutManager.HORIZONTAL
-                        ,false));
-                ((CHolder)holder).junggo_image_album.setAdapter(main_junggoListAdapter);
-            }
-
-            ((CHolder) holder).go_to_detail.setOnClickListener(v->{
-                MainActivity activity = (MainActivity)mContext;
-                activity.replaceFragment(new BoardFragment(),2);
-            });
+//            ((CHolder)holder).subject.setText(mainListViewTypeList.get(position).getName());
+//            if(mainListViewTypeList.get(position).getJunggos()!=null){
+//                Main_JunggoListAdapter main_junggoListAdapter = new Main_JunggoListAdapter((Activity)v_C.getContext(),mainListViewTypeList.get(position).getJunggos());
+//                ((CHolder) holder).junggo_image_album.setHasFixedSize(true);
+//                ((CHolder) holder).junggo_image_album.setLayoutManager(new LinearLayoutManager(v_C.getContext()
+//                        , LinearLayoutManager.HORIZONTAL
+//                        ,false));
+//                ((CHolder)holder).junggo_image_album.setAdapter(main_junggoListAdapter);
+//            }
+//
+//            ((CHolder) holder).go_to_detail.setOnClickListener(v->{
+//                MainActivity activity = (MainActivity)mContext;
+//                activity.replaceFragment(new BoardFragment(),2);
+//            });
         }
     }
 
@@ -220,7 +220,7 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ImageView profile;
         TextView name_and_ID, school, nickname;
         //이정찬 수정
-        CardView cardView;
+//        CardView cardView;
         ProgressBar myinfo_progressbar;
 
         public BHolder(@NonNull View itemView) {
@@ -230,24 +230,24 @@ public class MainListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             school = itemView.findViewById(R.id.school);
             nickname = itemView.findViewById(R.id.nickname);
             //이정찬 수정
-            cardView = itemView.findViewById(R.id.sharing);
+//            cardView = itemView.findViewById(R.id.sharing);
             //myinfo_progressbar = itemView.findViewById(R.id.main_myinfo_progressBar);
         }
     }
 
-    // 중고장터터
-    private class CHolder extends RecyclerView.ViewHolder {
-        TextView subject,go_to_detail;
-        RecyclerView junggo_image_album;
-        CardView junggo_card;
-        public CHolder(@NonNull View itemView) {
-            super(itemView);
-            subject = (TextView)itemView.findViewById(R.id.subject);
-            junggo_image_album = itemView.findViewById(R.id.junggo_image_album);
-            junggo_card = itemView.findViewById(R.id.junggo_card);
-            go_to_detail = itemView.findViewById(R.id.go_to_detail);
-        }
-    }
+    // 중고장터
+//    private class CHolder extends RecyclerView.ViewHolder {
+//        TextView subject,go_to_detail;
+//        RecyclerView junggo_image_album;
+//        CardView junggo_card;
+//        public CHolder(@NonNull View itemView) {
+//            super(itemView);
+//            subject = (TextView)itemView.findViewById(R.id.subject);
+//            junggo_image_album = itemView.findViewById(R.id.junggo_image_album);
+//            junggo_card = itemView.findViewById(R.id.junggo_card);
+//            go_to_detail = itemView.findViewById(R.id.go_to_detail);
+//        }
+//    }
 
     void profileSetting(ImageView img){
         FirebaseStorage storage = FirebaseStorage.getInstance();
