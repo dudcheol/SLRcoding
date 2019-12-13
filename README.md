@@ -49,3 +49,6 @@ __박영철, 김연준, 이정찬, 최민철__
  * Tool: Android Studio
  * 언어: Java
  * 서버/DB: Firebase 
+
+
+* 암호: 멘토 이름(성 빼고)
